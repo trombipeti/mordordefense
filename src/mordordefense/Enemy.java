@@ -5,4 +5,8 @@ public class Enemy {
 		System.out.println("I'm an enemy");
 		System.out.println("I'm evil");
 	}
+	
+	public void hit(){
+		System.out.println("oh, you hit me");
+	}
 }
