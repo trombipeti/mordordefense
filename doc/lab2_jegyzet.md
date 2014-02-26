@@ -70,6 +70,6 @@
  
 ***Saját cuccok***
 
- * ** Torony: **
+ * **Torony:**
  
-  * Ismeri a hatókörében lévő mezőket, feliratkozik az "onEntered" eseményre
+    * Ismeri a hatókörében lévő mezőket, feliratkozik az "onEntered" eseményre
