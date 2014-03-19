@@ -9,4 +9,9 @@ public class Elf extends Enemy {
 	public Elf() {
 
 	}
+
+	@Override
+	public String getType() {
+		return "Elf";
+	}
 }

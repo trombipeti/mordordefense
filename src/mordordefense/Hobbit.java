@@ -11,4 +11,9 @@ public class Hobbit extends Enemy
 	public Hobbit() {
 
 	}
+
+	@Override
+	public String getType() {
+		return "Hobbit";
+	}
 }

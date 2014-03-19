@@ -52,4 +52,9 @@ public class RouteCell extends Cell {
 	public void addRouteCellListener(RouteCellListener l) {
 
 	}
+
+	@Override
+	public String getType() {
+		return "RouteCell";
+	}
 }

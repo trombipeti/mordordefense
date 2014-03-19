@@ -2,10 +2,10 @@ package mordordefense;
 
 public class Bullet {
 
-	private int elfDamage;
-	private int dwarfDamage;
-	private int hobbitDamage;
-	private int humanDamage;
+	protected int elfDamage;
+	protected int dwarfDamage;
+	protected int hobbitDamage;
+	protected int humanDamage;
 
 	/**
 	 * Operation
@@ -21,9 +21,10 @@ public class Bullet {
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
 			int humanDamage) {
-		System.out.println(">> Bullet konstruktor hívás, paraméterek:");
+		System.out.println(">> Bullet konstruktor hivas, parameterek:");
 		System.out.println("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
-				+ elfDamage+", hobbitDamage: "+hobbitDamage+", humanDamage: "+humanDamage);
+				+ elfDamage + ", hobbitDamage: " + hobbitDamage
+				+ ", humanDamage: " + humanDamage);
 		this.dwarfDamage = dwarfDamage;
 		this.elfDamage = elfDamage;
 		this.hobbitDamage = hobbitDamage;
@@ -68,5 +69,14 @@ public class Bullet {
 	 */
 	public void damage(Human h) {
 		h.sebez(humanDamage);
+	}
+
+	@Override
+	public String toString() {
+		String ret;
+		ret = "Bullet, dwarfDamage: " + dwarfDamage + ", elfDamage: "
+				+ elfDamage + ", hobbitDamage: " + hobbitDamage
+				+ ", humanDamage: " + humanDamage;
+		return ret;
 	}
 }

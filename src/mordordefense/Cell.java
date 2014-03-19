@@ -4,19 +4,18 @@ import java.util.List;
 
 public abstract class Cell {
 	/** Attributes */
-	private int numSzomszed;
+	protected int numSzomszed;
+	protected int ID;
 
 	/** Associations */
-	private List<Cell> szomszedok;
+	protected List<Cell> szomszedok;
 
 	/**
 	 * Operation
 	 * 
 	 * @return String
 	 */
-	public String getType() {
-		return "";
-	}
+	abstract public String getType();
 
 	/**
 	 * Operation
@@ -24,7 +23,7 @@ public abstract class Cell {
 	 * @return List<Cell>
 	 */
 	public List<Cell> getSzomszedok() {
-		return null;
+		return szomszedok;
 	}
 
 	/**
@@ -43,7 +42,7 @@ public abstract class Cell {
 	 * @return int
 	 */
 	public int getID() {
-		return 0;
+		return ID;
 	}
 
 	/**
@@ -52,7 +51,7 @@ public abstract class Cell {
 	 * @param i
 	 */
 	public void setID(int i) {
-
+		ID = i;
 	}
 
 	/**
@@ -62,5 +61,9 @@ public abstract class Cell {
 	 */
 	public int[] getCoords() {
 		return null;
+	}
+	
+	public String toString() {
+		return "Cella, típusa: "+getType()+"helyzet: "+getCoords()[0]+","+getCoords()[1];
 	}
 }

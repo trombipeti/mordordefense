@@ -39,9 +39,7 @@ public abstract class Enemy {
 	 * 
 	 * @return String
 	 */
-	public String getType() {
-		return null;
-	}
+	abstract public String getType();
 
 	/**
 	 * Operation
@@ -49,6 +47,13 @@ public abstract class Enemy {
 	 * @return int
 	 */
 	public int getStepNumber() {
-		return 0;
+		return stepNumber;
+	}
+
+	public String toString() {
+		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
+				+ maxLifePoint + ", sebesseg" + speed + ", lepesszam: "
+				+ stepNumber + ", utoljara ennyi ideje lepett: "
+				+ timeSinceLastStep;
 	}
 }

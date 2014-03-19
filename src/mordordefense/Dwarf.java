@@ -10,4 +10,9 @@ public class Dwarf extends Enemy {
 	public Dwarf() {
 
 	}
+
+	@Override
+	public String getType() {
+		return "Dwarf";
+	}
 }

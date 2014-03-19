@@ -9,4 +9,9 @@ public class Human extends Enemy {
 	public Human() {
 
 	}
+
+	@Override
+	public String getType() {
+		return "Human";
+	}
 }

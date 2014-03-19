@@ -27,6 +27,11 @@ public class Trap implements RouteCellListener {
 	}
 
 	@Override
+	public String toString() {
+		return "Trap, strength: " + strength;
+	}
+
+	@Override
 	public void onEnter(RouteCell sender, Elf e) {
 		// TODO Auto-generated method stub
 

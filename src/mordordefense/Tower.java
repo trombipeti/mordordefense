@@ -6,14 +6,14 @@ public class Tower implements RouteCellListener
 
 {
 	/** Attributes */
-	private int freq;
-	private int radius;
-	private int baseDamage;
-	private int timeSinceLastShoot;
-	
+	protected int freq;
+	protected int radius;
+	protected int baseDamage;
+	protected int timeSinceLastShoot;
+
 	/** Associations */
-	private List<RouteCell> closestCellsWithEnemy;
-	private List<MagicStone> stones;
+	protected List<RouteCell> closestCellsWithEnemy;
+	protected List<MagicStone> stones;
 
 	/**
 	 * Operation
@@ -51,44 +51,51 @@ public class Tower implements RouteCellListener
 	}
 
 	@Override
+	public String toString() {
+		return "Tower, freq: " + freq + ", radius: " + radius
+				+ ", baseDamage: " + baseDamage
+				+ ", utolso loves ota eltelt ido: " + timeSinceLastShoot;
+	}
+
+	@Override
 	public void onEnter(RouteCell sender, Elf e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
