@@ -1,6 +1,5 @@
-package mordordefense; 
+package mordordefense;
 
-public class MordorCell extends RouteCell
-{
-	
+public class MordorCell extends RouteCell {
+
 }
