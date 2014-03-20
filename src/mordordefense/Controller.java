@@ -14,7 +14,7 @@ public class Controller implements RouteCellListener {
 	private List<Tower> towers;
 	private Saruman saruman;
 	private List<Enemy> enemies;
-	private List<Cell> unnamed;
+	private List<Cell> cells;
 
 	/**
 	 * Operation
