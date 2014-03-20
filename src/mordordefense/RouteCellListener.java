@@ -56,4 +56,12 @@ public interface RouteCellListener {
 	 * @param h
 	 */
 	public void onLeave(RouteCell sender, Hobbit h);
+	
+	/**
+	 * Operation
+	 * 
+	 * @param sender
+	 * @param h
+	 */
+	public void onLeave(RouteCell sender, Human h)
 }

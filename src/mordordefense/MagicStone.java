@@ -1,6 +1,20 @@
 package mordordefense;
 
+import sun.util.calendar.BaseCalendar;
+
 public class MagicStone {
+
+	protected int baseCost;
+
+	protected float elfMultiplier;
+	protected float dwarfMultiplier;
+	protected float hobbitMultiplier;
+	protected float humanMultiplier;
+
+	protected float damageMultiplier;
+	protected float freqMultiplier;
+	protected float radiusMultiplier;
+
 	/**
 	 * Operation
 	 * 
@@ -8,7 +22,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Elf e) {
-		return 0.0f;
+		return elfMultiplier;
 	}
 
 	/**
@@ -18,7 +32,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Human h) {
-		return 0.0f;
+		return humanMultiplier;
 	}
 
 	/**
@@ -28,7 +42,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMulitplier(Hobbit h) {
-		return 0.0f;
+		return hobbitMultiplier;
 	}
 
 	/**
@@ -38,7 +52,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Dwarf d) {
-		return 0.0f;
+		return dwarfMultiplier;
 	}
 
 	/**
@@ -47,7 +61,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getDamageMultiplier() {
-		return 0.0f;
+		return damageMultiplier;
 	}
 
 	/**
@@ -56,7 +70,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getRadiusMultiplier() {
-		return 0.0f;
+		return radiusMultiplier;
 	}
 
 	/**
@@ -65,7 +79,7 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getFreqMultiplier() {
-		return 0.0f;
+		return freqMultiplier;
 	}
 
 	/**
@@ -74,6 +88,16 @@ public class MagicStone {
 	 * @return int
 	 */
 	public int getBaseCost() {
-		return 0;
+		return baseCost;
+	}
+
+	public String toString() {
+		return "MagicStone, baseCost: " + baseCost + ", elfMultiplier"
+				+ elfMultiplier + ", dwarfMultiplier" + dwarfMultiplier
+				+ ", hobbitMultiplier" + hobbitMultiplier + ", humanMultiplier"
+				+ humanMultiplier + ", damageMultiplier" + damageMultiplier
+				+ ", freqMultiplier" + freqMultiplier + ", radiusMultiplier"
+				+ radiusMultiplier;
+
 	}
 }

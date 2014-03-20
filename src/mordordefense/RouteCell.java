@@ -3,18 +3,29 @@ package mordordefense;
 import java.util.List;
 
 public class RouteCell extends Cell {
-	private Trap trap;
-	private List<RouteCellListener> listeners;
-	private List<Bullet> bullets;
-	private List<Enemy> enemies;
-
+	protected Trap trap;
+	protected List<RouteCellListener> listeners;
+	protected List<Bullet> bullets;
+	protected List<Enemy> enemies;
+	
+	
+	public RouteCell() {
+		trap = null;
+	}
+	
+	public RouteCell(Trap t) {
+		trap = t;
+	}
+	
 	/**
 	 * Operation
 	 * 
 	 * @param t
 	 */
 	public void addTrap(Trap t) {
-
+		if(trap == null) {
+			trap = t;
+		}
 	}
 
 	/**
@@ -22,8 +33,43 @@ public class RouteCell extends Cell {
 	 * 
 	 * @param e
 	 */
-	public void enter(Enemy e) {
-
+	public void enter(Elf e) {
+		for(RouteCellListener l: listeners) {
+			l.onEnter(this, e);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param h
+	 */
+	public void enter(Human h) {
+		for(RouteCellListener l: listeners) {
+			l.onEnter(this, h);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param h
+	 */
+	public void enter(Hobbit h) {
+		for(RouteCellListener l: listeners) {
+			l.onEnter(this, h);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param d
+	 */
+	public void enter(Dwarf d) {
+		for(RouteCellListener l: listeners) {
+			l.onEnter(this, d);
+		}
 	}
 
 	/**
@@ -32,7 +78,7 @@ public class RouteCell extends Cell {
 	 * @param b
 	 */
 	public void addBullet(Bullet b) {
-
+		bullets.add(b);
 	}
 
 	/**
@@ -40,8 +86,43 @@ public class RouteCell extends Cell {
 	 * 
 	 * @param e
 	 */
-	public void leave(Enemy e) {
-
+	public void leave(Elf e) {
+		for(RouteCellListener l : listeners) {
+			l.onLeave(this, e);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param h
+	 */
+	public void leave(Human h) {
+		for(RouteCellListener l : listeners) {
+			l.onLeave(this, h);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param h
+	 */
+	public void leave(Hobbit h) {
+		for(RouteCellListener l : listeners) {
+			l.onLeave(this, h);
+		}
+	}
+	
+	/**
+	 * Operation
+	 * 
+	 * @param e
+	 */
+	public void leave(Dwarf d) {
+		for(RouteCellListener l : listeners) {
+			l.onLeave(this, d);
+		}
 	}
 
 	/**
@@ -50,7 +131,7 @@ public class RouteCell extends Cell {
 	 * @param l
 	 */
 	public void addRouteCellListener(RouteCellListener l) {
-
+		listeners.add(l);
 	}
 
 	@Override
