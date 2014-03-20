@@ -1,7 +1,5 @@
 package mordordefense;
 
-import sun.util.calendar.BaseCalendar;
-
 public class MagicStone {
 
 	protected int baseCost;
