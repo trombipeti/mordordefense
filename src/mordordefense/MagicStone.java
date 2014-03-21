@@ -20,6 +20,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Elf e) {
+		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+e.toString());
+		Logging.log("<< "+elfMultiplier);
 		return elfMultiplier;
 	}
 
@@ -30,6 +32,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Human h) {
+		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+h.toString()); 		
+		Logging.log("<< "+humanMultiplier);
 		return humanMultiplier;
 	}
 
@@ -40,6 +44,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMulitplier(Hobbit h) {
+		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+h.toString()); 		
+		Logging.log("<< "+hobbitMultiplier);
 		return hobbitMultiplier;
 	}
 
@@ -50,6 +56,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getMultiplier(Dwarf d) {
+		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+d.toString()); 		
+		Logging.log("<< "+dwarfMultiplier);
 		return dwarfMultiplier;
 	}
 
@@ -59,6 +67,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getDamageMultiplier() {
+		Logging.log(">> MagicStone.getDamageMultiplier() hívás"); 		
+		Logging.log("<< "+damageMultiplier);
 		return damageMultiplier;
 	}
 
@@ -68,6 +78,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getRadiusMultiplier() {
+		Logging.log(">> MagicStone.getRadiusMultiplier() hívás"); 		
+		Logging.log("<< "+radiusMultiplier);
 		return radiusMultiplier;
 	}
 
@@ -77,6 +89,8 @@ public class MagicStone {
 	 * @return float
 	 */
 	public float getFreqMultiplier() {
+		Logging.log(">> MagicStone.getFreqMultiplier() hívás"); 		
+		Logging.log("<< "+freqMultiplier);
 		return freqMultiplier;
 	}
 
@@ -86,6 +100,8 @@ public class MagicStone {
 	 * @return int
 	 */
 	public int getBaseCost() {
+		Logging.log(">> MagicStone.getBaseCost() hívás"); 		
+		Logging.log("<< "+baseCost);
 		return baseCost;
 	}
 
