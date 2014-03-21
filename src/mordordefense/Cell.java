@@ -1,5 +1,6 @@
 package mordordefense;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mordordefense.testing.Logging;
@@ -11,7 +12,7 @@ public abstract class Cell {
 	
 	protected int coords[] = new int[2];
 	
-	protected List<Cell> szomszedok;
+	protected List<Cell> szomszedok = new ArrayList<Cell>();
 
 	/**
 	 * Operation
