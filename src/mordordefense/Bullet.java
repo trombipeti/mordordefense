@@ -1,5 +1,9 @@
 package mordordefense;
 
+import java.io.IOException;
+
+import mordordefense.testing.Logging;
+
 public class Bullet {
 
 	protected int elfDamage;
@@ -21,10 +25,15 @@ public class Bullet {
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
 			int humanDamage) {
-		System.out.println(">> Bullet konstruktor hivas, parameterek:");
-		System.out.println("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
-				+ elfDamage + ", hobbitDamage: " + hobbitDamage
-				+ ", humanDamage: " + humanDamage);
+		try {
+			Logging.log(">> Bullet konstruktor hivas, parameterek:");
+			Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
+					+ elfDamage + ", hobbitDamage: " + hobbitDamage
+					+ ", humanDamage: " + humanDamage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		this.dwarfDamage = dwarfDamage;
 		this.elfDamage = elfDamage;
 		this.hobbitDamage = hobbitDamage;

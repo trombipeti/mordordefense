@@ -1,12 +1,13 @@
 package mordordefense;
 
+import mordordefense.testing.Logging;
+
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-
+		
+		// Itt kell beállítani majd, hogy hova logoljon.
+		Logging.setLogFileName(null);
 	}
 
 }
