@@ -1,6 +1,9 @@
 package mordordefense;
 
+import java.io.IOException;
 import java.util.List;
+
+import mordordefense.testing.Logging;
 
 public class RouteCell extends Cell {
 	protected Trap trap;
@@ -10,10 +13,20 @@ public class RouteCell extends Cell {
 	
 	
 	public RouteCell() {
+		try {
+			Logging.log(">> RouteCell konstruktor hívás");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		trap = null;
 	}
 	
 	public RouteCell(Trap t) {
+		try {
+			Logging.log(">> RouteCell konstruktor hívás, paraméter: "+t.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		trap = t;
 	}
 	
@@ -23,6 +36,12 @@ public class RouteCell extends Cell {
 	 * @param t
 	 */
 	public void addTrap(Trap t) {
+		try {
+			Logging.log(">> RouteCell.addTrap() hívás, paraméter: "+t.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(trap == null) {
 			trap = t;
 		}
