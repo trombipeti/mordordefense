@@ -1,7 +1,9 @@
 package mordordefense;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import mordordefense.testing.Logging;
 
@@ -18,7 +20,7 @@ public class Tower implements RouteCellListener
 	protected int baseCost;
 
 	/** Associations */
-	protected List<RouteCell> closestCellsWithEnemy = new ArrayList<RouteCell>();
+	protected Set<RouteCell> closestCellsWithEnemy = new HashSet<RouteCell>();
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	/**
@@ -36,7 +38,7 @@ public class Tower implements RouteCellListener
 	 * 
 	 * @return RouteCell[]
 	 */
-	public List<RouteCell> getClosestCellsWithEnemy() {
+	public Set<RouteCell> getClosestCellsWithEnemy() {
 		Logging.log(">> Tower.getClosestCellsWithEnemy() hívás");
 		return closestCellsWithEnemy;
 	}
@@ -71,22 +73,26 @@ public class Tower implements RouteCellListener
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+e.toString());
+		closestCellsWithEnemy.add(sender);
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+d.toString());
+		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override

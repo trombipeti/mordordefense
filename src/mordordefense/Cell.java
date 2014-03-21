@@ -65,6 +65,6 @@ public abstract class Cell {
 	}
 	
 	public String toString() {
-		return "Cella, típusa: "+getType()+"helyzet: "+getCoords()[0]+","+getCoords()[1];
+		return "Cella, típusa: "+getType()+", helyzet: "+getCoords()[0]+","+getCoords()[1];
 	}
 }

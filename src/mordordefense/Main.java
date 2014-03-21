@@ -1,6 +1,7 @@
 package mordordefense;
 
 import mordordefense.testing.Logging;
+import mordordefense.testing.SkeletonTester;
 
 public class Main {
 
@@ -8,6 +9,7 @@ public class Main {
 
 		// Itt kell beállítani majd, hogy hova logoljon.
 		Logging.setLogFileName(null);
+		SkeletonTester.runTowerTestCase();
 	}
 
 }

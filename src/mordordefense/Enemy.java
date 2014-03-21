@@ -31,7 +31,7 @@ public abstract class Enemy {
 	 * 
 	 */
 	public void leptet() {
-
+		
 	}
 
 	/**
