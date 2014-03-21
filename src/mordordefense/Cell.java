@@ -2,6 +2,8 @@ package mordordefense;
 
 import java.util.List;
 
+import mordordefense.testing.Logging;
+
 public abstract class Cell {
 	/** Attributes */
 	protected int numSzomszed;
@@ -18,12 +20,15 @@ public abstract class Cell {
 	 */
 	abstract public String getType();
 
+	
 	/**
 	 * Operation
 	 * 
 	 * @return List<Cell>
 	 */
 	public List<Cell> getSzomszedok() {
+		Logging.log(">> Cell.getSzomszedok() hívás");
+		Logging.log("<< "+szomszedok.toString());
 		return szomszedok;
 	}
 
@@ -34,7 +39,9 @@ public abstract class Cell {
 	 * @param szomszed
 	 */
 	public void setSzomszed(int n, Cell szomszed) {
-
+		Logging.log(">> Cell.setSzomszedok() hívás, paraméterek: "+"n: "+n+", szomszed: "+szomszed.toString());
+		Logging.log("<< void");
+		szomszedok.add(szomszed);
 	}
 
 	/**
@@ -43,6 +50,8 @@ public abstract class Cell {
 	 * @return int
 	 */
 	public int getID() {
+		Logging.log(">>Cell.getID() hívás");
+		Logging.log("<< "+ID);
 		return ID;
 	}
 
@@ -52,7 +61,9 @@ public abstract class Cell {
 	 * @param i
 	 */
 	public void setID(int i) {
+		Logging.log("Cell.setID() hívás, paraméter: "+i);
 		ID = i;
+		Logging.log("<< void");
 	}
 
 	/**
@@ -61,6 +72,8 @@ public abstract class Cell {
 	 * @return int[2]
 	 */
 	public int[] getCoords() {
+		Logging.log("Cell.getCoords() hívás");
+		Logging.log("<< "+coords[0]+", "+coords[1]);
 		return coords;
 	}
 	

@@ -107,6 +107,10 @@ public class MagicStone {
 		return freqMultiplier;
 	}
 
+	
+	public static void setBaseCost(int cost){
+		baseCost=cost;
+	}
 	/**
 	 * alap árat visszaadó függvény
 	 * @return baseCost
@@ -117,7 +121,7 @@ public class MagicStone {
 		return baseCost;
 	}
 	/**
-	 * új kő árát számoló függvény
+	 * új kő árát számoló statikus függvény
 	 * @param numStones
 	 * @return
 	 */
