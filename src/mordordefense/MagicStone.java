@@ -1,8 +1,10 @@
 package mordordefense;
 
+import mordordefense.testing.Logging;
+
 public class MagicStone {
 
-	protected int baseCost;
+	static protected int baseCost;		
 
 	protected float elfMultiplier;
 	protected float dwarfMultiplier;
@@ -13,12 +15,26 @@ public class MagicStone {
 	protected float freqMultiplier;
 	protected float radiusMultiplier;
 
+	
+	public MagicStone(float elf, float dwarf, float hobbit, float human, float damage, float freq, float radius){
+		Logging.log(">> MagicStone konstruktor hívás, paraméterek: "+"elfMultiplier: "+elf+", dwarfMultiplier: "+dwarf+
+					", hobbitMultiplier: "+hobbit+", humanMultiplier: "+human+", damageMultiplier: "+damage+", freqMultiplier: "+freq+", radiusMultiplier: "+radius);
+
+		this.elfMultiplier=elf;
+		this.dwarfMultiplier=dwarf;
+		this.hobbitMultiplier=hobbit;
+		this.humanMultiplier=human;
+		
+		this.damageMultiplier=damage;
+		this.freqMultiplier=freq;
+		this.radiusMultiplier=radius;
+	}
 	/**
-	 * Operation
+	 * tünde-sebzésszorzót visszadó függvény
 	 * 
 	 * @param e
-	 * @return float
-	 */
+	 * @return elffMultiplier
+	 */	
 	public float getMultiplier(Elf e) {
 		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+e.toString());
 		Logging.log("<< "+elfMultiplier);
@@ -26,10 +42,10 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
+	 * ember-sebzésszorzót visszadó függvény
 	 * 
 	 * @param h
-	 * @return float
+	 * @return humanfMultiplier
 	 */
 	public float getMultiplier(Human h) {
 		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+h.toString()); 		
@@ -38,10 +54,10 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
+	 * hobbit-sebzésszorzót visszadó függvény
 	 * 
 	 * @param h
-	 * @return float
+	 * @return hobbitMultiplier
 	 */
 	public float getMulitplier(Hobbit h) {
 		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+h.toString()); 		
@@ -50,10 +66,10 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
+	 * törp-sebzésszorzót visszadó függvény
 	 * 
 	 * @param d
-	 * @return float
+	 * @return dwarfMultiplier
 	 */
 	public float getMultiplier(Dwarf d) {
 		Logging.log(">> MagicStone.getMultiplier() hívás, paraméter: "+d.toString()); 		
@@ -62,9 +78,8 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
-	 * 
-	 * @return float
+	 * általános sebzésszorzót visszadó függvény
+	 * @return damageMultiplier
 	 */
 	public float getDamageMultiplier() {
 		Logging.log(">> MagicStone.getDamageMultiplier() hívás"); 		
@@ -73,9 +88,8 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
-	 * 
-	 * @return float
+	 * hatúsugár szorzót visszadó függvény
+	 * @return radiusMultiplier
 	 */
 	public float getRadiusMultiplier() {
 		Logging.log(">> MagicStone.getRadiusMultiplier() hívás"); 		
@@ -84,9 +98,8 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
-	 * 
-	 * @return float
+	 * frekvencia szorzót visszadó függvény
+	 * @return freqMultiplier
 	 */
 	public float getFreqMultiplier() {
 		Logging.log(">> MagicStone.getFreqMultiplier() hívás"); 		
@@ -95,16 +108,27 @@ public class MagicStone {
 	}
 
 	/**
-	 * Operation
-	 * 
-	 * @return int
+	 * alap árat visszaadó függvény
+	 * @return baseCost
 	 */
 	public int getBaseCost() {
 		Logging.log(">> MagicStone.getBaseCost() hívás"); 		
 		Logging.log("<< "+baseCost);
 		return baseCost;
 	}
-
+	/**
+	 * új kő árát számoló függvény
+	 * @param numStones
+	 * @return
+	 */
+	static public int calcCost(int numStones){
+		Logging.log(">> MagicStone.calcCost() hívás, paraméter: "+numStones); 		
+		int cost=baseCost;
+		Logging.log("<< "+cost);
+		
+		return cost;
+	}
+	
 	public String toString() {
 		return "MagicStone, baseCost: " + baseCost + ", elfMultiplier"
 				+ elfMultiplier + ", dwarfMultiplier" + dwarfMultiplier
