@@ -1,7 +1,5 @@
 package mordordefense;
 
-import java.io.IOException;
-
 import mordordefense.testing.Logging;
 
 public class Bullet {
@@ -25,15 +23,11 @@ public class Bullet {
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
 			int humanDamage) {
-		try {
-			Logging.log(">> Bullet konstruktor hivas, parameterek:");
-			Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
-					+ elfDamage + ", hobbitDamage: " + hobbitDamage
-					+ ", humanDamage: " + humanDamage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		Logging.log(">> Bullet konstruktor hivas, parameterek:");
+		Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
+				+ elfDamage + ", hobbitDamage: " + hobbitDamage
+				+ ", humanDamage: " + humanDamage);
+
 		this.dwarfDamage = dwarfDamage;
 		this.elfDamage = elfDamage;
 		this.hobbitDamage = hobbitDamage;
@@ -47,6 +41,7 @@ public class Bullet {
 	 *            Elf (tünde) típusú ellenség
 	 */
 	public void damage(Elf e) {
+		Logging.log(">> Bullet.damage() hívás, paraméter: "+e.toString()); 
 		e.sebez(elfDamage);
 	}
 
@@ -57,6 +52,7 @@ public class Bullet {
 	 *            Hobbit típusú ellenség
 	 */
 	public void damage(Hobbit h) {
+		Logging.log(">> Bullet.damage() hívás, paraméter: "+h.toString());
 		h.sebez(hobbitDamage);
 	}
 
@@ -67,6 +63,7 @@ public class Bullet {
 	 *            Dwarf (törp) típusú ellenség
 	 */
 	public void damage(Dwarf d) {
+		Logging.log(">> Bullet.damage() hívás, paraméter: "+d.toString());
 		d.sebez(dwarfDamage);
 	}
 
@@ -77,6 +74,7 @@ public class Bullet {
 	 *            Human (ember) típusú ellenség.
 	 */
 	public void damage(Human h) {
+		Logging.log(">> Bullet.damage() hívás, paraméter: "+h.toString());
 		h.sebez(humanDamage);
 	}
 

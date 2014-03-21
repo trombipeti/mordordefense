@@ -52,7 +52,7 @@ public abstract class Enemy {
 
 	public String toString() {
 		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
-				+ maxLifePoint + ", sebesseg" + speed + ", lepesszam: "
+				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
 				+ stepNumber + ", utoljara ennyi ideje lepett: "
 				+ timeSinceLastStep;
 	}

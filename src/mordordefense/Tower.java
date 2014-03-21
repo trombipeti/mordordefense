@@ -1,6 +1,9 @@
 package mordordefense;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import mordordefense.testing.Logging;
 
 public class Tower implements RouteCellListener
 
@@ -10,10 +13,13 @@ public class Tower implements RouteCellListener
 	protected int radius;
 	protected int baseDamage;
 	protected int timeSinceLastShoot;
+	
+	protected FieldCell parentCell;
+	protected int baseCost;
 
 	/** Associations */
-	protected List<RouteCell> closestCellsWithEnemy;
-	protected List<MagicStone> stones;
+	protected List<RouteCell> closestCellsWithEnemy = new ArrayList<RouteCell>();
+	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	/**
 	 * Operation
@@ -21,6 +27,8 @@ public class Tower implements RouteCellListener
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
+		Logging.log(">> Tower.addStone() hívás, paraméter: "+s.toString());
+		stones.add(s);
 	}
 
 	/**
@@ -29,7 +37,8 @@ public class Tower implements RouteCellListener
 	 * @return RouteCell[]
 	 */
 	public List<RouteCell> getClosestCellsWithEnemy() {
-		return null;
+		Logging.log(">> Tower.getClosestCellsWithEnemy() hívás");
+		return closestCellsWithEnemy;
 	}
 
 	/**
@@ -38,7 +47,8 @@ public class Tower implements RouteCellListener
 	 * @param f
 	 */
 	public void setParentCell(FieldCell f) {
-
+		Logging.log(">> Tower.setParentCell() hívás, paraméter: "+f.toString());
+		parentCell = f;
 	}
 
 	/**
@@ -47,7 +57,8 @@ public class Tower implements RouteCellListener
 	 * @return int
 	 */
 	public int getBaseCost() {
-		return 0;
+		Logging.log(">> Tower.getBaseCost() hívás");
+		return baseCost;
 	}
 
 	@Override
@@ -59,49 +70,42 @@ public class Tower implements RouteCellListener
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+e.toString());
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+d.toString());
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+e.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+d.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+h.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
-		
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+h.toString());
 	}
 }

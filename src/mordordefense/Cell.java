@@ -6,8 +6,9 @@ public abstract class Cell {
 	/** Attributes */
 	protected int numSzomszed;
 	protected int ID;
-
-	/** Associations */
+	
+	protected int coords[] = new int[2];
+	
 	protected List<Cell> szomszedok;
 
 	/**
@@ -60,7 +61,7 @@ public abstract class Cell {
 	 * @return int[2]
 	 */
 	public int[] getCoords() {
-		return null;
+		return coords;
 	}
 	
 	public String toString() {
