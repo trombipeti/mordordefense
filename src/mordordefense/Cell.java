@@ -15,15 +15,25 @@ public abstract class Cell {
 	protected List<Cell> szomszedok = new ArrayList<Cell>();
 
 	/**
-	 * Operation
+	 * típust visszaadó absztrakt függvény
 	 * 
 	 * @return String
 	 */
 	abstract public String getType();
-
 	
 	/**
-	 * Operation
+	 * koordinátákat beállító konstruktor
+	 * @param x
+	 * @param y
+	 */
+	
+	protected Cell(int x, int y){
+		coords[0]=x;
+		coords[1]=y;
+	}
+	
+	/**
+	 * Szomszédokat visszaadó függvény
 	 * 
 	 * @return List<Cell>
 	 */
@@ -34,7 +44,7 @@ public abstract class Cell {
 	}
 
 	/**
-	 * Operation
+	 * Szomszédokat beállító függvény
 	 * 
 	 * @param n
 	 * @param szomszed
@@ -46,7 +56,7 @@ public abstract class Cell {
 	}
 
 	/**
-	 * Operation
+	 * ID-t visszadó függvény
 	 * 
 	 * @return int
 	 */
@@ -57,7 +67,7 @@ public abstract class Cell {
 	}
 
 	/**
-	 * Operation
+	 * ID-t beállító függvény
 	 * 
 	 * @param i
 	 */
@@ -68,7 +78,7 @@ public abstract class Cell {
 	}
 
 	/**
-	 * Operation
+	 * koordinátákat visszaadó függvény
 	 * 
 	 * @return int[2]
 	 */
