@@ -1,5 +1,7 @@
 package mordordefense;
 
+import mordordefense.testing.Logging;
+
 public class Elf extends Enemy {
 	/**
 	 * Operation
@@ -7,7 +9,13 @@ public class Elf extends Enemy {
 	 * @return
 	 */
 	public Elf() {
-
+		Logging.log(">> Elf default konstruktor hívás");
+	}
+	
+	public Elf(int parMaxLifePoint, int parSpeed ){
+		super(parMaxLifePoint,parSpeed);
+		Logging.log(">> Elf konstruktor hívás, maxLP: "+parMaxLifePoint+" speed: "+parSpeed);
+		
 	}
 
 	@Override
