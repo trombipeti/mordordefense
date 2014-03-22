@@ -6,14 +6,8 @@ public class FieldCell extends Cell {
 	/** Associations */
 	private Tower tower;
 
-	public FieldCell() {
-		Logging.log(">> FieldCell default konstruktor hívás.");
-		tower = null;
-	}
-	
-	public FieldCell(Tower t) {
-		Logging.log(">> FieldCell konstruktor hívás, paraméter:"+t.toString());
-		tower = t;
+	public FieldCell(int x,int y){
+		super(x,y);
 	}
 	
 	/**

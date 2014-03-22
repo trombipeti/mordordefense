@@ -1,5 +1,7 @@
 package mordordefense;
 
+import mordordefense.testing.Logging;
+
 public class Human extends Enemy {
 	/**
 	 * Operation
@@ -7,7 +9,13 @@ public class Human extends Enemy {
 	 * @return
 	 */
 	public Human() {
-
+		Logging.log(">> Human default konstruktor hívás");
+	}
+	
+	public Human(int parMaxLifePoint, int parSpeed ){
+		super(parMaxLifePoint,parSpeed);
+		Logging.log(">> Human konstruktor hívás, maxLP: "+parMaxLifePoint+" speed: "+parSpeed);
+		
 	}
 
 	@Override
