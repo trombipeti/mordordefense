@@ -1,6 +1,5 @@
 package mordordefense;
 
-import java.util.ArrayList;
 import mordordefense.testing.Logging;
 
 public abstract class Enemy {
@@ -10,23 +9,23 @@ public abstract class Enemy {
 	protected int speed;
 	protected int stepNumber;
 	protected int timeSinceLastStep;
-        protected RouteCell rc;
+	protected RouteCell rc;
 
 	/**
 	 * Operation
 	 * 
 	 * @param mertek
 	 */
-        public Enemy (){
-            Logging.log(">> Enemy konstruktor hÌv·s");
-                                                            //honan fogja megkapni a kezdo ertekeit?
-            
-        }                
-                
+	public Enemy() {
+		Logging.log(">> Enemy konstruktor h√≠v√°s");
+		// honan fogja megkapni a kezdo ertekeit?
+
+	}
+
 	public void lassit(int mertek) {
-            Logging.log(">> Enemy, lassit meghivva");
-            speed -= mertek;
-            Logging.log("<< void");
+		Logging.log(">> Enemy, lassit meghivva, param√©ter: "+mertek);
+		speed -= mertek;
+		Logging.log("<< void");
 	}
 
 	/**
@@ -35,9 +34,9 @@ public abstract class Enemy {
 	 * @param mertek
 	 */
 	public void sebez(int mertek) {
-            Logging.log(">> Enemy, sebez meghivva");
-            lifePoint -= mertek;
-            Logging.log("<< void");
+		Logging.log(">> Enemy, sebez meghivva");
+		lifePoint -= mertek;
+		Logging.log("<< void");
 	}
 
 	/**
@@ -45,18 +44,20 @@ public abstract class Enemy {
 	 * 
 	 */
 	public void leptet() {
-            Logging.log("<< Enemy, leptet meghivva");
-            //rc.leave                                      //elhagyja azt a mezot amin allt
-            stepNumber++;                                   //noveli a lepesszamot
-            timeSinceLastStep = 0;                          //0-za az idot, mert lepett
-            for (int i=0; rc.szomszedok.size()!=i;i++){
-                if(rc.szomszedok.get(i).ID == stepNumber){
-                    rc=(RouteCell)rc.szomszedok.get(i);     //beallitja az rc-t arra a mezore amire lepett
-                }
-            }
-            //rc.Enter                                      //belep arra a mezore ahova lep
-            Logging.log("<<  void");
-		
+		Logging.log("<< Enemy, leptet meghivva");
+		// rc.leave(this); //elhagyja azt a mezot amin allt
+		stepNumber++; // noveli a lepesszamot
+		timeSinceLastStep = 0; // 0-za az idot, mert lepett
+		for (int i = 0; rc.szomszedok.size() != i; i++) {
+			if (rc.getSzomszedok().get(i).ID == stepNumber) {
+				rc = (RouteCell) rc.getSzomszedok().get(i); // beallitja az rc-t
+															// arra
+				// a mezore amire lepett
+			}
+		}
+		// rc.Enter //belep arra a mezore ahova lep
+		Logging.log("<< void");
+
 	}
 
 	/**
@@ -72,10 +73,10 @@ public abstract class Enemy {
 	 * @return int
 	 */
 	public int getStepNumber() {
-            Logging.log("<< Enemy, getStepNumber meghivva");
-            
-            Logging.log("<< "+stepNumber);
-            return stepNumber;
+		Logging.log("<< Enemy, getStepNumber meghivva");
+
+		Logging.log("<< " + stepNumber);
+		return stepNumber;
 	}
 
 	public String toString() {
