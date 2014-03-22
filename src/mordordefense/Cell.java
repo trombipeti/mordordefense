@@ -68,7 +68,7 @@ public abstract class Cell {
 	 * @return int
 	 */
 	public int getID() {
-		Logging.log(">>Cell.getID() hívás");
+		Logging.log(">> Cell.getID() hívás");
 		Logging.log("<< "+ID);
 		return ID;
 	}
@@ -79,7 +79,7 @@ public abstract class Cell {
 	 * @param i
 	 */
 	public void setID(int i) {
-		Logging.log("Cell.setID() hívás, paraméter: "+i);
+		Logging.log(">> Cell.setID() hívás, paraméter: "+i);
 		ID = i;
 		Logging.log("<< void");
 	}
@@ -90,12 +90,12 @@ public abstract class Cell {
 	 * @return int[2]
 	 */
 	public int[] getCoords() {
-		Logging.log("Cell.getCoords() hívás");
+		Logging.log(">> Cell.getCoords() hívás");
 		Logging.log("<< "+coords[0]+", "+coords[1]);
 		return coords;
 	}
 	
 	public String toString() {
-		return "Cella, típusa: "+getType()+", helyzet: "+getCoords()[0]+","+getCoords()[1];
+		return "Cella, típusa: "+getType()+", helyzet: "+coords[0]+","+coords[1];
 	}
 }
