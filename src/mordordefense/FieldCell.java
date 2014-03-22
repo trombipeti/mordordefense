@@ -11,6 +11,10 @@ public class FieldCell extends Cell {
 		tower = null;
 	}
 	
+	public FieldCell(int x,int y){
+		super(x,y);
+	}
+	
 	public FieldCell(Tower t) {
 		Logging.log(">> FieldCell konstruktor hívás, paraméter:"+t.toString());
 		tower = t;
