@@ -15,7 +15,16 @@ public class MagicStone {
 	protected float freqMultiplier;
 	protected float radiusMultiplier;
 
-	
+	/**
+	 * Konstruktor
+	 * @param elf
+	 * @param dwarf
+	 * @param hobbit
+	 * @param human
+	 * @param damage
+	 * @param freq
+	 * @param radius
+	 */
 	public MagicStone(float elf, float dwarf, float hobbit, float human, float damage, float freq, float radius){
 		Logging.log(">> MagicStone konstruktor hívás, paraméterek: "+"elfMultiplier: "+elf+", dwarfMultiplier: "+dwarf+
 					", hobbitMultiplier: "+hobbit+", humanMultiplier: "+human+", damageMultiplier: "+damage+", freqMultiplier: "+freq+", radiusMultiplier: "+radius);
@@ -107,8 +116,14 @@ public class MagicStone {
 		return freqMultiplier;
 	}
 
-	
+	/**
+	 * alap árat beállytó statikus függvény
+	 * @param cost
+	 */
 	public static void setBaseCost(int cost){
+		Logging.log(">> MagicStone.setBaseCost() hívás, paraméter: "+cost); 		
+		Logging.log("<< void");
+
 		baseCost=cost;
 	}
 	/**
