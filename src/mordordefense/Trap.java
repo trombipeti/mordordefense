@@ -9,7 +9,6 @@ public class Trap implements RouteCellListener {
 	/** Attributes */
 	protected int strength;
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
-	
 
 	/**
 	 * Operation
@@ -30,7 +29,6 @@ public class Trap implements RouteCellListener {
 	public int getBaseCost() {
 		Logging.log(">> Trap, getBaseCost meghivva");
 		return 0;
-
 	}
 
 	@Override
@@ -83,6 +81,5 @@ public class Trap implements RouteCellListener {
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
 		// TODO Auto-generated method stub
-
 	}
 }
