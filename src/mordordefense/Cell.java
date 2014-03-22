@@ -20,6 +20,12 @@ public abstract class Cell {
 	 * @return String
 	 */
 	abstract public String getType();
+	/**
+	 * paraméter nélküli konstruktor
+	 */
+	protected Cell(){
+		Logging.log(">> Cell.Cell() konstruktor hívás");
+	}
 	
 	/**
 	 * koordinátákat beállító konstruktor
@@ -30,6 +36,7 @@ public abstract class Cell {
 	protected Cell(int x, int y){
 		coords[0]=x;
 		coords[1]=y;
+		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: "+"x: "+x+", y:"+y);
 	}
 	
 	/**
