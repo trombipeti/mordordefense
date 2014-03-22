@@ -1,15 +1,59 @@
 package mordordefense;
 
-public class Enemy {
-	
-	private int lifePoint;
-	
-	public Enemy(){
-		System.out.println("I'm an enemy");
-		System.out.println("I'm evil");
+public abstract class Enemy {
+	/** Attributes */
+	protected int maxLifePoint;
+	protected int lifePoint;
+	protected int speed;
+	protected int stepNumber;
+	protected int timeSinceLastStep;
+
+	/**
+	 * Operation
+	 * 
+	 * @param mertek
+	 */
+	public void lassit(int mertek) {
+
 	}
-	
-	public void hit(){
-		System.out.println("oh, you hit me");
+
+	/**
+	 * Operation
+	 * 
+	 * @param mertek
+	 */
+	public void sebez(int mertek) {
+
+	}
+
+	/**
+	 * Operation
+	 * 
+	 */
+	public void leptet() {
+		
+	}
+
+	/**
+	 * Operation
+	 * 
+	 * @return String
+	 */
+	abstract public String getType();
+
+	/**
+	 * Operation
+	 * 
+	 * @return int
+	 */
+	public int getStepNumber() {
+		return stepNumber;
+	}
+
+	public String toString() {
+		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
+				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
+				+ stepNumber + ", utoljara ennyi ideje lepett: "
+				+ timeSinceLastStep;
 	}
 }
