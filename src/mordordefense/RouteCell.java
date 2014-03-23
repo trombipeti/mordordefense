@@ -141,9 +141,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Elf kiléptetése a celláról.
 	 * 
 	 * @param e
+	 *            Egy {@link Elf}.
 	 */
 	public void leave(Elf e) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + e.toString());
@@ -153,9 +154,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Human kiléptetése a celláról.
 	 * 
 	 * @param h
+	 *            Egy {@link Human}.
 	 */
 	public void leave(Human h) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
@@ -165,9 +167,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Hobbit kiléptetése a celláról.
 	 * 
 	 * @param h
+	 *            Egy {@link Hobbit}.
 	 */
 	public void leave(Hobbit h) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
@@ -177,15 +180,25 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Törp kiléptetése a celláról.
 	 * 
-	 * @param e
+	 * @param Egy
+	 *            {@link Dwarf}.
 	 */
 	public void leave(Dwarf d) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + d.toString());
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
+	}
+
+	/**
+	 * @return A cellán tarózkodó ellenségek száma.
+	 */
+	public int getNumEnemies() {
+		Logging.log(">> RouteCell.getNumEnemis() hívás");
+		Logging.log("<< " + enemies.size());
+		return enemies.size();
 	}
 
 	/**

@@ -2,6 +2,10 @@ package mordordefense;
 
 import mordordefense.testing.Logging;
 
+/**
+ * Az ellenségek kiinduló helyét megtestesítő osztály.
+ * 
+ */
 public class SpawnPointCell extends RouteCell {
 
 	public SpawnPointCell(int x, int y) {

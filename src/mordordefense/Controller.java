@@ -2,6 +2,8 @@ package mordordefense;
 
 import java.util.List;
 
+import mordordefense.testing.Logging;
+
 /**
  * A játékot vezérlő "játékmester" objektum.
  * 
@@ -53,6 +55,17 @@ public class Controller implements RouteCellListener {
 	private List<Cell> cells;
 
 	/**
+	 * Azt tárolja, hogy véget ért-e a játék.
+	 */
+	private volatile boolean gameEnded = false;
+
+	/**
+	 * A győzteseket tároló StringBuffer. Azért ilyen típusú, hogy szálbiztos
+	 * legyen.
+	 */
+	private volatile StringBuffer winner = null;
+
+	/**
 	 * Inicializáló függvény
 	 * 
 	 */
@@ -70,22 +83,42 @@ public class Controller implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + e.toString());
+		if (sender.getType().equalsIgnoreCase("MordorCell")) {
+			gameEnded = true;
+			winner = new StringBuffer("enemies");
+		}
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + d.toString());
+		if (sender.getType().equalsIgnoreCase("MordorCell")) {
+			gameEnded = true;
+			winner = new StringBuffer("enemies");
+		}
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		if (sender.getType().equalsIgnoreCase("MordorCell")) {
+			gameEnded = true;
+			winner = new StringBuffer("enemies");
+		}
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		if (sender.getType().equalsIgnoreCase("MordorCell")) {
+			gameEnded = true;
+			winner = new StringBuffer("enemies");
+		}
 	}
 
 	@Override
