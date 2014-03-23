@@ -22,23 +22,6 @@ public class Tower implements RouteCellListener
 	/** Associations */
 	protected Set<RouteCell> closestCellsWithEnemy = new HashSet<RouteCell>();
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
-	
-	public Tower() {
-		parentCell = null;
-		timeSinceLastShoot = 0;
-		baseDamage = 1;
-		radius = 3;
-		freq = 10;
-	}
-	
-	public Tower(int _freq, int _radius, int _baseDamage) {
-		parentCell = null;
-		timeSinceLastShoot = 0;
-		freq = _freq;
-		radius = _radius;
-		baseDamage = _baseDamage;
-		
-	}
 
 	/**
 	 * Operation

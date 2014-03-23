@@ -1,15 +1,19 @@
 package mordordefense;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import mordordefense.testing.Logging;
 
 public class Trap implements RouteCellListener {
 	/** Attributes */
+<<<<<<< HEAD
 	protected int strength;
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 	
+=======
+	private int strength;
+
+	/** Associations */
+	private List<MagicStone> stones;
+>>>>>>> asd2.
 
 	/**
 	 * Operation
@@ -17,9 +21,6 @@ public class Trap implements RouteCellListener {
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
-		Logging.log(">> Trap, addStone ");
-		stones.add(s);
-		Logging.log("<< void");
 	}
 
 	/**
@@ -28,7 +29,6 @@ public class Trap implements RouteCellListener {
 	 * @return int
 	 */
 	public int getBaseCost() {
-		Logging.log(">> Trap, getBaseCost meghivva");
 		return 0;
 
 	}
@@ -83,6 +83,10 @@ public class Trap implements RouteCellListener {
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> asd2.
 	}
 }
