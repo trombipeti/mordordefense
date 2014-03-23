@@ -10,6 +10,7 @@ public abstract class Enemy {
 
 	public Enemy(int parMaxLifePoint, int parSpeed) {
 		maxLifePoint = parMaxLifePoint;
+		lifePoint = parMaxLifePoint;
 		speed = parSpeed;
 	}
 	
