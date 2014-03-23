@@ -38,7 +38,7 @@ public class Hobbit extends Enemy
 	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
-		Logging.log(">> Hobbit.leptet() hívás");
+		Logging.log(">> Dwarf.leptet() hívás");
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
