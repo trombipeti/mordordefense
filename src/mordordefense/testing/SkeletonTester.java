@@ -82,4 +82,12 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: mordorTestCase vége ===");
 	}
 
+	public static void runControllerTestCase(){
+		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
+			Controller c=new Controller(1);
+			c.init();
+			c.run();
+		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
+		
+	}
 }

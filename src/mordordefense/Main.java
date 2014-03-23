@@ -51,6 +51,20 @@ public class Main {
 				return "mordorTestCase";
 			}
 		});
+		
+		testCases.put(4, new Runnable() {
+			
+			@Override
+			public void run() {
+				SkeletonTester.runControllerTestCase();
+			}
+			
+			@Override
+			public String toString() {
+				return "controllerTestCase";
+			}
+		});
+
 	}
 
 	private static int askForTestCase() {

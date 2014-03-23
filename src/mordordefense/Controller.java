@@ -55,7 +55,7 @@ public class Controller implements RouteCellListener {
 	/**
 	 * A pályán lévő cellák
 	 */
-	private List cells = new ArrayList<Cell>();
+	private ArrayList<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
 
 	/**
 	 * Azt tárolja, hogy véget ért-e a játék.
@@ -68,7 +68,6 @@ public class Controller implements RouteCellListener {
 	 */
 	private volatile StringBuffer winner = null;
 
-	private SpawnPointCell sp;
 
 	/**
 	 * Konstruktor
@@ -83,16 +82,22 @@ public class Controller implements RouteCellListener {
 
 	/**
 	 * Inicializáló függvény
-	 * 
+	 * később egy config fájlból fogja a pályát beolvasni
 	 */
 	public void init() {
 		Logging.log("Controller.init() hívás");
 		saruman = new Saruman(100);
 		SpawnPointCell rc = new SpawnPointCell(0, 0);
-		cells.add(rc);
+		rc.setID(0);
+		MordorCell mc=new MordorCell(0,1);
+		mc.setID(1);
+		ArrayList row=new ArrayList<Cell>();
+		row.add(rc);
+		row.add(mc);
+		mc.addRouteCellListener(this);
+		cells.add(row);
 		calcSzomszedok(rc);
 		spawnCoords = rc.getCoords();
-		sp = rc;
 	}
 
 	/**
@@ -104,7 +109,7 @@ public class Controller implements RouteCellListener {
 		Logging.log("Controller.calcSzomszedok() hívás, paraméter: "
 				+ c.toString());
 		int[] coords = c.getCoords();
-		c.setSzomszed(1, null);
+		c.setSzomszed(1, cells.get(0).get(1));
 	}
 
 	/**
@@ -114,6 +119,7 @@ public class Controller implements RouteCellListener {
 	public void run() {
 		Logging.log("Controller.run() hívás");
 		Elf e = new Elf(10, 1);
+		SpawnPointCell sp= (SpawnPointCell) cells.get(spawnCoords[0]).get(spawnCoords[1]);
 		sp.enter(e);
 		enemies.add(e);
 
@@ -128,7 +134,6 @@ public class Controller implements RouteCellListener {
 				e1.printStackTrace();
 			}
 		}
-		
 	}
 
 	@Override
