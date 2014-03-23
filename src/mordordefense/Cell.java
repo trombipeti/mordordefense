@@ -13,10 +13,6 @@ public abstract class Cell {
 	protected int coords[] = new int[2];
 	
 	protected List<Cell> szomszedok = new ArrayList<Cell>();
-	
-	public Cell() {
-		
-	}
 
 	/**
 	 * típust visszaadó absztrakt függvény

@@ -5,6 +5,7 @@ import mordordefense.*;
 public class SkeletonTester {
 	
 	public static void runSpawnTestCase() {
+		Logging.log("=== SkeletonTester: spawnTestCase futtatása ===");
 		Hobbit h = new Hobbit();
 		Elf e = new Elf();
 		SpawnPointCell sp = new SpawnPointCell();
@@ -13,9 +14,11 @@ public class SkeletonTester {
 		sp.enter(e);
 		sp.leave(e);
 		rc.enter(e);
+		Logging.log("=== SkeletonTester: spawnTestCase vége ===");
 	}
 	
 	public static void runTowerTestCase() {
+		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
 		Dwarf d = new Dwarf();
 		Tower t = new Tower();
 		RouteCell rc1 = new RouteCell();
@@ -31,6 +34,7 @@ public class SkeletonTester {
 		rc1.enter(d);
 		rc1.leave(d);
 		rc2.enter(d);
+		Logging.log("=== SkeletonTester: towerTestCase vége ===");
 	}
 	
 }
