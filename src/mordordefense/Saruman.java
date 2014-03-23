@@ -14,6 +14,16 @@ public class Saruman {
 	private int manna;
 
 	/**
+	 * Szarumán konstruktora
+	 * 
+	 * @param mana
+	 */
+	public Saruman(int mana) {
+		Logging.log("Saruman konstruktor hívás, paraméter: " + mana);
+		manna = mana;
+	}
+
+	/**
 	 * Szarumán varázserejét növelő függvény.
 	 * 
 	 * @param m

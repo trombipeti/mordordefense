@@ -3,6 +3,8 @@ package mordordefense;
 import java.util.ArrayList;
 import java.util.List;
 
+import mordordefense.exceptions.EnemyCannotStepException;
+import mordordefense.exceptions.EnemyDeadException;
 import mordordefense.testing.Logging;
 
 /**
@@ -33,12 +35,12 @@ public class Controller implements RouteCellListener {
 	/**
 	 * A pályán lévő csapdák
 	 */
-	private List<Trap> traps;
+	private List<Trap> traps = new ArrayList<Trap>();
 
 	/**
 	 * A pályán lévő tornyok
 	 */
-	private List<Tower> towers;
+	private List<Tower> towers = new ArrayList<Tower>();
 
 	/**
 	 * Szarumán
@@ -48,12 +50,12 @@ public class Controller implements RouteCellListener {
 	/**
 	 * A pályán lévő ellenségek
 	 */
-	private List<Enemy> enemies;
+	private List<Enemy> enemies = new ArrayList<Enemy>();
 
 	/**
 	 * A pályán lévő cellák
 	 */
-	private List cells=new ArrayList<Cell>();
+	private List cells = new ArrayList<Cell>();
 
 	/**
 	 * Azt tárolja, hogy véget ért-e a játék.
@@ -66,40 +68,66 @@ public class Controller implements RouteCellListener {
 	 */
 	private volatile StringBuffer winner = null;
 
+	private SpawnPointCell sp;
+
 	/**
+	 * Konstruktor
 	 * 
+	 * @param n
+	 *            hány ellenséget tehet le
 	 */
-	public Controller(int n){
-		Logging.log(">> Controller konstruktor hívás, paraméter:"+n);
-		maxEnemyNum=n;
+	public Controller(int n) {
+		Logging.log(">> Controller konstruktor hívás, paraméter:" + n);
+		maxEnemyNum = n;
 	}
-	
+
 	/**
 	 * Inicializáló függvény
 	 * 
 	 */
 	public void init() {
 		Logging.log("Controller.init() hívás");
-		RouteCell rc= new RouteCell(0,0);
+		saruman = new Saruman(100);
+		SpawnPointCell rc = new SpawnPointCell(0, 0);
 		cells.add(rc);
 		calcSzomszedok(rc);
+		spawnCoords = rc.getCoords();
+		sp = rc;
 	}
 
 	/**
 	 * meghatározza a paraméterül kapott cella szomszédait
+	 * 
 	 * @param c
 	 */
-	private void calcSzomszedok(Cell c){
-		Logging.log("Controller.calcSzomszedok() hívás, paraméter: "+c.toString());
-		int[] coords=c.getCoords();
+	private void calcSzomszedok(Cell c) {
+		Logging.log("Controller.calcSzomszedok() hívás, paraméter: "
+				+ c.toString());
+		int[] coords = c.getCoords();
 		c.setSzomszed(1, null);
 	}
+
 	/**
 	 * Az eseményeket vezérlő függvény
 	 * 
 	 */
 	public void run() {
 		Logging.log("Controller.run() hívás");
+		Elf e = new Elf(10, 1);
+		sp.enter(e);
+		enemies.add(e);
+
+		for (Enemy en : enemies) {
+			try {
+				en.leptet();
+			} catch (EnemyDeadException e1) {
+				saruman.addManna(2);
+				e1.printStackTrace();
+				enemies.remove(en);
+			} catch (EnemyCannotStepException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 
@@ -110,7 +138,7 @@ public class Controller implements RouteCellListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log("Enemy nyert: "+e.toString());
+			Logging.log("Enemy nyert: " + e.toString());
 		}
 	}
 
@@ -121,7 +149,7 @@ public class Controller implements RouteCellListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log("Enemy nyert: "+d.toString());
+			Logging.log("Enemy nyert: " + d.toString());
 		}
 	}
 
@@ -132,7 +160,7 @@ public class Controller implements RouteCellListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log("Enemy nyert: "+h.toString());
+			Logging.log("Enemy nyert: " + h.toString());
 		}
 	}
 
@@ -143,7 +171,7 @@ public class Controller implements RouteCellListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log("Enemy nyert: "+h.toString());
+			Logging.log("Enemy nyert: " + h.toString());
 		}
 	}
 
