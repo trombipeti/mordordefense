@@ -195,7 +195,7 @@ public class MagicStone {
 	 * 
 	 * @return baseCost A kövek alapára
 	 */
-	public int getBaseCost() {
+	public static int getBaseCost() {
 		Logging.log(">> MagicStone.getBaseCost() hívás");
 		Logging.log("<< " + baseCost);
 		return baseCost;
