@@ -56,4 +56,30 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: towerTestCase vége ===");
 	}
 
+	public static void runMordorTestCase() {
+		Logging.log("=== SkeletonTester: mordorTestCase futtatása ===");
+		Human h=new Human(10,1);
+		RouteCell rc=new RouteCell(0, 0);
+		rc.setID(0);
+		MordorCell mc=new MordorCell(0, 1);
+		mc.setID(1);
+		Controller c=new Controller(1);
+		
+		rc.setSzomszed(0, mc);
+		mc.setSzomszed(2, rc);
+		rc.enter(h);
+		
+		mc.addRouteCellListener(c);
+		try {
+			h.leptet();
+		} catch (EnemyCannotStepException e1) {
+			e1.printStackTrace();
+		} catch (EnemyDeadException e1) {
+			e1.printStackTrace();
+			Logging.log("!!! Az enemy meghalt: " + e.toString() + " !!!");
+		}
+		
+		Logging.log("=== SkeletonTester: mordorTestCase vége ===");
+	}
+
 }

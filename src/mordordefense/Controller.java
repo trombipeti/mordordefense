@@ -2,6 +2,8 @@ package mordordefense;
 
 import java.util.List;
 
+import mordordefense.testing.Logging;
+
 /**
  * A játékot vezérlő "játékmester" objektum.
  * 
@@ -53,11 +55,26 @@ public class Controller implements RouteCellListener {
 	private List<Cell> cells;
 
 	/**
+	 * játék végét nyilvántartó változó
+	 */
+	private boolean gameEnded = false;
+
+	
+	/**
+	 * Controller konstruktor
+	 * @param maxenemy
+	 */
+	public Controller(int maxenemy){
+		Logging.log(">> Controller konstruktor hívás, paraméter: maxenemy: "+maxenemy);
+		maxEnemyNum=maxenemy;
+	}
+	/**
 	 * Inicializáló függvény
 	 * 
-	 */
-	public void init() {
-
+	 */	
+	public void init(String file) {
+		Logging.log(">> Controller.init() hívás");
+		Logging.log("<< void");
 	}
 
 	/**
@@ -65,46 +82,73 @@ public class Controller implements RouteCellListener {
 	 * 
 	 */
 	public void run() {
+		Logging.log(">> Controller.run() hívás");
+
+		while(!gameEnded){
+			
+		}
+		Logging.log("<< void");
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + e.toString());
+		Logging.log("enemy nyert");
+		Logging.log("<< void");
+		gameEnded = true;
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + d.toString());
+		Logging.log("<< void");
+		gameEnded = true;
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		Logging.log("<< void");
+		gameEnded = true;
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-
+		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		Logging.log("<< void");
+		gameEnded = true;
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-
+		Logging.log(">> Controller.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + e.toString());
+		Logging.log("<< void");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-
+		Logging.log(">> Controller.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + d.toString());
+		Logging.log("<< void");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-
+		Logging.log(">> Controller.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		Logging.log("<< void");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-
+		Logging.log(">> Controller.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
+		Logging.log("<< void");
 	}
 }
