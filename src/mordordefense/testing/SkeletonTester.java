@@ -76,7 +76,7 @@ public class SkeletonTester {
 			e1.printStackTrace();
 		} catch (EnemyDeadException e1) {
 			e1.printStackTrace();
-			Logging.log("!!! Az enemy meghalt: " + e.toString() + " !!!");
+			Logging.log("!!! Az enemy meghalt: " + h.toString() + " !!!");
 		}
 		
 		Logging.log("=== SkeletonTester: mordorTestCase vége ===");
