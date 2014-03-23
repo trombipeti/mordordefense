@@ -76,7 +76,7 @@ public abstract class Cell {
 	 * Szomszédokat beállító függvény
 	 * 
 	 * @param n
-	 *            Melyik szomszéd.
+	 *            Melyik szomszéd. óra járásának megfelelően 0-tól
 	 * @param szomszed
 	 *            Ki az a bizonyos szomszéd. Lehet null, ez pályaszélet jelent.
 	 */
