@@ -21,6 +21,10 @@ public class RouteCell extends Cell {
 				+ t.toString());
 		trap = t;
 	}
+	
+	public RouteCell(int x, int y) {
+		super(x,y);
+	}
 
 	/**
 	 * Operation

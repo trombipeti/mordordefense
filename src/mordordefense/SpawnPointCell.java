@@ -9,6 +9,10 @@ public class SpawnPointCell extends RouteCell {
 		Logging.log(">>SpawnPointCell konstruktor hívása, x: "+x+" y: "+y);
 	}
 	
+	public SpawnPointCell() {
+		
+	}
+
 	@Override
 	public String getType() {
 		return "SpawnPointCell";
