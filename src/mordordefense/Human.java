@@ -41,7 +41,7 @@ public class Human extends Enemy {
 		}
 		RouteCell next = null;
 		for (Cell rc : routeCell.getSzomszedok()) {
-			if (rc.getType().equalsIgnoreCase("RouteCell")
+			if (! rc.getType().equalsIgnoreCase("FieldCell")
 					&& rc.getID() > stepNumber) {
 				next = (RouteCell) rc;
 				Logging.log("\t Erre a cellara lépek: " + next.toString());
