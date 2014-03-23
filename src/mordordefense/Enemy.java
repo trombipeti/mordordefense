@@ -1,8 +1,5 @@
 package mordordefense;
 
-import java.util.ArrayList;
-import mordordefense.testing.Logging;
-
 public abstract class Enemy {
 	/** Attributes */
 	protected int maxLifePoint;
@@ -10,13 +7,28 @@ public abstract class Enemy {
 	protected int speed;
 	protected int stepNumber;
 	protected int timeSinceLastStep;
+<<<<<<< HEAD
         protected RouteCell rc;
         
+=======
+
+	public Enemy(int parMaxLifePoint, int parSpeed) {
+		maxLifePoint = parMaxLifePoint;
+		lifePoint = parMaxLifePoint;
+		speed = parSpeed;
+	}
+	
+	public Enemy() {
+		
+	}
+	
+>>>>>>> origin/master
 	/**
 	 * Operation
 	 * 
 	 * @param mertek
 	 */
+<<<<<<< HEAD
                        
 	public void lassit(int mertek) {
             Logging.log(">> Enemy.lassit() meghivva");
@@ -27,6 +39,10 @@ public abstract class Enemy {
                     speed -= mertek;
            //      }
             Logging.log("<< Enemy.lassit() void visszateres");
+=======
+	public void lassit(int mertek) {
+
+>>>>>>> origin/master
 	}
 
 	/**
@@ -35,9 +51,13 @@ public abstract class Enemy {
 	 * @param mertek
 	 */
 	public void sebez(int mertek) {
+<<<<<<< HEAD
             Logging.log(">> Enemy.sebez() meghivva");
             lifePoint -= mertek;
             Logging.log("<< Enemy.sebez() void visszateres");
+=======
+
+>>>>>>> origin/master
 	}
 
 	/**
@@ -45,6 +65,7 @@ public abstract class Enemy {
 	 * 
 	 */
 	public void leptet() {
+<<<<<<< HEAD
             Logging.log("<< Enemy.leptet() meghivva");
             //rc.leave                                      //elhagyja azt a mezot amin allt
             stepNumber++;                                   //noveli a lepesszamot
@@ -56,6 +77,8 @@ public abstract class Enemy {
             }
             //rc.Enter                                      //belep arra a mezore ahova lep
             Logging.log("<<  Enemy.leptet() void visszateres");
+=======
+>>>>>>> origin/master
 		
 	}
 
@@ -72,10 +95,14 @@ public abstract class Enemy {
 	 * @return int
 	 */
 	public int getStepNumber() {
+<<<<<<< HEAD
             Logging.log("<< Enemy.getStepNumber() meghivva");
             
             Logging.log("<< Enemy.getStepNumber() visszateres"+stepNumber+);
             return stepNumber;
+=======
+		return stepNumber;
+>>>>>>> origin/master
 	}
 
 	public String toString() {
