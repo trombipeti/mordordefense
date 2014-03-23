@@ -7,9 +7,12 @@ import mordordefense.testing.Logging;
 
 public class Trap implements RouteCellListener {
 	/** Attributes */
-	private int strength;
-	private List<MagicStone> stones = new ArrayList<MagicStone> ();
-
+	protected int strength;
+	protected List<MagicStone> stones = new ArrayList<MagicStone> ();
+        protected baseCost;
+        protected baseDamage;
+        protected baseSlow;
+        
 	/**
 	 * Operation
 	 * 
@@ -39,25 +42,48 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
-
+            Logging.log(">> Trap.onEnter() hivas, parameterek: "+sender.toString()+", "+e.toString());
+            float slow = baseSlow;
+            for (MagicStone m : stones) {
+                slow *= m.elfMultiplier;
+            }
+            Enemy.lassit(slow);
+            Logging.log(">> Trap.onEnter() void visszateres");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
+            Logging.log(">> Trap.onEnter() hivas, parameterek: "+sender.toString()+", "+d.toString());
+            float slow = baseSlow;
+            for (MagicStone m : stones) {
+                slow *= m.dwarfMultiplier;
+            }
+            Enemy.lassit(slow);
+            Logging.log(">> Trap.onEnter() void visszateres");
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
+            Logging.log(">> Trap.onEnter() hivas, parameterek: "+sender.toString()+", "+h.toString());
+            float slow = baseSlow;
+            for (MaicStone m : stones) {
+                slow *= m.hobbitMultiplier;
+            }
+            Enemy.lassit(slow);
+            Logging.log(">> Trap.onEnter() void visszateres");
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
+            Logging.log(">> Trap.onEnter() hivas, parameterek: "+sender.toString()+", "+h.toString());
+            float slow = baseSlow;
+            for (MaicStone m : stones) {
+                slow *= m.humanMultiplier;
+            }
+            Enemy.lassit(slow);
+            Logging.log(">> Trap.onEnter() void visszateres");
 
 	}
 
