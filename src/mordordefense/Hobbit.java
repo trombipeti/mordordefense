@@ -54,6 +54,7 @@ public class Hobbit extends Enemy
 		if (next != null) {
 			routeCell.leave(this);
 			next.enter(this);
+			resetSpeed();
 			routeCell = next;
 		} else {
 			throw new EnemyCannotStepException();

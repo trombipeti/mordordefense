@@ -7,26 +7,62 @@ import java.util.Set;
 
 import mordordefense.testing.Logging;
 
+/**
+ * Szarumány tornyait megtestesítő osztály.
+ * 
+ */
 public class Tower implements RouteCellListener
 
 {
-	/** Attributes */
+
+	/**
+	 * A torony tüzelési frekvenciája.
+	 */
 	protected int freq;
+
+	/**
+	 * A torony hatósugara. Az őt tartalmaző cellától maximum ekkora távolságra
+	 * lévő utakra tud lőni. Ezekre a RouteCell-ekre fel is iratkozik
+	 * listenerként.
+	 */
 	protected int radius;
+
+	/**
+	 * A torony alapsebzése.
+	 */
 	protected int baseDamage;
+
+	/**
+	 * A legutolsó lövés óta eltelt idő. Ebből számítja ki, hogy lőhet-e.
+	 */
 	protected int timeSinceLastShoot;
 
+	/**
+	 * A tornyot tartalmazó {@link FieldCell}.
+	 */
 	protected FieldCell parentCell;
-	protected int baseCost;
 
-	/** Associations */
+	/**
+	 * A tornyok éptésének alapára.
+	 */
+	static protected int baseCost;
+
+	/**
+	 * A torony hatósugarában lévő, ellenséget tartalmazó {@link RouteCell}-ek,
+	 * távolság szerint növekvő sorrendben.
+	 */
 	protected Set<RouteCell> closestCellsWithEnemy = new HashSet<RouteCell>();
+
+	/**
+	 * A toronyban lévő várzskövek.
+	 */
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	/**
-	 * Operation
+	 * Varázskövet elhelyező függvény.
 	 * 
 	 * @param s
+	 *            A hozzáadandó {@link MagicStone}
 	 */
 	public void addStone(MagicStone s) {
 		Logging.log(">> Tower.addStone() hívás, paraméter: " + s.toString());
@@ -34,9 +70,10 @@ public class Tower implements RouteCellListener
 	}
 
 	/**
-	 * Operation
+	 * A hatósugarában lévő, ellenséget tartalmazó cellák rendezett halmazát
+	 * visszaadó függvény.
 	 * 
-	 * @return RouteCell[]
+	 * @return Set<RouteCell>
 	 */
 	public Set<RouteCell> getClosestCellsWithEnemy() {
 		Logging.log(">> Tower.getClosestCellsWithEnemy() hívás");
@@ -44,9 +81,10 @@ public class Tower implements RouteCellListener
 	}
 
 	/**
-	 * Operation
+	 * A torony helyzetét beállító függvény.
 	 * 
 	 * @param f
+	 *            A tornyot tartalmazó {@link FieldCell}
 	 */
 	public void setParentCell(FieldCell f) {
 		Logging.log(">> Tower.setParentCell() hívás, paraméter: "
@@ -55,11 +93,11 @@ public class Tower implements RouteCellListener
 	}
 
 	/**
-	 * Operation
+	 * A tornyok építésének alapárát lekérdező függvény.
 	 * 
-	 * @return int
+	 * @return int Az építés alapára.
 	 */
-	public int getBaseCost() {
+	public static int getBaseCost() {
 		Logging.log(">> Tower.getBaseCost() hívás");
 		return baseCost;
 	}
@@ -104,23 +142,35 @@ public class Tower implements RouteCellListener
 	public void onLeave(RouteCell sender, Elf e) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + e.toString());
+		if(sender.getNumEnemies() == 0) {
+			closestCellsWithEnemy.remove(sender);
+		}
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + d.toString());
+		if(sender.getNumEnemies() == 0) {
+			closestCellsWithEnemy.remove(sender);
+		}
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
+		if(sender.getNumEnemies() == 0) {
+			closestCellsWithEnemy.remove(sender);
+		}
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
+		if(sender.getNumEnemies() == 0) {
+			closestCellsWithEnemy.remove(sender);
+		}
 	}
 }

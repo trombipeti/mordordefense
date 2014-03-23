@@ -1,13 +1,23 @@
 package mordordefense;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Trap implements RouteCellListener {
-	/** Attributes */
-	private int strength;
+import mordordefense.testing.Logging;
 
-	/** Associations */
-	private List<MagicStone> stones;
+public class Trap implements RouteCellListener {
+
+	/**
+	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.
+	 */
+	protected int strength;
+
+	protected static int baseCost;
+
+	/**
+	 * A csapdán lévő varázskövek.
+	 */
+	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	/**
 	 * Operation
@@ -15,15 +25,30 @@ public class Trap implements RouteCellListener {
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
+		Logging.log(">> Trap.addStone() hívás, paraméter: " + s.toString());
+		stones.add(s);
 	}
 
 	/**
-	 * Operation
+	 * A csapdaelhelyezés alapárát visszaadó függvény.
 	 * 
-	 * @return int
+	 * @return int Az építés alapköltsége.
 	 */
-	public int getBaseCost() {
-		return 0;
+	public static int getBaseCost() {
+		Logging.log(">> Trap.getBaseCost() hívás.");
+		Logging.log("<< " + baseCost);
+		return baseCost;
+	}
+
+	/**
+	 * Az építés alapárát beállító függvény.
+	 * 
+	 * @param c
+	 *            Az alapár.
+	 */
+	public static void setBaseCost(int c) {
+		Logging.log(">> Trap.setBaseCost() hívás, paraméter: " + c);
+		baseCost = c;
 	}
 
 	@Override
@@ -33,49 +58,65 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
+				+ sender.toString() + e.toString());
+		int sebzes = strength;
+		for (MagicStone s : stones) {
+			sebzes *= s.getMultiplier(e);
+		}
+		e.lassit(sebzes);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
+				+ sender.toString() + d.toString());
+		int sebzes = strength;
+		for (MagicStone s : stones) {
+			sebzes *= s.getMultiplier(d);
+		}
+		d.lassit(sebzes);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
+				+ sender.toString() + h.toString());
+		int sebzes = strength;
+		for (MagicStone s : stones) {
+			sebzes *= s.getMulitplier(h);
+		}
+		h.lassit(sebzes);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
-
+		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
+				+ sender.toString() + h.toString());
+		int sebzes = strength;
+		for (MagicStone s : stones) {
+			sebzes *= s.getMultiplier(h);
+		}
+		h.lassit(sebzes);
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
 
 	}
 }

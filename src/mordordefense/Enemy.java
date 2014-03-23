@@ -22,6 +22,11 @@ public abstract class Enemy {
 	protected int lifePoint;
 
 	/**
+	 * Az enemy alapsebessége.
+	 */
+	protected int baseSpeed;
+	
+	/**
 	 * Az enemy aktuális sebessége. Egy megadott mértéknél sose csökken lejebb.
 	 */
 	protected int speed;
@@ -53,6 +58,7 @@ public abstract class Enemy {
 	public Enemy(int parMaxLifePoint, int parSpeed) {
 		maxLifePoint = parMaxLifePoint;
 		lifePoint = parMaxLifePoint;
+		baseSpeed = parSpeed;
 		speed = parSpeed;
 	}
 
@@ -101,7 +107,15 @@ public abstract class Enemy {
 					+ speed);
 		}
 	}
-
+	
+	/**
+	 * Az enemy sebességét alapértékre állító függvény.
+	 */
+	public void resetSpeed() {
+		Logging.log(">> Enemy.resetSpeed() hívás");
+		speed = baseSpeed;
+	}
+	
 	/**
 	 * Az enemyt sebző függvény.
 	 * 
