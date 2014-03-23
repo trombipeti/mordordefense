@@ -1,6 +1,5 @@
 package mordordefense.exceptions;
 
-
 public class EnemyDeadException extends Exception {
 
 	// Hogy ne sirjon az eclipse

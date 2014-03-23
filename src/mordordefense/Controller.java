@@ -2,22 +2,58 @@ package mordordefense;
 
 import java.util.List;
 
+/**
+ * A játékot vezérlő "játékmester" objektum.
+ * 
+ */
 public class Controller implements RouteCellListener {
-	/** Attributes */
-	public int[][] mordorCoords;
-	public int[][] spawnCoords;
+
+	/**
+	 * Mordor koordinátái.
+	 * 
+	 * @see MordorCell
+	 */
+	public int[] mordorCoords;
+
+	/**
+	 * Az indulópont koordinátái.
+	 * 
+	 * @see SpawnPointCell
+	 */
+	public int[] spawnCoords;
+
+	/**
+	 * Maximum hány enemy indulhat el.
+	 */
 	private int maxEnemyNum;
-	// ## Implementation preserve start class attributes.
-	// ## Implementation preserve end class attributes.
-	/** Associations */
+
+	/**
+	 * A pályán lévő csapdák
+	 */
 	private List<Trap> traps;
+
+	/**
+	 * A pályán lévő tornyok
+	 */
 	private List<Tower> towers;
+
+	/**
+	 * Szarumán
+	 */
 	private Saruman saruman;
+
+	/**
+	 * A pályán lévő ellenségek
+	 */
 	private List<Enemy> enemies;
+
+	/**
+	 * A pályán lévő cellák
+	 */
 	private List<Cell> cells;
 
 	/**
-	 * Operation
+	 * Inicializáló függvény
 	 * 
 	 */
 	public void init() {
@@ -25,7 +61,7 @@ public class Controller implements RouteCellListener {
 	}
 
 	/**
-	 * Operation
+	 * Az eseményeket vezérlő függvény
 	 * 
 	 */
 	public void run() {
@@ -69,6 +105,6 @@ public class Controller implements RouteCellListener {
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		
+
 	}
 }

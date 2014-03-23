@@ -56,7 +56,7 @@ public interface RouteCellListener {
 	 * @param h
 	 */
 	public void onLeave(RouteCell sender, Hobbit h);
-	
+
 	/**
 	 * Operation
 	 * 

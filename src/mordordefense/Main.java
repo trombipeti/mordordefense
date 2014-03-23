@@ -11,7 +11,7 @@ import mordordefense.testing.SkeletonTester;
 public class Main {
 
 	private static TreeMap<Integer, Runnable> testCases = new TreeMap<Integer, Runnable>();
-	
+
 	private static TreeMap<Integer, Boolean> ranTestCases = new TreeMap<Integer, Boolean>();
 
 	private static void setupTestCases() {
@@ -26,14 +26,14 @@ public class Main {
 				return "towerTestCase";
 			}
 		});
-		
+
 		testCases.put(2, new Runnable() {
-			
+
 			@Override
 			public void run() {
 				SkeletonTester.runSpawnTestCase();
 			}
-			
+
 			public String toString() {
 				return "spawnPointTestCase";
 			}
@@ -42,24 +42,25 @@ public class Main {
 
 	private static int askForTestCase() {
 		int ret = -1;
-		if(ranTestCases.size() == testCases.size()) {
+		if (ranTestCases.size() == testCases.size()) {
 			return -1;
 		}
 		System.out.println("Melyik tesztesetet futtassam? :");
 		for (Integer i : testCases.keySet()) {
-			if(! ranTestCases.containsKey(i)) {
-				System.out.println("\t " + i + ": " + testCases.get(i).toString());
+			if (!ranTestCases.containsKey(i)) {
+				System.out.println("\t " + i + ": "
+						+ testCases.get(i).toString());
 			}
 		}
 		System.out.println("\t q: kilepes");
 		boolean read_ok = false;
-		
+
 		while (!read_ok) {
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						System.in));
 				String in = br.readLine();
-				if(in.equals("q")) {
+				if (in.equals("q")) {
 					return -1;
 				}
 				int n = Integer.parseInt(in);
@@ -83,9 +84,9 @@ public class Main {
 		Logging.setLogFileName(null);
 		setupTestCases();
 		boolean ex = false;
-		while(! ex) {
+		while (!ex) {
 			int run = askForTestCase();
-			if(run == -1) {
+			if (run == -1) {
 				ex = true;
 				break;
 			}

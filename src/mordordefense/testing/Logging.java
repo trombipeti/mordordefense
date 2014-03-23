@@ -12,7 +12,7 @@ public class Logging {
 		pw.close();
 	}
 
-	public static void log(String message){
+	public static void log(String message) {
 		if (logFileName == null) {
 			System.out.println(message);
 		} else {

@@ -2,22 +2,40 @@ package mordordefense;
 
 import mordordefense.testing.Logging;
 
+/**
+ * A nem-út cellákat megtestesítő Cell leszármazott osztály. Csak ilyen típusú
+ * cellára lehet tornyot elhelyezni.
+ * 
+ */
 public class FieldCell extends Cell {
-	/** Associations */
+
+	/**
+	 * A mezőn lévő torony. Ha nincs rajta, akkor null.
+	 * 
+	 * @see Tower
+	 */
 	private Tower tower;
 
-	public FieldCell(int x,int y){
-		super(x,y);
-	}
-	
 	/**
-	 * Operation
+	 * @see Cell
+	 */
+	public FieldCell(int x, int y) {
+		super(x, y);
+		Logging.log(">> FieldCell konstruktor hívás");
+		tower = null;
+	}
+
+	/**
+	 * A FieldCell-re tornyot elhelyező függvény
 	 * 
+	 * @see Tower
 	 * @param t
+	 *            A lerakandó torony.
 	 */
 	public void addTower(Tower t) {
-		Logging.log(">> FieldCell.addTower függvényhívás, paraméter: "+t.toString());
-		if(tower == null) {
+		Logging.log(">> FieldCell.addTower függvényhívás, paraméter: "
+				+ t.toString());
+		if (tower == null) {
 			tower = t;
 			t.setParentCell(this);
 		}

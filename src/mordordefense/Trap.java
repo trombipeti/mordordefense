@@ -76,6 +76,6 @@ public class Trap implements RouteCellListener {
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

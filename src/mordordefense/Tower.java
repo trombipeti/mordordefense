@@ -15,7 +15,7 @@ public class Tower implements RouteCellListener
 	protected int radius;
 	protected int baseDamage;
 	protected int timeSinceLastShoot;
-	
+
 	protected FieldCell parentCell;
 	protected int baseCost;
 
@@ -29,7 +29,7 @@ public class Tower implements RouteCellListener
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
-		Logging.log(">> Tower.addStone() hívás, paraméter: "+s.toString());
+		Logging.log(">> Tower.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
 	}
 
@@ -49,7 +49,8 @@ public class Tower implements RouteCellListener
 	 * @param f
 	 */
 	public void setParentCell(FieldCell f) {
-		Logging.log(">> Tower.setParentCell() hívás, paraméter: "+f.toString());
+		Logging.log(">> Tower.setParentCell() hívás, paraméter: "
+				+ f.toString());
 		parentCell = f;
 	}
 
@@ -72,46 +73,54 @@ public class Tower implements RouteCellListener
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+e.toString());
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+d.toString());
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+e.toString());
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + e.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+d.toString());
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + d.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "+sender.toString()+", "+h.toString());
+		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
+				+ sender.toString() + ", " + h.toString());
 	}
 }
