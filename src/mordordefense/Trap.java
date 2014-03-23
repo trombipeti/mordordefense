@@ -16,9 +16,9 @@ public class Trap implements RouteCellListener {
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
-            Logging.log(">> Trap, addStone ");
+            Logging.log(">> Trap.addStone() meghivva ");
             stones.add(s);
-            Logging.log(">> void");
+            Logging.log(">> Trap.addStone() void visszateres");
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class Trap implements RouteCellListener {
 	 * @return int
 	 */
 	public int getBaseCost() {
-            Logging.log(">> Trap, getBaseCost meghivva");
+            Logging.log(">> Trap.getBaseCost() meghivva");
             return 0;
             
 	}
@@ -63,25 +63,25 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-		// TODO Auto-generated method stub
+		Logging.log(">> Trap.onLeave() hivas, parameterek: "+sender.toString()+", "+e.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-		// TODO Auto-generated method stub
+		Logging.log(">> Trap.onLeave() hivas, parameterek: "+sender.toString()+", "+d.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-		// TODO Auto-generated method stub
+		Logging.log(">> Trap.onLeave() hivas, parameterek: "+sender.toString()+", "+h.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		// TODO Auto-generated method stub
+		Logging.log(">> Trap.onLeave() hivas, parameterek: "+sender.toString()+", "+h.toString());
 		
 	}
 }
