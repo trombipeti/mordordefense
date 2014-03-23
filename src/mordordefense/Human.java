@@ -35,7 +35,7 @@ public class Human extends Enemy {
 
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
-		Logging.log(">> Dwarf.leptet() hívás");
+		Logging.log(">> Human.leptet() hívás");
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
