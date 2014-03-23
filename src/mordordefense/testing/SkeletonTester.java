@@ -6,8 +6,8 @@ public class SkeletonTester {
 	
 	public static void runSpawnTestCase() {
 		Logging.log("=== SkeletonTester: spawnTestCase futtatása ===");
-		Hobbit h = new Hobbit();
-		Elf e = new Elf();
+		Hobbit h = new Hobbit(8,1);
+		Elf e = new Elf(13,1);
 		SpawnPointCell sp = new SpawnPointCell();
 		RouteCell rc = new RouteCell();
 		sp.enter(h);
@@ -19,7 +19,7 @@ public class SkeletonTester {
 	
 	public static void runTowerTestCase() {
 		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
-		Dwarf d = new Dwarf();
+		Dwarf d = new Dwarf(10,1);
 		Tower t = new Tower();
 		RouteCell rc1 = new RouteCell();
 		rc1.setID(1);
