@@ -1,6 +1,5 @@
 package mordordefense;
 
-import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
@@ -52,6 +51,7 @@ public class Human extends Enemy {
 			routeCell.leave(this);
 			next.enter(this);
 			resetSpeed();
+			stepNumber++;
 			routeCell = next;
 		} else {
 			throw new EnemyCannotStepException();

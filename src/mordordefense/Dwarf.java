@@ -51,6 +51,7 @@ public class Dwarf extends Enemy {
 			routeCell.leave(this);
 			next.enter(this);
 			resetSpeed();
+			stepNumber++;
 			routeCell = next;
 		} else {
 			throw new EnemyCannotStepException();

@@ -81,10 +81,11 @@ public class RouteCell extends Cell {
 	 */
 	public void enter(Elf e) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + e.toString());
+		e.setRouteCell(this);
+		enemies.add(e);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, e);
 		}
-		e.setRouteCell(this);
 	}
 
 	/**
@@ -95,10 +96,11 @@ public class RouteCell extends Cell {
 	 */
 	public void enter(Human h) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		h.setRouteCell(this);
+		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
-		h.setRouteCell(this);
 	}
 
 	/**
@@ -109,10 +111,11 @@ public class RouteCell extends Cell {
 	 */
 	public void enter(Hobbit h) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		h.setRouteCell(this);
+		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
-		h.setRouteCell(this);
 	}
 
 	/**
@@ -123,10 +126,11 @@ public class RouteCell extends Cell {
 	 */
 	public void enter(Dwarf d) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + d.toString());
+		d.setRouteCell(this);
+		enemies.add(d);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, d);
 		}
-		d.setRouteCell(this);
 	}
 
 	/**
@@ -136,8 +140,21 @@ public class RouteCell extends Cell {
 	 *            A lövedék.
 	 */
 	public void addBullet(Bullet b) {
-		Logging.log("RouteCell.addBullet() hívás, paraméter: " + b.toString());
+		Logging.log(">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
+		for(Enemy e: enemies) {
+			for(Bullet b1 : bullets) {
+				if(e.getType().equalsIgnoreCase("Elf")) {
+					b1.damage((Elf)e);
+				} else if (e.getType().equalsIgnoreCase("Hobbit")) {
+					b1.damage((Hobbit)e);
+				} else if (e.getType().equalsIgnoreCase("Human")) {
+					b1.damage((Human)e);
+				} else if (e.getType().equalsIgnoreCase("Dwarf")) {
+					b1.damage((Dwarf)e);
+				}
+			}
+		}
 	}
 
 	/**

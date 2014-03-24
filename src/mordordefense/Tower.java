@@ -144,6 +144,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
+		sender.addBullet(new Bullet(5, 5, 5, 5));
 
 	}
 
@@ -152,6 +153,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
+		sender.addBullet(new Bullet(5, 5, 5, 5));
 	}
 
 	@Override
@@ -159,6 +161,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
+		sender.addBullet(new Bullet(5, 5, 5, 5));
 	}
 
 	@Override
@@ -166,6 +169,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
+		sender.addBullet(new Bullet(5, 5, 5, 5));
 	}
 
 	@Override
