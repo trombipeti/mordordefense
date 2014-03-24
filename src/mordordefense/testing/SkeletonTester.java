@@ -96,4 +96,36 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
 
 	}
+	
+	public static void runTrapTestCase() {
+		Logging.log("=== SkeletonTester: trapTestCase futtatása ===");
+		Dwarf d = new Dwarf(10, 1);
+		Trap t = new Trap();
+		RouteCell rc1 = new RouteCell(3, 1);
+		rc1.setID(1);
+		RouteCell rc2 = new RouteCell(3, 2);
+		rc2.setID(2);
+		RouteCell rc3 = new RouteCell(3, 3);
+		rc1.setID(3);
+
+		rc1.setSzomszed(0, rc2);
+		rc1.addRouteCellListener(t);
+		rc2.setSzomszed(2, rc1);
+		rc2.addRouteCellListener(t);
+		rc2.setSzomszed(0, rc3);
+		rc3.setSzomszed(2, rc2);
+		rc3.addRouteCellListener(t);
+
+		rc1.enter(d);
+		try {
+			d.leptet();
+			d.leptet();
+		} catch (EnemyDeadException e) {
+			// e.printStackTrace();
+			Logging.log("!!! Az enemy meghalt: " + d.toString() + " !!!");
+		} catch (EnemyCannotStepException e) {
+			e.printStackTrace();
+		}
+		Logging.log("=== SkeletonTester: trapTestCase vége ===");
+	}
 }

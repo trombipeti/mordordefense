@@ -89,7 +89,7 @@ public class Controller implements RouteCellListener {
 		rc.setID(0);
 		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
-		ArrayList row = new ArrayList<Cell>();
+		ArrayList<Cell> row = new ArrayList<Cell>();
 		row.add(rc);
 		row.add(mc);
 		mc.addRouteCellListener(this);
