@@ -140,18 +140,19 @@ public class RouteCell extends Cell {
 	 *            A lövedék.
 	 */
 	public void addBullet(Bullet b) {
-		Logging.log(">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
+		Logging.log(">> RouteCell.addBullet() hívás, paraméter: "
+				+ b.toString());
 		bullets.add(b);
-		for(Enemy e: enemies) {
-			for(Bullet b1 : bullets) {
-				if(e.getType().equalsIgnoreCase("Elf")) {
-					b1.damage((Elf)e);
+		for (Enemy e : enemies) {
+			for (Bullet b1 : bullets) {
+				if (e.getType().equalsIgnoreCase("Elf")) {
+					b1.damage((Elf) e);
 				} else if (e.getType().equalsIgnoreCase("Hobbit")) {
-					b1.damage((Hobbit)e);
+					b1.damage((Hobbit) e);
 				} else if (e.getType().equalsIgnoreCase("Human")) {
-					b1.damage((Human)e);
+					b1.damage((Human) e);
 				} else if (e.getType().equalsIgnoreCase("Dwarf")) {
-					b1.damage((Dwarf)e);
+					b1.damage((Dwarf) e);
 				}
 			}
 		}

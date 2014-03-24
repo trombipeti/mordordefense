@@ -38,27 +38,27 @@ public class Main {
 				return "spawnPointTestCase";
 			}
 		});
-		
+
 		testCases.put(3, new Runnable() {
-			
+
 			@Override
 			public void run() {
 				SkeletonTester.runMordorTestCase();
 			}
-			
+
 			@Override
 			public String toString() {
 				return "mordorTestCase";
 			}
 		});
-		
+
 		testCases.put(4, new Runnable() {
-			
+
 			@Override
 			public void run() {
 				SkeletonTester.runControllerTestCase();
 			}
-			
+
 			@Override
 			public String toString() {
 				return "controllerTestCase";

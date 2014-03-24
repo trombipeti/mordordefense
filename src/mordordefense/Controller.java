@@ -68,7 +68,6 @@ public class Controller implements RouteCellListener {
 	 */
 	private volatile StringBuffer winner = null;
 
-
 	/**
 	 * Konstruktor
 	 * 
@@ -81,17 +80,16 @@ public class Controller implements RouteCellListener {
 	}
 
 	/**
-	 * Inicializáló függvény
-	 * később egy config fájlból fogja a pályát beolvasni
+	 * Inicializáló függvény később egy config fájlból fogja a pályát beolvasni
 	 */
 	public void init() {
 		Logging.log("Controller.init() hívás");
 		saruman = new Saruman(100);
 		SpawnPointCell rc = new SpawnPointCell(0, 0);
 		rc.setID(0);
-		MordorCell mc=new MordorCell(0,1);
+		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
-		ArrayList row=new ArrayList<Cell>();
+		ArrayList row = new ArrayList<Cell>();
 		row.add(rc);
 		row.add(mc);
 		mc.addRouteCellListener(this);
@@ -119,7 +117,8 @@ public class Controller implements RouteCellListener {
 	public void run() {
 		Logging.log("Controller.run() hívás");
 		Elf e = new Elf(10, 1);
-		SpawnPointCell sp= (SpawnPointCell) cells.get(spawnCoords[0]).get(spawnCoords[1]);
+		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
+				spawnCoords[1]);
 		sp.enter(e);
 		enemies.add(e);
 

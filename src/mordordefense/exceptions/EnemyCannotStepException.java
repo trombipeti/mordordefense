@@ -1,5 +1,5 @@
 package mordordefense.exceptions;
 
-public class EnemyCannotStepException extends Exception{
+public class EnemyCannotStepException extends Exception {
 
 }

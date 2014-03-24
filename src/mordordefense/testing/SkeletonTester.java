@@ -40,7 +40,7 @@ public class SkeletonTester {
 		rc2.setID(2);
 		RouteCell rc3 = new RouteCell(3, 3);
 		rc1.setID(3);
-		
+
 		rc1.setSzomszed(0, rc2);
 		rc1.addRouteCellListener(t);
 		rc2.setSzomszed(2, rc1);
@@ -54,7 +54,7 @@ public class SkeletonTester {
 			d.leptet();
 			d.leptet();
 		} catch (EnemyDeadException e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			Logging.log("!!! Az enemy meghalt: " + d.toString() + " !!!");
 		} catch (EnemyCannotStepException e) {
 			e.printStackTrace();
@@ -64,17 +64,17 @@ public class SkeletonTester {
 
 	public static void runMordorTestCase() {
 		Logging.log("=== SkeletonTester: mordorTestCase futtatása ===");
-		Human h=new Human(10,1);
-		RouteCell rc=new RouteCell(0, 0);
+		Human h = new Human(10, 1);
+		RouteCell rc = new RouteCell(0, 0);
 		rc.setID(0);
-		MordorCell mc=new MordorCell(0, 1);
+		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
-		Controller c=new Controller(1);
-		
+		Controller c = new Controller(1);
+
 		rc.setSzomszed(0, mc);
 		mc.setSzomszed(2, rc);
 		rc.enter(h);
-		
+
 		mc.addRouteCellListener(c);
 		try {
 			h.leptet();
@@ -84,16 +84,16 @@ public class SkeletonTester {
 			e1.printStackTrace();
 			Logging.log("!!! Az enemy meghalt: " + h.toString() + " !!!");
 		}
-		
+
 		Logging.log("=== SkeletonTester: mordorTestCase vége ===");
 	}
 
-	public static void runControllerTestCase(){
+	public static void runControllerTestCase() {
 		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
-			Controller c=new Controller(1);
-			c.init();
-			c.run();
+		Controller c = new Controller(1);
+		c.init();
+		c.run();
 		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
-		
+
 	}
 }

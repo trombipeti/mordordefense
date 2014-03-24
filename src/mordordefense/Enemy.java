@@ -5,8 +5,9 @@ import mordordefense.exceptions.EnemyDeadException;
 import mordordefense.testing.Logging;
 
 /**
- * Az ellenségek heterogén kollekcióját lehetővé tevő, közös absztrakt ősosztály.
- *
+ * Az ellenségek heterogén kollekcióját lehetővé tevő, közös absztrakt
+ * ősosztály.
+ * 
  */
 public abstract class Enemy {
 
@@ -25,7 +26,7 @@ public abstract class Enemy {
 	 * Az enemy alapsebessége.
 	 */
 	protected int baseSpeed;
-	
+
 	/**
 	 * Az enemy aktuális sebessége. Egy megadott mértéknél sose csökken lejebb.
 	 */
@@ -107,7 +108,7 @@ public abstract class Enemy {
 					+ speed);
 		}
 	}
-	
+
 	/**
 	 * Az enemy sebességét alapértékre állító függvény.
 	 */
@@ -115,7 +116,7 @@ public abstract class Enemy {
 		Logging.log(">> Enemy.resetSpeed() hívás");
 		speed = baseSpeed;
 	}
-	
+
 	/**
 	 * Az enemyt sebző függvény.
 	 * 

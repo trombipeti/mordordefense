@@ -91,12 +91,13 @@ public class Tower implements RouteCellListener
 				+ f.toString());
 		parentCell = f;
 	}
-	
+
 	/**
-	 * A torony szomszédait beállító függvény. Beregisztrálja a tornyot a hatósugarában lévő utak eseményeire.
+	 * A torony szomszédait beállító függvény. Beregisztrálja a tornyot a
+	 * hatósugarában lévő utak eseményeire.
 	 * 
 	 * @return void
-	 *            
+	 * 
 	 */
 	public void setNeighbors() {
 		Logging.log(">> Tower.setNeighbors() hívás");
@@ -111,25 +112,27 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.getBaseCost() hívás");
 		return baseCost;
 	}
-	
+
 	/**
 	 * Megmondja hogy egy cella benne van e a torony hatósugarában
 	 * 
-	 * @param c A megnézendő {@link Cell}
+	 * @param c
+	 *            A megnézendő {@link Cell}
 	 */
-	public boolean isInRange(Cell c){
+	public boolean isInRange(Cell c) {
 		Logging.log(">> Tower.isInRange() hívás, paraméter: " + c);
 		return false;
 	}
-	
+
 	/**
 	 * A tornyok építésének alapárát beállítáó függvény.
 	 * 
-	 * @param c Az építés alapára.
+	 * @param c
+	 *            Az építés alapára.
 	 */
 	public static void setBaseCost(int c) {
 		Logging.log(">> Tower.setBaseCost() hívás, paraméter: " + c);
-		baseCost=c;
+		baseCost = c;
 	}
 
 	@Override
@@ -176,7 +179,7 @@ public class Tower implements RouteCellListener
 	public void onLeave(RouteCell sender, Elf e) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + e.toString());
-		if(sender.getNumEnemies() == 0) {
+		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
 	}
@@ -185,7 +188,7 @@ public class Tower implements RouteCellListener
 	public void onLeave(RouteCell sender, Dwarf d) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + d.toString());
-		if(sender.getNumEnemies() == 0) {
+		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
 	}
@@ -194,7 +197,7 @@ public class Tower implements RouteCellListener
 	public void onLeave(RouteCell sender, Hobbit h) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
-		if(sender.getNumEnemies() == 0) {
+		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
 	}
@@ -203,7 +206,7 @@ public class Tower implements RouteCellListener
 	public void onLeave(RouteCell sender, Human h) {
 		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
-		if(sender.getNumEnemies() == 0) {
+		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
 	}

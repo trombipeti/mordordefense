@@ -2,7 +2,7 @@ package mordordefense;
 
 /**
  * Az utakon történő mozgásokat figyelő interfész.
- *
+ * 
  */
 public interface RouteCellListener {
 	/**

@@ -4,7 +4,7 @@ import mordordefense.testing.Logging;
 
 /**
  * Csapdákra és tornyokra elhelyezhető varázskő.
- *
+ * 
  */
 public class MagicStone {
 
