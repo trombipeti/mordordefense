@@ -33,7 +33,7 @@ public class SkeletonTester {
 	public static void runTowerTestCase() {
 		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
-		Tower t = new Tower();
+		Tower t = new Tower(1, 1, 1);
 		RouteCell rc1 = new RouteCell(3, 1);
 		rc1.setID(1);
 		RouteCell rc2 = new RouteCell(3, 2);

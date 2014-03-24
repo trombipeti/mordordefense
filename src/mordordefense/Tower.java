@@ -59,6 +59,22 @@ public class Tower implements RouteCellListener
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	/**
+	 * Tower konstruktor
+	 * 
+	 * @param freq
+	 *            lövési frekvencia
+	 * @param radius
+	 *            hatósugár
+	 * @param damage
+	 *            alap sebzési érték
+	 */
+	public Tower(int freq, int radius, int damage) {
+		this.freq = freq;
+		this.radius = radius;
+		this.baseDamage = damage;
+	}
+
+	/**
 	 * Varázskövet elhelyező függvény.
 	 * 
 	 * @param s
@@ -148,6 +164,7 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
 		sender.addBullet(new Bullet(5, 5, 5, 5));
+		timeSinceLastShoot=freq;
 
 	}
 
@@ -157,6 +174,7 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
 		sender.addBullet(new Bullet(5, 5, 5, 5));
+		timeSinceLastShoot=freq;
 	}
 
 	@Override
@@ -165,6 +183,7 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 		sender.addBullet(new Bullet(5, 5, 5, 5));
+		timeSinceLastShoot=freq;
 	}
 
 	@Override
@@ -173,6 +192,7 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 		sender.addBullet(new Bullet(5, 5, 5, 5));
+		timeSinceLastShoot=freq;
 	}
 
 	@Override
@@ -208,6 +228,15 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + h.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
+		}
+	}
+	
+	public void rmTimeSinceLastShoot(int i){
+		Logging.log(">> Tower.rmTimeSinceLastShoot() hívás, paraméter: "+i);
+		if(timeSinceLastShoot-i>=0){
+			timeSinceLastShoot-=i;
+		}else{
+			timeSinceLastShoot=0;
 		}
 	}
 }
