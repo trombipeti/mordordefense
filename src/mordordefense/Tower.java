@@ -91,6 +91,16 @@ public class Tower implements RouteCellListener
 				+ f.toString());
 		parentCell = f;
 	}
+	
+	/**
+	 * A torony szomszédait beállító függvény. Beregisztrálja a tornyot a hatósugarában lévő utak eseményeire.
+	 * 
+	 * @return void
+	 *            
+	 */
+	public void setNeighbors() {
+		Logging.log(">> Tower.setNeighbors() hívás");
+	}
 
 	/**
 	 * A tornyok építésének alapárát lekérdező függvény.
@@ -100,6 +110,26 @@ public class Tower implements RouteCellListener
 	public static int getBaseCost() {
 		Logging.log(">> Tower.getBaseCost() hívás");
 		return baseCost;
+	}
+	
+	/**
+	 * Megmondja hogy egy cella benne van e a torony hatósugarában
+	 * 
+	 * @param c A megnézendő {@link Cell}
+	 */
+	public boolean isInRange(Cell c){
+		Logging.log(">> Tower.isInRange() hívás, paraméter: " + c);
+		return false;
+	}
+	
+	/**
+	 * A tornyok építésének alapárát beállítáó függvény.
+	 * 
+	 * @param c Az építés alapára.
+	 */
+	public static void setBaseCost(int c) {
+		Logging.log(">> Tower.setBaseCost() hívás, paraméter: " + c);
+		baseCost=c;
 	}
 
 	@Override

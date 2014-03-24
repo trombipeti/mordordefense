@@ -38,6 +38,7 @@ public class FieldCell extends Cell {
 		if (tower == null) {
 			tower = t;
 			t.setParentCell(this);
+			t.setNeighbors();
 		}
 		Logging.log("<<FieldCell.addTower return: void");
 	}
