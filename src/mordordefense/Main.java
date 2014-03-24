@@ -64,6 +64,19 @@ public class Main {
 				return "controllerTestCase";
 			}
 		});
+		
+		testCases.put(5,  new Runnable() {
+			
+			@Override
+			public void run() {
+				SkeletonTester.runTrapTestCase();
+			}
+			
+			@Override
+			public String toString() {
+				return "trapTestCase";
+			}
+		});
 
 	}
 
