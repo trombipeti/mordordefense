@@ -2,15 +2,35 @@ package mordordefense;
 
 import mordordefense.testing.Logging;
 
+/**
+ * Lövedéket megtestesítő osztály. Különböző típusú ellenségekre különbözően tud
+ * hatni.
+ * 
+ */
 public class Bullet {
 
+	/**
+	 * Tündékre ható sebzés.
+	 */
 	protected int elfDamage;
+
+	/**
+	 * Törpökre ható sebzés.
+	 */
 	protected int dwarfDamage;
+
+	/**
+	 * Hobbitokra ható sebzés.
+	 */
 	protected int hobbitDamage;
+
+	/**
+	 * Emberekra ható sebzés.
+	 */
 	protected int humanDamage;
 
 	/**
-	 * Operation
+	 * Alap konstruktor, beállítja a sebzések értékeit.
 	 * 
 	 * @param dwarfDamage
 	 *            Törpökre ható sebzése mértéke
@@ -35,46 +55,46 @@ public class Bullet {
 	}
 
 	/**
-	 * Operation
+	 * Megsebzi a paraméterként kapott {@link Elf} ellenséget.
 	 * 
 	 * @param e
 	 *            Elf (tünde) típusú ellenség
 	 */
 	public void damage(Elf e) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: "+e.toString()); 
+		Logging.log(">> Bullet.damage() hívás, paraméter: " + e.toString());
 		e.sebez(elfDamage);
 	}
 
 	/**
-	 * Operation
+	 * Megsebzi a paraméterként kapott {@link Hobbit} ellenséget.
 	 * 
 	 * @param h
 	 *            Hobbit típusú ellenség
 	 */
 	public void damage(Hobbit h) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: "+h.toString());
+		Logging.log(">> Bullet.damage() hívás, paraméter: " + h.toString());
 		h.sebez(hobbitDamage);
 	}
 
 	/**
-	 * Operation
+	 * Megsebzi a paraméterként kapott {@link Dwarf} ellenséget.
 	 * 
 	 * @param d
 	 *            Dwarf (törp) típusú ellenség
 	 */
 	public void damage(Dwarf d) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: "+d.toString());
+		Logging.log(">> Bullet.damage() hívás, paraméter: " + d.toString());
 		d.sebez(dwarfDamage);
 	}
 
 	/**
-	 * Operation
+	 * Megsebzi a paraméterként kapott {@link Human} ellenséget.
 	 * 
 	 * @param h
 	 *            Human (ember) típusú ellenség.
 	 */
 	public void damage(Human h) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: "+h.toString());
+		Logging.log(">> Bullet.damage() hívás, paraméter: " + h.toString());
 		h.sebez(humanDamage);
 	}
 

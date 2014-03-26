@@ -5,31 +5,66 @@ import java.util.List;
 
 import mordordefense.testing.Logging;
 
+/**
+ * Az utat megtestesítő Cell leszármazott osztály. Csak ezen lépkedhetnek az
+ * ellenségek, erre lehet csapdát elhelyezni.
+ * 
+ */
 public class RouteCell extends Cell {
+
+	/**
+	 * A cellán lévő csapda. Ha nincs rajta, akkor null;
+	 */
 	protected Trap trap;
+
+	/**
+	 * A cellán áthaladó forgalmat figyelő listenerek.
+	 */
 	protected List<RouteCellListener> listeners = new ArrayList<RouteCellListener>();
+
+	/**
+	 * A cellán lévő ellenségekre ható lövedékek.
+	 */
 	protected List<Bullet> bullets = new ArrayList<Bullet>();
+
+	/**
+	 * A cellán tartózkodó ellenségek.
+	 */
 	protected List<Enemy> enemies = new ArrayList<Enemy>();
 
+	/**
+	 * Alap konstruktor.
+	 */
 	public RouteCell() {
 		Logging.log(">> RouteCell konstruktor hívás");
 		trap = null;
 	}
 
+	/**
+	 * A RouteCell-t csapdával létrehozó konstruktor.
+	 * 
+	 * @param t
+	 *            A cellán lévő csapda.
+	 */
 	public RouteCell(Trap t) {
 		Logging.log(">> RouteCell konstruktor hívás, paraméter: "
 				+ t.toString());
 		trap = t;
 	}
-	
+
+	/**
+	 * @see Cell#Cell(int, int)
+	 */
 	public RouteCell(int x, int y) {
-		super(x,y);
+		super(x, y);
+		trap = null;
 	}
 
 	/**
-	 * Operation
+	 * Az útra csapdát elhelyező metódus.
 	 * 
 	 * @param t
+	 *            Az elhelyezendő csapda.
 	 */
 	public void addTrap(Trap t) {
 		Logging.log(">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
@@ -39,67 +74,95 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Elf beléptetése a cellára.
 	 * 
 	 * @param e
+	 *            A belépő {@link Elf}
 	 */
 	public void enter(Elf e) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + e.toString());
+		e.setRouteCell(this);
+		enemies.add(e);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, e);
 		}
 	}
 
 	/**
-	 * Operation
+	 * Ember beléptetése a cellára.
 	 * 
 	 * @param h
+	 *            A belépő {@link Human}
 	 */
 	public void enter(Human h) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		h.setRouteCell(this);
+		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
 	}
 
 	/**
-	 * Operation
+	 * Hobbit beléptetése a cellára.
 	 * 
 	 * @param h
+	 *            A belépő {@link Hobbit}
 	 */
 	public void enter(Hobbit h) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		h.setRouteCell(this);
+		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
 	}
 
 	/**
-	 * Operation
+	 * Törp beléptetése a cellára.
 	 * 
 	 * @param d
+	 *            A belépő {@link Dwarf}
 	 */
 	public void enter(Dwarf d) {
 		Logging.log(">> RouteCell.enter() hívás, paraméter: " + d.toString());
+		d.setRouteCell(this);
+		enemies.add(d);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, d);
 		}
 	}
 
 	/**
-	 * Operation
+	 * Lövedék kilövése a cellára
 	 * 
 	 * @param b
+	 *            A lövedék.
 	 */
 	public void addBullet(Bullet b) {
-		Logging.log("RouteCell.addBullet() hívás, paraméter: "+b.toString());
+		Logging.log(">> RouteCell.addBullet() hívás, paraméter: "
+				+ b.toString());
 		bullets.add(b);
+		for (Enemy e : enemies) {
+			for (Bullet b1 : bullets) {
+				if (e.getType().equalsIgnoreCase("Elf")) {
+					b1.damage((Elf) e);
+				} else if (e.getType().equalsIgnoreCase("Hobbit")) {
+					b1.damage((Hobbit) e);
+				} else if (e.getType().equalsIgnoreCase("Human")) {
+					b1.damage((Human) e);
+				} else if (e.getType().equalsIgnoreCase("Dwarf")) {
+					b1.damage((Dwarf) e);
+				}
+			}
+		}
 	}
 
 	/**
-	 * Operation
+	 * Elf kiléptetése a celláról.
 	 * 
 	 * @param e
+	 *            Egy {@link Elf}.
 	 */
 	public void leave(Elf e) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + e.toString());
@@ -109,9 +172,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Human kiléptetése a celláról.
 	 * 
 	 * @param h
+	 *            Egy {@link Human}.
 	 */
 	public void leave(Human h) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
@@ -121,9 +185,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Hobbit kiléptetése a celláról.
 	 * 
 	 * @param h
+	 *            Egy {@link Hobbit}.
 	 */
 	public void leave(Hobbit h) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
@@ -133,9 +198,10 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * Törp kiléptetése a celláról.
 	 * 
-	 * @param e
+	 * @param Egy
+	 *            {@link Dwarf}.
 	 */
 	public void leave(Dwarf d) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + d.toString());
@@ -145,12 +211,22 @@ public class RouteCell extends Cell {
 	}
 
 	/**
-	 * Operation
+	 * @return A cellán tarózkodó ellenségek száma.
+	 */
+	public int getNumEnemies() {
+		Logging.log(">> RouteCell.getNumEnemis() hívás");
+		Logging.log("<< " + enemies.size());
+		return enemies.size();
+	}
+
+	/**
+	 * Listener hozzáadása.
 	 * 
 	 * @param l
+	 *            A hozzáadandó {@link RouteCellListener}
 	 */
 	public void addRouteCellListener(RouteCellListener l) {
-		Logging.log(">> RouteCell.addRouteCellListener() hívás"+l.toString());
+		Logging.log(">> RouteCell.addRouteCellListener() hívás" + l.toString());
 		listeners.add(l);
 	}
 

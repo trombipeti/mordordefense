@@ -1,6 +1,9 @@
 package mordordefense.exceptions;
 
-
+/**
+ * Kivétel osztály, amellyel jelezni tud a léptetendő ellenség, hogy meghalt.
+ * 
+ */
 public class EnemyDeadException extends Exception {
 
 	// Hogy ne sirjon az eclipse
