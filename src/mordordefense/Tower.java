@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 
 import mordordefense.testing.Logging;
 
@@ -68,6 +69,11 @@ public class Tower implements RouteCellListener
 	 * távolság szerint növekvő sorrendben.
 	 */
 	protected Set<RouteCell> closestCellsWithEnemy = new HashSet<RouteCell>();
+	
+	/**
+	 * A hatósugárban lévő cellák.
+	 */
+	protected Set<Cell> cellsInRange = new HashSet<Cell>();
 
 	/**
 	 * A toronyban lévő várzskövek.
@@ -131,7 +137,10 @@ public class Tower implements RouteCellListener
 	public void setParentCell(FieldCell f) {
 		Logging.log(">> Tower.setParentCell() hívás, paraméter: "
 				+ f.toString());
-		parentCell = f;
+		if (f != null) {
+			parentCell = f;
+			setUpNeighbors();
+		}
 		Logging.log("<< Tower.setParentCell()");
 	}
 
@@ -140,9 +149,32 @@ public class Tower implements RouteCellListener
 	 * hatósugarában lévő utak eseményeire.
 	 * 
 	 */
-	public void setNeighbors() {
-		Logging.log(">> Tower.setNeighbors() hívás");
-		Logging.log("<< Tower.setNeighbors()");
+	public void setUpNeighbors() {
+		Logging.log(">> Tower.setUpNeighbors() hívás");
+		getNeighbors(parentCell);
+		for(Cell c : cellsInRange) {
+			if( ! c.getType().equalsIgnoreCase("FieldCell")) {
+				((RouteCell)c).addRouteCellListener(this);
+			}
+		}
+		Logging.log("<< Tower.setUpNeighbors()");
+	}
+
+	/**
+	 * Feliratkoztatja a tornyot a paraméterként kapott cella szomszédaira,
+	 * amennyiben hatósugaron belül vannak.
+	 * 
+	 * @param c
+	 *            A cella
+	 */
+	public void getNeighbors(Cell c) {
+		TreeMap<Integer, Cell> neighbors = c.getSzomszedok();
+		for (Cell nc : neighbors.values()) {
+			if (nc != null && isInRange(nc) && ! cellsInRange.contains(nc)) {
+				cellsInRange.add(nc);
+				getNeighbors(nc);
+			}
+		}
 	}
 
 	/**
@@ -172,15 +204,18 @@ public class Tower implements RouteCellListener
 	}
 
 	/**
-	 * Ködöt ereszt a toronyra, amelynek következtében erősen csökken a látómezeje.
-	 * @param timeOut Mennyi idő múlva oszoljon fel a köd (milliszekundumban).
+	 * Ködöt ereszt a toronyra, amelynek következtében erősen csökken a
+	 * látómezeje.
+	 * 
+	 * @param timeOut
+	 *            Mennyi idő múlva oszoljon fel a köd (milliszekundumban).
 	 */
 	public void addFog(long timeOut) {
 		hasFog = true;
 		fogTimeOut = timeOut;
 		fogAddTime = System.currentTimeMillis();
 	}
-	
+
 	private void fire(RouteCell rc) {
 		int dw, el, hu, ho;
 		dw = el = hu = ho = baseDamage;
@@ -195,7 +230,7 @@ public class Tower implements RouteCellListener
 		rc.addBullet(new Bullet(dw, el, hu, ho, slice));
 		timeOfLastShoot = System.currentTimeMillis();
 	}
-	
+
 	/**
 	 * A tornyok építésének alapárát beállító függvény.
 	 * 
@@ -220,7 +255,6 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
 		fire(sender);
-		
 
 	}
 

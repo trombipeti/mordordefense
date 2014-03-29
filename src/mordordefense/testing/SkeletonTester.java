@@ -43,21 +43,25 @@ public class SkeletonTester {
 	public static void runTowerTestCase() {
 		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
-		Tower t = new Tower(1, 1, 1);
+		Tower t = new Tower(1, 10, 1);
 		RouteCell rc1 = new RouteCell(3, 1);
 		rc1.setID(1);
 		RouteCell rc2 = new RouteCell(3, 2);
 		rc2.setID(2);
 		RouteCell rc3 = new RouteCell(3, 3);
 		rc1.setID(3);
+		
+		FieldCell fc = new FieldCell(2, 2);
 
 		rc1.setSzomszed(0, rc2);
-		rc1.addRouteCellListener(t);
 		rc2.setSzomszed(2, rc1);
-		rc2.addRouteCellListener(t);
 		rc2.setSzomszed(0, rc3);
 		rc3.setSzomszed(2, rc2);
-		rc3.addRouteCellListener(t);
+		
+		rc2.setSzomszed(3, fc);
+		fc.setSzomszed(1, rc2);
+		
+		fc.addTower(t);
 
 		rc1.enter(d);
 		try {

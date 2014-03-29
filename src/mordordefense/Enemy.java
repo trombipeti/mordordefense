@@ -130,7 +130,13 @@ public abstract class Enemy {
 		lifePoint -= mertek;
 		Logging.log("\t Az enemy új életereje: " + lifePoint);
 	}
-
+	
+	
+	/**
+	 * Az Enemyt kettévágó absztrakt függvény.
+	 */
+	abstract protected void slice();
+	
 	/**
 	 * Az ellenségeket léptető metódus. Ha útelágazásnál több helyre is tud
 	 * lépni, akkor véletlenszerűen választ.
