@@ -200,8 +200,8 @@ public class RouteCell extends Cell {
 	/**
 	 * Törp kiléptetése a celláról.
 	 * 
-	 * @param Egy
-	 *            {@link Dwarf}.
+	 * @param d
+	 *            Egy {@link Dwarf}.
 	 */
 	public void leave(Dwarf d) {
 		Logging.log(">> RouteCell.leave() hívás, paraméter: " + d.toString());

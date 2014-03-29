@@ -205,7 +205,7 @@ public class MagicStone {
 	 * új kő árát számoló statikus függvény
 	 * 
 	 * @param numStones
-	 * @return
+	 * @return Az építés ára.
 	 */
 	static public int calcCost(int numStones) {
 		Logging.log(">> MagicStone.calcCost() hívás, paraméter: " + numStones);
