@@ -28,6 +28,25 @@ public class Bullet {
 	 * Emberekra ható sebzés.
 	 */
 	protected int humanDamage;
+	
+	/**
+	 * A lövedék kettvágja-e azt, akit eltalál.
+	 */
+	protected boolean slicing;
+	
+	/**
+	 * @return A lövedék kettvágja-e azt, akit eltalál.
+	 */
+	public boolean isSlicing() {
+		return slicing;
+	}
+
+	/**
+	 * @param slicing Kettévágós típusú legyen-e a lövedék.
+	 */
+	public void setSlicing(boolean slicing) {
+		this.slicing = slicing;
+	}
 
 	/**
 	 * Alap konstruktor, beállítja a sebzések értékeit.
@@ -42,16 +61,17 @@ public class Bullet {
 	 *            Embrekre ható sebzése mértéke
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
-			int humanDamage) {
+			int humanDamage, boolean slicing) {
 		Logging.log(">> Bullet konstruktor hivas, parameterek:");
 		Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
 				+ elfDamage + ", hobbitDamage: " + hobbitDamage
-				+ ", humanDamage: " + humanDamage);
+				+ ", humanDamage: " + humanDamage + ", slicing: " + slicing);
 
 		this.dwarfDamage = dwarfDamage;
 		this.elfDamage = elfDamage;
 		this.hobbitDamage = hobbitDamage;
 		this.humanDamage = humanDamage;
+		this.slicing = slicing;
 	}
 
 	/**
@@ -103,7 +123,7 @@ public class Bullet {
 		String ret;
 		ret = "Bullet, dwarfDamage: " + dwarfDamage + ", elfDamage: "
 				+ elfDamage + ", hobbitDamage: " + hobbitDamage
-				+ ", humanDamage: " + humanDamage;
+				+ ", humanDamage: " + humanDamage + ", slicing: " + slicing;
 		return ret;
 	}
 }

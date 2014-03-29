@@ -125,4 +125,14 @@ public abstract class Cell {
 		return "Cella, típusa: " + getType() + ", ID: " + ID + ", helyzet: "
 				+ coords[0] + "," + coords[1];
 	}
+	
+	public static double Distance(Cell c1, Cell c2) {
+		double ret = 0.0f;
+		int x1 = c1.getCoords()[0];
+		int y1 = c1.getCoords()[1];
+		int x2 = c2.getCoords()[0];
+		int y2 = c2.getCoords()[1];
+		ret = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+		return ret;
+	}
 }

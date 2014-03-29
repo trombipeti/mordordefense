@@ -38,10 +38,10 @@ public abstract class Enemy {
 	protected int stepNumber;
 
 	/**
-	 * Az utolsó lépés óta eltelt idő. Ebből az értékből tudja megmondani, hogy
+	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy
 	 * tud-e lépni az aktuális sebességértéke mellett.
 	 */
-	protected int timeSinceLastStep;
+	protected long timeOfLastStep;
 
 	/**
 	 * Az enemy aktuális helyzetét jelző {@link RouteCell}
@@ -168,7 +168,7 @@ public abstract class Enemy {
 	public String toString() {
 		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
 				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
-				+ stepNumber + ", utoljara ennyi ideje lepett: "
-				+ timeSinceLastStep;
+				+ stepNumber + ", utoljara ekkor lepett: "
+				+ timeOfLastStep;
 	}
 }
