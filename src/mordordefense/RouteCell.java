@@ -226,8 +226,21 @@ public class RouteCell extends Cell {
 	 *            A hozzáadandó {@link RouteCellListener}
 	 */
 	public void addRouteCellListener(RouteCellListener l) {
-		Logging.log(">> RouteCell.addRouteCellListener() hívás" + l.toString());
+		Logging.log(">> RouteCell.addRouteCellListener() hívás, paraméter: "
+				+ l.toString());
 		listeners.add(l);
+	}
+
+	/**
+	 * Listener leiratkozása
+	 * 
+	 * @param l
+	 *            A leiratkozni vágyó {@link RouteCellListener}
+	 */
+	public void removeRouteCellListener(RouteCellListener l) {
+		Logging.log(">> RouteCell.removeRouteCellListener() hívás, paraméter: "
+				+ l.toString());
+		listeners.remove(l);
 	}
 
 	@Override

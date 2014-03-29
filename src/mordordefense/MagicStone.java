@@ -18,20 +18,36 @@ public class MagicStone {
 	 */
 	protected float elfMultiplier;
 
+	public float getElfMultiplier() {
+		return elfMultiplier;
+	}
+
 	/**
 	 * Törpökre ható szorzó.
 	 */
 	protected float dwarfMultiplier;
+
+	public float getDwarfMultiplier() {
+		return dwarfMultiplier;
+	}
 
 	/**
 	 * Hobbitokra ható szorzó.
 	 */
 	protected float hobbitMultiplier;
 
+	public float getHobbitMultiplier() {
+		return hobbitMultiplier;
+	}
+
 	/**
 	 * Emberekre ható szorzó.
 	 */
 	protected float humanMultiplier;
+
+	public float getHumanMultiplier() {
+		return humanMultiplier;
+	}
 
 	/**
 	 * Általános sebzésszorzó.

@@ -3,6 +3,7 @@ package mordordefense;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import mordordefense.testing.Logging;
@@ -33,9 +34,24 @@ public class Tower implements RouteCellListener
 	protected int baseDamage;
 
 	/**
-	 * A legutolsó lövés óta eltelt idő. Ebből számítja ki, hogy lőhet-e.
+	 * A legutolsó lövés ideje. Ebből számítja ki, hogy lőhet-e.
 	 */
-	protected int timeSinceLastShoot;
+	protected long timeOfLastShoot;
+
+	/**
+	 * A tornyot ellepi-e a köd.
+	 */
+	protected boolean hasFog;
+
+	/**
+	 * Mikor lepte el a tornyot a köd.
+	 */
+	protected long fogAddTime;
+
+	/**
+	 * Mennyi ideig lepi el a köd a tornyot.
+	 */
+	protected long fogTimeOut;
 
 	/**
 	 * A tornyot tartalmazó {@link FieldCell}.
@@ -69,13 +85,18 @@ public class Tower implements RouteCellListener
 	 *            alap sebzési érték
 	 */
 	public Tower(int freq, int radius, int damage) {
+		Logging.log("<< Tower konstruktor hívás, paraméterek: freq: " + freq
+				+ ", radius: " + radius + ", damage: " + damage);
 		this.freq = freq;
 		this.radius = radius;
 		this.baseDamage = damage;
+		this.hasFog = false;
+		Logging.log("<< Tower konstruktor");
 	}
 
 	/**
-	 * Varázskövet elhelyező függvény.
+	 * Varázskövet elhelyező függvény. A torony tüzelési frekvenciáját és
+	 * hatósugarát is a kellő mértékben növeli.
 	 * 
 	 * @param s
 	 *            A hozzáadandó {@link MagicStone}
@@ -83,6 +104,10 @@ public class Tower implements RouteCellListener
 	public void addStone(MagicStone s) {
 		Logging.log(">> Tower.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
+		freq = (int) (freq * s.getFreqMultiplier());
+		radius = (int) (radius * s.getRadiusMultiplier());
+		Logging.log("<< Tower.addStone()");
 	}
 
 	/**
@@ -93,6 +118,7 @@ public class Tower implements RouteCellListener
 	 */
 	public Set<RouteCell> getClosestCellsWithEnemy() {
 		Logging.log(">> Tower.getClosestCellsWithEnemy() hívás");
+		Logging.log("<< Tower.getClosestCellsWithEnemy()");
 		return closestCellsWithEnemy;
 	}
 
@@ -106,6 +132,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.setParentCell() hívás, paraméter: "
 				+ f.toString());
 		parentCell = f;
+		Logging.log("<< Tower.setParentCell()");
 	}
 
 	/**
@@ -115,6 +142,7 @@ public class Tower implements RouteCellListener
 	 */
 	public void setNeighbors() {
 		Logging.log(">> Tower.setNeighbors() hívás");
+		Logging.log("<< Tower.setNeighbors()");
 	}
 
 	/**
@@ -124,6 +152,7 @@ public class Tower implements RouteCellListener
 	 */
 	public static int getBaseCost() {
 		Logging.log(">> Tower.getBaseCost() hívás");
+		Logging.log("<< Tower.getBaseCost() return: " + baseCost);
 		return baseCost;
 	}
 
@@ -135,11 +164,40 @@ public class Tower implements RouteCellListener
 	 */
 	public boolean isInRange(Cell c) {
 		Logging.log(">> Tower.isInRange() hívás, paraméter: " + c);
-		return false;
+		boolean ret = false;
+		double dst = Cell.Distance(parentCell, c);
+		ret = (dst <= radius);
+		Logging.log("<< Tower.isInRange() return: " + ret);
+		return ret;
 	}
 
 	/**
-	 * A tornyok építésének alapárát beállítáó függvény.
+	 * Ködöt ereszt a toronyra, amelynek következtében erősen csökken a látómezeje.
+	 * @param timeOut Mennyi idő múlva oszoljon fel a köd (milliszekundumban).
+	 */
+	public void addFog(long timeOut) {
+		hasFog = true;
+		fogTimeOut = timeOut;
+		fogAddTime = System.currentTimeMillis();
+	}
+	
+	private void fire(RouteCell rc) {
+		int dw, el, hu, ho;
+		dw = el = hu = ho = baseDamage;
+		for (MagicStone s : stones) {
+			float dmgmult = s.getDamageMultiplier();
+			dw *= s.getDwarfMultiplier() * dmgmult;
+			el *= s.getElfMultiplier() * dmgmult;
+			hu *= s.getHumanMultiplier() * dmgmult;
+			ho *= s.getHobbitMultiplier() * dmgmult;
+		}
+		boolean slice = (new Random().nextInt(10) % 10 == 0);
+		rc.addBullet(new Bullet(dw, el, hu, ho, slice));
+		timeOfLastShoot = System.currentTimeMillis();
+	}
+	
+	/**
+	 * A tornyok építésének alapárát beállító függvény.
 	 * 
 	 * @param c
 	 *            Az építés alapára.
@@ -152,8 +210,8 @@ public class Tower implements RouteCellListener
 	@Override
 	public String toString() {
 		return "Tower, freq: " + freq + ", radius: " + radius
-				+ ", baseDamage: " + baseDamage
-				+ ", utolso loves ota eltelt ido: " + timeSinceLastShoot;
+				+ ", baseDamage: " + baseDamage + ", utolso loves ota ideje: "
+				+ timeOfLastShoot;
 	}
 
 	@Override
@@ -161,8 +219,8 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
-		sender.addBullet(new Bullet(5, 5, 5, 5));
-		timeSinceLastShoot=freq;
+		fire(sender);
+		
 
 	}
 
@@ -171,8 +229,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
-		sender.addBullet(new Bullet(5, 5, 5, 5));
-		timeSinceLastShoot=freq;
+		fire(sender);
 	}
 
 	@Override
@@ -180,8 +237,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
-		sender.addBullet(new Bullet(5, 5, 5, 5));
-		timeSinceLastShoot=freq;
+		fire(sender);
 	}
 
 	@Override
@@ -189,8 +245,7 @@ public class Tower implements RouteCellListener
 		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
-		sender.addBullet(new Bullet(5, 5, 5, 5));
-		timeSinceLastShoot=freq;
+		fire(sender);
 	}
 
 	@Override
@@ -226,15 +281,6 @@ public class Tower implements RouteCellListener
 				+ sender.toString() + ", " + h.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
-		}
-	}
-	
-	public void rmTimeSinceLastShoot(int i){
-		Logging.log(">> Tower.rmTimeSinceLastShoot() hívás, paraméter: "+i);
-		if(timeSinceLastShoot-i>=0){
-			timeSinceLastShoot-=i;
-		}else{
-			timeSinceLastShoot=0;
 		}
 	}
 }
