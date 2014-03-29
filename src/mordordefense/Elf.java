@@ -50,8 +50,8 @@ public class Elf extends Enemy {
 		// Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
-		for (Cell rc : routeCell.getSzomszedok()) {
-			if (!rc.getType().equalsIgnoreCase("FieldCell")
+		for (Cell rc : routeCell.getSzomszedok().values()) {
+			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
 					&& rc.getID() > stepNumber) {
 				possibleNext.add((RouteCell) rc);
 			}
@@ -62,7 +62,7 @@ public class Elf extends Enemy {
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: "+nextCell.toString());
+			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
 			nextCell.enter(this);
 			resetSpeed();
@@ -72,5 +72,11 @@ public class Elf extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log("<< Elf.leptet()");
+	}
+
+	@Override
+	protected void slice() {
+		// TODO Auto-generated method stub
+
 	}
 }

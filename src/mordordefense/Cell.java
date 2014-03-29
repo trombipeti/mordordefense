@@ -1,7 +1,7 @@
 package mordordefense;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import mordordefense.testing.Logging;
 
@@ -29,7 +29,7 @@ public abstract class Cell {
 	/**
 	 * A cella szomszédai. Amelyik null, az a pálya szélét jelenti.
 	 */
-	protected List<Cell> szomszedok = new ArrayList<Cell>();
+	protected TreeMap<Integer,Cell> szomszedok = new TreeMap<Integer,Cell>();
 
 	/**
 	 * típust visszaadó absztrakt függvény
@@ -59,14 +59,17 @@ public abstract class Cell {
 		coords[1] = y;
 		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
 				+ x + ", y:" + y);
+		for(int i = 0;i<4;++i) {
+			szomszedok.put(i, null);
+		}
 	}
 
 	/**
 	 * Szomszédokat visszaadó függvény
 	 * 
-	 * @return List<Cell> A cella szomszédai.
+	 * @return ArrayList<Cell> A cella szomszédai.
 	 */
-	public List<Cell> getSzomszedok() {
+	public TreeMap<Integer, Cell> getSzomszedok() {
 		Logging.log(">> Cell.getSzomszedok() hívás");
 		Logging.log("<< " + szomszedok.toString());
 		return szomszedok;
@@ -84,7 +87,7 @@ public abstract class Cell {
 		Logging.log(">> Cell.setSzomszedok() hívás, paraméterek: " + "n: " + n
 				+ ", szomszed: " + szomszed.toString());
 		Logging.log("<< void");
-		szomszedok.add(szomszed);
+		szomszedok.put(n, szomszed);
 	}
 
 	/**

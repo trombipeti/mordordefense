@@ -48,8 +48,8 @@ public class Dwarf extends Enemy {
 		// akkor azokra külön-külön le kell csekkolni a getType()-ot. Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
-		for (Cell rc : routeCell.getSzomszedok()) {
-			if (!rc.getType().equalsIgnoreCase("FieldCell")
+		for (Cell rc : routeCell.getSzomszedok().values()) {
+			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
 					&& rc.getID() > stepNumber) {
 				possibleNext.add((RouteCell) rc);
 			}
@@ -70,5 +70,11 @@ public class Dwarf extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log("<< Dwarf.leptet()");
+	}
+
+	@Override
+	protected void slice() {
+		// TODO Auto-generated method stub
+		
 	}
 }
