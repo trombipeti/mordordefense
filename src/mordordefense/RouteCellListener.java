@@ -30,7 +30,7 @@ public interface RouteCellListener {
 	 * 
 	 * @param sender
 	 *            Melyik {@link RouteCell}re léptek be.
-	 * @param e
+	 * @param h
 	 *            A belépő {@link Hobbit}
 	 */
 	public void onEnter(RouteCell sender, Hobbit h);
@@ -40,7 +40,7 @@ public interface RouteCellListener {
 	 * 
 	 * @param sender
 	 *            Melyik {@link RouteCell}re léptek be.
-	 * @param e
+	 * @param h
 	 *            A belépő {@link Human}
 	 */
 	public void onEnter(RouteCell sender, Human h);
@@ -60,7 +60,7 @@ public interface RouteCellListener {
 	 * 
 	 * @param sender
 	 *            Melyik {@link RouteCell}t hagyták el.
-	 * @param e
+	 * @param d
 	 *            A kilépő {@link Dwarf}
 	 */
 	public void onLeave(RouteCell sender, Dwarf d);
@@ -70,7 +70,7 @@ public interface RouteCellListener {
 	 * 
 	 * @param sender
 	 *            Melyik {@link RouteCell}t hagyták el.
-	 * @param e
+	 * @param h
 	 *            A kilépő {@link Hobbit}
 	 */
 	public void onLeave(RouteCell sender, Hobbit h);
@@ -80,7 +80,7 @@ public interface RouteCellListener {
 	 * 
 	 * @param sender
 	 *            Melyik {@link RouteCell}t hagyták el.
-	 * @param e
+	 * @param h
 	 *            A kilépő {@link Human}
 	 */
 	public void onLeave(RouteCell sender, Human h);

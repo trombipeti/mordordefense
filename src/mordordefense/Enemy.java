@@ -132,7 +132,8 @@ public abstract class Enemy {
 	}
 
 	/**
-	 * Az ellenségeket léptető metódus.
+	 * Az ellenségeket léptető metódus. Ha útelágazásnál több helyre is tud
+	 * lépni, akkor véletlenszerűen választ.
 	 * 
 	 * @throws EnemyDeadException
 	 *             Ha az enemy már meghalt.

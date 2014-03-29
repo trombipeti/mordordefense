@@ -112,8 +112,6 @@ public class Tower implements RouteCellListener
 	 * A torony szomszédait beállító függvény. Beregisztrálja a tornyot a
 	 * hatósugarában lévő utak eseményeire.
 	 * 
-	 * @return void
-	 * 
 	 */
 	public void setNeighbors() {
 		Logging.log(">> Tower.setNeighbors() hívás");
