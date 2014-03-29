@@ -107,6 +107,7 @@ public abstract class Enemy {
 			Logging.log("\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
 					+ speed);
 		}
+		Logging.log("<< Enemy.lassit()");
 	}
 
 	/**
@@ -115,6 +116,7 @@ public abstract class Enemy {
 	public void resetSpeed() {
 		Logging.log(">> Enemy.resetSpeed() hívás");
 		speed = baseSpeed;
+		Logging.log("<< Enemy.resetSpeed()");
 	}
 
 	/**

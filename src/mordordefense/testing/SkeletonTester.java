@@ -14,11 +14,21 @@ public class SkeletonTester {
 		sp.setID(0);
 		RouteCell rc = new RouteCell(1, 0);
 		rc.setID(1);
+		RouteCell uc = new RouteCell(1,1);
+		uc.setID(2);
+		RouteCell jc = new RouteCell(2,0);
+		jc.setID(2);
 		sp.setSzomszed(1, rc);
 		rc.setSzomszed(3, sp);
+		rc.setSzomszed(0, uc);
+		uc.setSzomszed(2, rc);
+		rc.setSzomszed(1, jc);
+		jc.setSzomszed(3, rc);
 		sp.enter(h);
 		sp.enter(e);
 		try {
+			e.leptet();
+			h.leptet();
 			e.leptet();
 			h.leptet();
 		} catch (EnemyCannotStepException e1) {

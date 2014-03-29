@@ -64,14 +64,14 @@ public class Main {
 				return "controllerTestCase";
 			}
 		});
-		
-		testCases.put(5,  new Runnable() {
-			
+
+		testCases.put(5, new Runnable() {
+
 			@Override
 			public void run() {
 				SkeletonTester.runTrapTestCase();
 			}
-			
+
 			@Override
 			public String toString() {
 				return "trapTestCase";
@@ -87,10 +87,9 @@ public class Main {
 		}
 		System.out.println("Melyik tesztesetet futtassam? :");
 		for (Integer i : testCases.keySet()) {
-			if (!ranTestCases.containsKey(i)) {
-				System.out.println("\t " + i + ": "
-						+ testCases.get(i).toString());
-			}
+			// if (!ranTestCases.containsKey(i)) {
+			System.out.println("\t " + i + ": " + testCases.get(i).toString());
+			// }
 		}
 		System.out.println("\t q: kilepes");
 		boolean read_ok = false;
