@@ -28,12 +28,12 @@ public class Bullet {
 	 * Emberekra ható sebzés.
 	 */
 	protected int humanDamage;
-	
+
 	/**
 	 * A lövedék kettvágja-e azt, akit eltalál.
 	 */
 	protected boolean slicing;
-	
+
 	/**
 	 * @return A lövedék kettvágja-e azt, akit eltalál.
 	 */
@@ -42,7 +42,8 @@ public class Bullet {
 	}
 
 	/**
-	 * @param slicing Kettévágós típusú legyen-e a lövedék.
+	 * @param slicing
+	 *            Kettévágós típusú legyen-e a lövedék.
 	 */
 	public void setSlicing(boolean slicing) {
 		this.slicing = slicing;

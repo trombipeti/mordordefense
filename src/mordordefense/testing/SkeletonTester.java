@@ -1,7 +1,17 @@
 package mordordefense.testing;
 
-import mordordefense.*;
 import mordordefense.Cell.Dir;
+import mordordefense.Controller;
+import mordordefense.Dwarf;
+import mordordefense.Elf;
+import mordordefense.FieldCell;
+import mordordefense.Hobbit;
+import mordordefense.Human;
+import mordordefense.MordorCell;
+import mordordefense.RouteCell;
+import mordordefense.SpawnPointCell;
+import mordordefense.Tower;
+import mordordefense.Trap;
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
 
@@ -100,7 +110,16 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
 		Controller c = new Controller(1, "palya1.p");
 		c.init();
-		c.run();
+		c.addDwarf(new Dwarf(10, 2));
+		c.stepAllEnemies();
+		c.stepAllEnemies();
+		// c.addHobbit(new Hobbit(8,3));
+		c.stepAllEnemies();
+		c.stepAllEnemies();
+		c.stepAllEnemies();
+		c.stepAllEnemies();
+		c.stepAllEnemies();
+		c.stepAllEnemies();
 		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
 
 	}

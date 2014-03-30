@@ -17,7 +17,7 @@ import mordordefense.testing.Logging;
  * A játékot vezérlő "játékmester" objektum.
  * 
  */
-public class Controller implements RouteCellListener {
+public class Controller implements RouteCellListener, EnemyListener {
 
 	/**
 	 * Mordor koordinátái.
@@ -178,7 +178,8 @@ public class Controller implements RouteCellListener {
 							}
 						}
 						break;
-					case 2: // A RouteCell-ek helyét és ID-jét megadó részben vagyunk
+					case 2: // A RouteCell-ek helyét és ID-jét megadó részben
+							// vagyunk
 						if (sp.length >= 3) {
 							int rx = Integer.parseInt(sp[0]);
 							int ry = Integer.parseInt(sp[1]);
@@ -247,12 +248,40 @@ public class Controller implements RouteCellListener {
 	 */
 	public void run() {
 		Logging.log("Controller.run() hívás");
-		Elf e = new Elf(10, 1);
+		addElf(new Elf(10, 1));
+
+		stepAllEnemies();
+	}
+
+	public void addHuman(Human h) {
+		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
+				spawnCoords[1]);
+		enemies.add(h);
+		sp.enter(h);
+	}
+
+	public void addElf(Elf e) {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
 		enemies.add(e);
 		sp.enter(e);
+	}
 
+	public void addHobbit(Hobbit h) {
+		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
+				spawnCoords[1]);
+		enemies.add(h);
+		sp.enter(h);
+	}
+
+	public void addDwarf(Dwarf d) {
+		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
+				spawnCoords[1]);
+		enemies.add(d);
+		sp.enter(d);
+	}
+
+	public void stepAllEnemies() {
 		for (Enemy en : enemies) {
 			try {
 				en.leptet();
@@ -264,6 +293,12 @@ public class Controller implements RouteCellListener {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	public void placeTower(Tower t, int x, int y) {
+		FieldCell fc = (FieldCell) cells.get(x).get(y);
+		fc.addTower(t);
+		saruman.rmManna(Tower.getBaseCost());
 	}
 
 	@Override
@@ -336,5 +371,10 @@ public class Controller implements RouteCellListener {
 		Logging.log(">> Controller.onLeave() hívás, paraméterek: "
 				+ sender.toString() + ", " + h.toString());
 
+	}
+
+	@Override
+	public void onSlice(Enemy e) {
+		enemies.add(e);
 	}
 }

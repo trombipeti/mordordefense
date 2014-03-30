@@ -69,7 +69,7 @@ public class Tower implements RouteCellListener
 	 * távolság szerint növekvő sorrendben.
 	 */
 	protected Set<RouteCell> closestCellsWithEnemy = new HashSet<RouteCell>();
-	
+
 	/**
 	 * A hatósugárban lévő cellák.
 	 */
@@ -152,9 +152,9 @@ public class Tower implements RouteCellListener
 	public void setUpNeighbors() {
 		Logging.log(">> Tower.setUpNeighbors() hívás");
 		getNeighbors(parentCell);
-		for(Cell c : cellsInRange) {
-			if( ! c.getType().equalsIgnoreCase("FieldCell")) {
-				((RouteCell)c).addRouteCellListener(this);
+		for (Cell c : cellsInRange) {
+			if (!c.getType().equalsIgnoreCase("FieldCell")) {
+				((RouteCell) c).addRouteCellListener(this);
 			}
 		}
 		Logging.log("<< Tower.setUpNeighbors()");
@@ -170,7 +170,7 @@ public class Tower implements RouteCellListener
 	public void getNeighbors(Cell c) {
 		TreeMap<Integer, Cell> neighbors = c.getSzomszedok();
 		for (Cell nc : neighbors.values()) {
-			if (nc != null && isInRange(nc) && ! cellsInRange.contains(nc)) {
+			if (nc != null && isInRange(nc) && !cellsInRange.contains(nc)) {
 				cellsInRange.add(nc);
 				getNeighbors(nc);
 			}
@@ -216,6 +216,20 @@ public class Tower implements RouteCellListener
 		fogAddTime = System.currentTimeMillis();
 	}
 
+	/**
+	 * Feloszlatja a tornyon lévő ködöt.
+	 */
+	public void removeFog() {
+		hasFog = false;
+		fogAddTime = fogTimeOut = -1;
+	}
+
+	/**
+	 * Lövedéket lő a paraméterként kapott útra.
+	 * 
+	 * @param rc
+	 *            A {@link RouteCell}, ahova a lövedéket ki kell lőni.
+	 */
 	private void fire(RouteCell rc) {
 		int dw, el, hu, ho;
 		dw = el = hu = ho = baseDamage;
