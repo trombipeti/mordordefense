@@ -33,20 +33,15 @@ public class RouteCell extends Cell {
 	protected List<Enemy> enemies = new ArrayList<Enemy>();
 
 	/**
-	 * Alap konstruktor.
-	 */
-	public RouteCell() {
-		Logging.log(">> RouteCell konstruktor hívás");
-		trap = null;
-	}
-
-	/**
 	 * A RouteCell-t csapdával létrehozó konstruktor.
+	 * 
+	 * @see Cell#Cell(int, int)
 	 * 
 	 * @param t
 	 *            A cellán lévő csapda.
 	 */
-	public RouteCell(Trap t) {
+	public RouteCell(int x, int y, Trap t) {
+		super(x,y);
 		Logging.log(">> RouteCell konstruktor hívás, paraméter: "
 				+ t.toString());
 		trap = t;
