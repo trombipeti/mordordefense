@@ -51,21 +51,18 @@ public abstract class Cell {
 	protected TreeMap<Integer, Cell> szomszedok = new TreeMap<Integer, Cell>();
 
 	/**
-	 * Tárolja, hogy már ismeri-e a szomszédait.
-	 * Ez azért kell, hogy rekurzívan lehessen beállítani
-	 * a Controllerben a szomszédokat.
+	 * Tárolja, hogy már ismeri-e a szomszédait. Ez azért kell, hogy rekurzívan
+	 * lehessen beállítani a Controllerben a szomszédokat.
 	 */
 	protected boolean neighborsKnown = false;
-	
+
 	public boolean isNeighborsKnown() {
 		return neighborsKnown;
 	}
 
-
 	public void setNeighborsKnown(boolean neighborsKnown) {
 		this.neighborsKnown = neighborsKnown;
 	}
-
 
 	/**
 	 * típust visszaadó absztrakt függvény
@@ -73,7 +70,6 @@ public abstract class Cell {
 	 * @return String A Cell típusa, pl RouteCell
 	 */
 	abstract public String getType();
-
 
 	/**
 	 * koordinátákat beállító konstruktor
@@ -89,6 +85,17 @@ public abstract class Cell {
 		coords[1] = y;
 		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
 				+ x + ", y:" + y);
+		for (int i = 0; i < 4; ++i) {
+			szomszedok.put(i, null);
+		}
+	}
+
+	protected Cell(int x, int y, int ID) {
+		coords[0] = x;
+		coords[1] = y;
+		this.ID = ID;
+		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
+				+ x + ", y: " + y + ", ID: " + ID);
 		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
@@ -114,8 +121,9 @@ public abstract class Cell {
 	 *            Ki az a bizonyos szomszéd. Lehet null, ez pályaszélet jelent.
 	 */
 	public void setSzomszed(Dir d, Cell szomszed) {
-		Logging.log(">> Cell.setSzomszedok() hívás, paraméterek: " + "n: "
-				+ d.toString() + ", szomszed: " + (szomszed == null ? "null" : szomszed.toString()));
+		Logging.log(">> Cell.setSzomszed() hívás, paraméterek: " + "n: "
+				+ d.toString() + ", szomszed: "
+				+ (szomszed == null ? "null" : szomszed.toString()));
 		szomszedok.put(d.getValue(), szomszed);
 		Logging.log("<< void");
 	}

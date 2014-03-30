@@ -11,14 +11,10 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: spawnTestCase futtatása ===");
 		Hobbit h = new Hobbit(8, 1);
 		Elf e = new Elf(13, 1);
-		SpawnPointCell sp = new SpawnPointCell(0, 0);
-		sp.setID(0);
-		RouteCell rc = new RouteCell(1, 0);
-		rc.setID(1);
-		RouteCell uc = new RouteCell(1, 1);
-		uc.setID(2);
-		RouteCell jc = new RouteCell(2, 0);
-		jc.setID(2);
+		SpawnPointCell sp = new SpawnPointCell(0, 0, 0);
+		RouteCell rc = new RouteCell(1, 0, 1);
+		RouteCell uc = new RouteCell(1, 1, 2);
+		RouteCell jc = new RouteCell(2, 0, 3);
 		sp.setSzomszed(Dir.RIGHT, rc);
 		rc.setSzomszed(Dir.LEFT, sp);
 		rc.setSzomszed(Dir.UP, uc);
@@ -45,12 +41,9 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
 		Tower t = new Tower(1, 10, 1);
-		RouteCell rc1 = new RouteCell(3, 1);
-		rc1.setID(1);
-		RouteCell rc2 = new RouteCell(3, 2);
-		rc2.setID(2);
-		RouteCell rc3 = new RouteCell(3, 3);
-		rc1.setID(3);
+		RouteCell rc1 = new RouteCell(3, 1, 1);
+		RouteCell rc2 = new RouteCell(3, 2, 2);
+		RouteCell rc3 = new RouteCell(3, 3, 3);
 
 		FieldCell fc = new FieldCell(2, 2);
 
@@ -80,9 +73,9 @@ public class SkeletonTester {
 	public static void runMordorTestCase() {
 		Logging.log("=== SkeletonTester: mordorTestCase futtatása ===");
 		Human h = new Human(10, 1);
-		RouteCell rc = new RouteCell(0, 0);
+		RouteCell rc = new RouteCell(0, 0, 0);
 		rc.setID(0);
-		MordorCell mc = new MordorCell(0, 1);
+		MordorCell mc = new MordorCell(0, 1, 1);
 		mc.setID(1);
 		Controller c = new Controller(1, "");
 
@@ -116,11 +109,11 @@ public class SkeletonTester {
 		Logging.log("=== SkeletonTester: trapTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
 		Trap t = new Trap();
-		RouteCell rc1 = new RouteCell(3, 1);
+		RouteCell rc1 = new RouteCell(3, 1, 1);
 		rc1.setID(1);
-		RouteCell rc2 = new RouteCell(3, 2);
+		RouteCell rc2 = new RouteCell(3, 2, 2);
 		rc2.setID(2);
-		RouteCell rc3 = new RouteCell(3, 3);
+		RouteCell rc3 = new RouteCell(3, 3, 3);
 		rc1.setID(3);
 
 		rc1.setSzomszed(Dir.UP, rc2);

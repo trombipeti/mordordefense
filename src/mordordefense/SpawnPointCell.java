@@ -8,10 +8,10 @@ import mordordefense.testing.Logging;
  */
 public class SpawnPointCell extends RouteCell {
 
-	public SpawnPointCell(int x, int y) {
-		super(x, y);
+	public SpawnPointCell(int x, int y, int ID) {
+		super(x, y, ID);
 		Logging.log(">> SpawnPointCell konstruktor hívása, x: " + x + " y: "
-				+ y);
+				+ y + ", ID: " + ID);
 	}
 
 	@Override

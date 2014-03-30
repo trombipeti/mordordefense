@@ -17,6 +17,10 @@ public abstract class Enemy {
 	 * Az enemy maximális (és kezdeti) életereje.
 	 */
 	protected int maxLifePoint;
+	
+	public int getMaxLifePoint() {
+		return maxLifePoint;
+	}
 
 	/**
 	 * Az enemy aktuális életereje. Ha <= 0, akkor az enemy meghalt. Ezt a

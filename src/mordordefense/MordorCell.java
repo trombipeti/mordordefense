@@ -9,9 +9,9 @@ import mordordefense.testing.Logging;
  */
 public class MordorCell extends RouteCell {
 
-	public MordorCell(int x, int y) {
-		super(x, y);
-		Logging.log(">>MordorCell konstruktor hívás, x: " + x + " y: " + y);
+	public MordorCell(int x, int y, int ID) {
+		super(x, y, ID);
+		Logging.log(">> MordorCell konstruktor hívás, x: " + x + ", y: " + y + ", ID: " + ID);
 	}
 
 	public String getType() {
