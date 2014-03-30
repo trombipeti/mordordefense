@@ -83,7 +83,7 @@ public class SkeletonTester {
 		rc.setID(0);
 		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
-		Controller c = new Controller(1);
+		Controller c = new Controller(1,"");
 
 		rc.setSzomszed(0, mc);
 		mc.setSzomszed(2, rc);
@@ -104,7 +104,7 @@ public class SkeletonTester {
 
 	public static void runControllerTestCase() {
 		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
-		Controller c = new Controller(1);
+		Controller c = new Controller(1,"");
 		c.init();
 		c.run();
 		Logging.log("=== SkeletonTester: controllerTestCase vége ===");

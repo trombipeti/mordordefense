@@ -1,6 +1,5 @@
 package mordordefense;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 import mordordefense.testing.Logging;

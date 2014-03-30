@@ -1,7 +1,10 @@
 package mordordefense;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeMap;
 
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
@@ -50,12 +53,20 @@ public class Controller implements RouteCellListener {
 	/**
 	 * A pályán lévő ellenségek
 	 */
-	private List<Enemy> enemies = new ArrayList<Enemy>();
+	private HashSet<Enemy> enemies = new HashSet<Enemy>();
 
 	/**
-	 * A pályán lévő cellák
+	 * A pályán lévő cellák. A map kulcsaihoz újabb map-ek vannak rendelve (a
+	 * sorok), és ezeken belül vannak a cellák. Inicializáláskor N*M-esre lesz
+	 * inicializálva, null-okkal feltöltve.
+	 * 
+	 * Példa:
+	 * 
+	 * A (3,2) koordinátájú cella elérése: cells.get(3).get(2);
+	 * 
+	 * A (4,1) koordinára új cella beállítása: cells.get(4).put(1, Cell);
 	 */
-	private ArrayList<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>();
+	private TreeMap<Integer, TreeMap<Integer, Cell>> cells = new TreeMap<Integer, TreeMap<Integer, Cell>>();
 
 	/**
 	 * Azt tárolja, hogy véget ért-e a játék.
@@ -67,35 +78,41 @@ public class Controller implements RouteCellListener {
 	 * legyen.
 	 */
 	private volatile StringBuffer winner = null;
-
+	
+	/**
+	 * A pálya adatait tartalmazó fájl neve.
+	 */
+	private String mapFileName;
+	
 	/**
 	 * Konstruktor
 	 * 
 	 * @param n
 	 *            hány ellenséget tehet le
 	 */
-	public Controller(int n) {
+	public Controller(int n, String fileName) {
 		Logging.log(">> Controller konstruktor hívás, paraméter:" + n);
 		maxEnemyNum = n;
+		mapFileName = fileName;
 	}
 
 	/**
 	 * Inicializáló függvény később egy config fájlból fogja a pályát beolvasni
 	 */
 	public void init() {
-		Logging.log("Controller.init() hívás");
+		Logging.log(">> Controller.init() hívás");
 		saruman = new Saruman(100);
 		SpawnPointCell rc = new SpawnPointCell(0, 0);
 		rc.setID(0);
 		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
 		ArrayList<Cell> row = new ArrayList<Cell>();
-		row.add(rc);
-		row.add(mc);
-		mc.addRouteCellListener(this);
-		cells.add(row);
-		calcSzomszedok(rc);
-		spawnCoords = rc.getCoords();
+//		row.add(rc);
+//		row.add(mc);
+//		mc.addRouteCellListener(this);
+//		cells.add(row);
+//		calcSzomszedok(rc);
+//		spawnCoords = rc.getCoords();
 	}
 
 	/**
