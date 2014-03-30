@@ -1,5 +1,7 @@
 package mordordefense;
 
+import java.util.HashSet;
+
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
 import mordordefense.testing.Logging;
@@ -47,6 +49,11 @@ public abstract class Enemy {
 	 * Az enemy aktuális helyzetét jelző {@link RouteCell}
 	 */
 	protected RouteCell routeCell;
+	
+	/**
+	 * Az enemy eseményeire feliratkozott listenerek.
+	 */
+	protected HashSet<EnemyListener> listeners = new HashSet<EnemyListener>();
 
 	/**
 	 * Konstruktor, amely beállítja a maximális életerőt és a kezdősebességet.
@@ -168,6 +175,23 @@ public abstract class Enemy {
 		Logging.log(">> Enemy.getStepNumber() hívás");
 		Logging.log("<< " + stepNumber);
 		return stepNumber;
+	}
+	
+	/**
+	 * Ezzel a függvénnyel lehet feliratkozni az enemy eseményeire.
+	 * @param el Egy {@link EnemyListener} interfészt implementáló osztály
+	 */
+	public void addEnemyListener(EnemyListener el) {
+		listeners.add(el);
+	}
+	
+	/**
+	 * Ezzel a függvénnyel lehet leiratkozni az enemy eseményeiről.
+	 * 
+	 * @param el A leiratkozni kívánt {@link EnemyListener}.
+	 */
+	public void removeEnemyListener(EnemyListener el) {
+		listeners.remove(el);
 	}
 
 	@Override
