@@ -17,7 +17,7 @@ public abstract class Enemy {
 	 * Az enemy maximális (és kezdeti) életereje.
 	 */
 	protected int maxLifePoint;
-	
+
 	public int getMaxLifePoint() {
 		return maxLifePoint;
 	}
@@ -44,8 +44,8 @@ public abstract class Enemy {
 	protected int stepNumber;
 
 	/**
-	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy
-	 * tud-e lépni az aktuális sebességértéke mellett.
+	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy tud-e
+	 * lépni az aktuális sebességértéke mellett.
 	 */
 	protected long timeOfLastStep;
 
@@ -53,7 +53,7 @@ public abstract class Enemy {
 	 * Az enemy aktuális helyzetét jelző {@link RouteCell}
 	 */
 	protected RouteCell routeCell;
-	
+
 	/**
 	 * Az enemy eseményeire feliratkozott listenerek.
 	 */
@@ -141,13 +141,12 @@ public abstract class Enemy {
 		lifePoint -= mertek;
 		Logging.log("\t Az enemy új életereje: " + lifePoint);
 	}
-	
-	
+
 	/**
 	 * Az Enemyt kettévágó absztrakt függvény.
 	 */
 	abstract protected void slice();
-	
+
 	/**
 	 * Az ellenségeket léptető metódus. Ha útelágazásnál több helyre is tud
 	 * lépni, akkor véletlenszerűen választ.
@@ -180,19 +179,22 @@ public abstract class Enemy {
 		Logging.log("<< " + stepNumber);
 		return stepNumber;
 	}
-	
+
 	/**
 	 * Ezzel a függvénnyel lehet feliratkozni az enemy eseményeire.
-	 * @param el Egy {@link EnemyListener} interfészt implementáló osztály
+	 * 
+	 * @param el
+	 *            Egy {@link EnemyListener} interfészt implementáló osztály
 	 */
 	public void addEnemyListener(EnemyListener el) {
 		listeners.add(el);
 	}
-	
+
 	/**
 	 * Ezzel a függvénnyel lehet leiratkozni az enemy eseményeiről.
 	 * 
-	 * @param el A leiratkozni kívánt {@link EnemyListener}.
+	 * @param el
+	 *            A leiratkozni kívánt {@link EnemyListener}.
 	 */
 	public void removeEnemyListener(EnemyListener el) {
 		listeners.remove(el);
@@ -202,7 +204,6 @@ public abstract class Enemy {
 	public String toString() {
 		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
 				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
-				+ stepNumber + ", utoljara ekkor lepett: "
-				+ timeOfLastStep;
+				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep;
 	}
 }

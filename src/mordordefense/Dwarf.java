@@ -44,8 +44,10 @@ public class Dwarf extends Enemy {
 			throw new EnemyDeadException();
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
-		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud lépni,
-		// akkor azokra külön-külön le kell csekkolni a getType()-ot. Szerencsére
+		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
+		// lépni,
+		// akkor azokra külön-külön le kell csekkolni a getType()-ot.
+		// Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
 		for (Cell rc : routeCell.getSzomszedok().values()) {
@@ -60,7 +62,7 @@ public class Dwarf extends Enemy {
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: "+nextCell.toString());
+			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
 			nextCell.enter(this);
 			resetSpeed();
@@ -75,6 +77,6 @@ public class Dwarf extends Enemy {
 	@Override
 	protected void slice() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

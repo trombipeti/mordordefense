@@ -41,7 +41,7 @@ public class RouteCell extends Cell {
 	 *            A cellán lévő csapda.
 	 */
 	public RouteCell(int x, int y, Trap t) {
-		super(x,y);
+		super(x, y);
 		Logging.log(">> RouteCell konstruktor hívás, paraméter: "
 				+ t.toString());
 		trap = t;
