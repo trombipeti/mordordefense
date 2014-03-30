@@ -50,8 +50,8 @@ public class RouteCell extends Cell {
 	/**
 	 * @see Cell#Cell(int, int)
 	 */
-	public RouteCell(int x, int y) {
-		super(x, y);
+	public RouteCell(int x, int y, int ID) {
+		super(x, y, ID);
 		trap = null;
 	}
 

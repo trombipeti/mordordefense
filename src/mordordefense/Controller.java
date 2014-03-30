@@ -1,7 +1,6 @@
 package mordordefense;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -126,9 +125,9 @@ public class Controller implements RouteCellListener {
 			try {
 				int partno = 0;
 				String line = null;
-				ReadIn: while(true) {
+				ReadIn: while (true) {
 					line = br.readLine();
-					if(line == null) {
+					if (line == null) {
 						break ReadIn;
 					}
 					if (line.startsWith("-")) {
@@ -153,13 +152,14 @@ public class Controller implements RouteCellListener {
 						}
 						break;
 					case 1: // A SpawnPoint/Mordor helyét megadó részben vagyunk
-						if (sp.length >= 3) {
+						if (sp.length >= 4) {
 							if (sp[0].equalsIgnoreCase("S")) {
 								// Ha a SpawnPoint helyét adta meg
 								int sx = Integer.parseInt(sp[1]);
 								int sy = Integer.parseInt(sp[2]);
+								int id = Integer.parseInt(sp[3]);
 								cells.get(sx).put(sy,
-										new SpawnPointCell(sx, sy));
+										new SpawnPointCell(sx, sy, id));
 								spawnCoords[0] = sx;
 								spawnCoords[1] = sy;
 
@@ -167,9 +167,10 @@ public class Controller implements RouteCellListener {
 								// Ha a MordorCell helyét adta meg
 								int mx = Integer.parseInt(sp[1]);
 								int my = Integer.parseInt(sp[2]);
+								int id = Integer.parseInt(sp[3]);
 								// Feliratkozunk a MordorCell-re, hogy tudjuk,
 								// mikor érnek oda az enemyk
-								MordorCell mc = new MordorCell(mx, my);
+								MordorCell mc = new MordorCell(mx, my, id);
 								mc.addRouteCellListener(this);
 								cells.get(mx).put(my, mc);
 								mordorCoords[0] = mx;
@@ -177,11 +178,12 @@ public class Controller implements RouteCellListener {
 							}
 						}
 						break;
-					case 2: // A RouteCell-ek helyét megadó részben vagyunk
-						if (sp.length >= 2) {
+					case 2: // A RouteCell-ek helyét és ID-jét megadó részben vagyunk
+						if (sp.length >= 3) {
 							int rx = Integer.parseInt(sp[0]);
 							int ry = Integer.parseInt(sp[1]);
-							cells.get(rx).put(ry, new RouteCell(rx, ry));
+							int id = Integer.parseInt(sp[2]);
+							cells.get(rx).put(ry, new RouteCell(rx, ry, id));
 						}
 						break;
 					default:
@@ -213,23 +215,27 @@ public class Controller implements RouteCellListener {
 		int y = coords[1];
 		if (x == 0) { // Bal széle
 			c.setSzomszed(Dir.LEFT, null);
-		} else if (x == mapWidth - 1) { // Jobb széle
-			c.setSzomszed(Dir.RIGHT, null);
 		} else {
 			c.setSzomszed(Dir.LEFT, cells.get(x - 1).get(y));
+		}
+		if (x == mapWidth - 1) { // Jobb széle
+			c.setSzomszed(Dir.RIGHT, null);
+		} else {
 			c.setSzomszed(Dir.RIGHT, cells.get(x + 1).get(y));
 		}
 		if (y == 0) { // Teteje
 			c.setSzomszed(Dir.UP, null);
-		} else if (y == mapHeight - 1) { // Alja
-			c.setSzomszed(Dir.DOWN, null);
 		} else {
 			c.setSzomszed(Dir.UP, cells.get(x).get(y - 1));
+		}
+		if (y == mapHeight - 1) { // Alja
+			c.setSzomszed(Dir.DOWN, null);
+		} else {
 			c.setSzomszed(Dir.DOWN, cells.get(x).get(y + 1));
 		}
 		c.setNeighborsKnown(true);
 		for (Cell nc : c.getSzomszedok().values()) {
-			if (nc != null && ! nc.isNeighborsKnown()) {
+			if (nc != null && !nc.isNeighborsKnown()) {
 				calcSzomszedok(nc);
 			}
 		}
@@ -244,14 +250,14 @@ public class Controller implements RouteCellListener {
 		Elf e = new Elf(10, 1);
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
-		sp.enter(e);
 		enemies.add(e);
+		sp.enter(e);
 
 		for (Enemy en : enemies) {
 			try {
 				en.leptet();
 			} catch (EnemyDeadException e1) {
-				saruman.addManna(2);
+				saruman.addManna(en.getMaxLifePoint());
 				e1.printStackTrace();
 				enemies.remove(en);
 			} catch (EnemyCannotStepException e1) {
