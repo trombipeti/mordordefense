@@ -1,6 +1,7 @@
 package mordordefense.testing;
 
 import mordordefense.*;
+import mordordefense.Cell.Dir;
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
 
@@ -14,16 +15,16 @@ public class SkeletonTester {
 		sp.setID(0);
 		RouteCell rc = new RouteCell(1, 0);
 		rc.setID(1);
-		RouteCell uc = new RouteCell(1,1);
+		RouteCell uc = new RouteCell(1, 1);
 		uc.setID(2);
-		RouteCell jc = new RouteCell(2,0);
+		RouteCell jc = new RouteCell(2, 0);
 		jc.setID(2);
-		sp.setSzomszed(1, rc);
-		rc.setSzomszed(3, sp);
-		rc.setSzomszed(0, uc);
-		uc.setSzomszed(2, rc);
-		rc.setSzomszed(1, jc);
-		jc.setSzomszed(3, rc);
+		sp.setSzomszed(Dir.RIGHT, rc);
+		rc.setSzomszed(Dir.LEFT, sp);
+		rc.setSzomszed(Dir.UP, uc);
+		uc.setSzomszed(Dir.DOWN, rc);
+		rc.setSzomszed(Dir.RIGHT, jc);
+		jc.setSzomszed(Dir.LEFT, rc);
 		sp.enter(h);
 		sp.enter(e);
 		try {
@@ -50,17 +51,17 @@ public class SkeletonTester {
 		rc2.setID(2);
 		RouteCell rc3 = new RouteCell(3, 3);
 		rc1.setID(3);
-		
+
 		FieldCell fc = new FieldCell(2, 2);
 
-		rc1.setSzomszed(0, rc2);
-		rc2.setSzomszed(2, rc1);
-		rc2.setSzomszed(0, rc3);
-		rc3.setSzomszed(2, rc2);
-		
-		rc2.setSzomszed(3, fc);
-		fc.setSzomszed(1, rc2);
-		
+		rc1.setSzomszed(Dir.UP, rc2);
+		rc2.setSzomszed(Dir.DOWN, rc1);
+		rc2.setSzomszed(Dir.UP, rc3);
+		rc3.setSzomszed(Dir.DOWN, rc2);
+
+		rc2.setSzomszed(Dir.LEFT, fc);
+		fc.setSzomszed(Dir.RIGHT, rc2);
+
 		fc.addTower(t);
 
 		rc1.enter(d);
@@ -83,10 +84,10 @@ public class SkeletonTester {
 		rc.setID(0);
 		MordorCell mc = new MordorCell(0, 1);
 		mc.setID(1);
-		Controller c = new Controller(1,"");
+		Controller c = new Controller(1, "");
 
-		rc.setSzomszed(0, mc);
-		mc.setSzomszed(2, rc);
+		rc.setSzomszed(Dir.UP, mc);
+		mc.setSzomszed(Dir.DOWN, rc);
 		rc.enter(h);
 
 		mc.addRouteCellListener(c);
@@ -104,13 +105,13 @@ public class SkeletonTester {
 
 	public static void runControllerTestCase() {
 		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
-		Controller c = new Controller(1,"");
+		Controller c = new Controller(1, "palya1.p");
 		c.init();
 		c.run();
 		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
 
 	}
-	
+
 	public static void runTrapTestCase() {
 		Logging.log("=== SkeletonTester: trapTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
@@ -122,12 +123,12 @@ public class SkeletonTester {
 		RouteCell rc3 = new RouteCell(3, 3);
 		rc1.setID(3);
 
-		rc1.setSzomszed(0, rc2);
+		rc1.setSzomszed(Dir.UP, rc2);
 		rc1.addRouteCellListener(t);
-		rc2.setSzomszed(2, rc1);
+		rc2.setSzomszed(Dir.DOWN, rc1);
 		rc2.addRouteCellListener(t);
-		rc2.setSzomszed(0, rc3);
-		rc3.setSzomszed(2, rc2);
+		rc2.setSzomszed(Dir.UP, rc3);
+		rc3.setSzomszed(Dir.DOWN, rc2);
 		rc3.addRouteCellListener(t);
 
 		rc1.enter(d);

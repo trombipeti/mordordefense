@@ -10,6 +10,26 @@ import mordordefense.testing.Logging;
  */
 public abstract class Cell {
 
+	public static enum Dir {
+		UP(0, "UP"), RIGHT(1, "RIGHT"), DOWN(2, "DOWN"), LEFT(3, "LEFT");
+
+		private final int value;
+		private final String name;
+
+		private Dir(int val, String name) {
+			value = val;
+			this.name = name;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public String toString() {
+			return name;
+		}
+	}
+
 	/**
 	 * A szomszédok száma
 	 */
@@ -28,7 +48,24 @@ public abstract class Cell {
 	/**
 	 * A cella szomszédai. Amelyik null, az a pálya szélét jelenti.
 	 */
-	protected TreeMap<Integer,Cell> szomszedok = new TreeMap<Integer,Cell>();
+	protected TreeMap<Integer, Cell> szomszedok = new TreeMap<Integer, Cell>();
+
+	/**
+	 * Tárolja, hogy már ismeri-e a szomszédait.
+	 * Ez azért kell, hogy rekurzívan lehessen beállítani
+	 * a Controllerben a szomszédokat.
+	 */
+	protected boolean neighborsKnown = false;
+	
+	public boolean isNeighborsKnown() {
+		return neighborsKnown;
+	}
+
+
+	public void setNeighborsKnown(boolean neighborsKnown) {
+		this.neighborsKnown = neighborsKnown;
+	}
+
 
 	/**
 	 * típust visszaadó absztrakt függvény
@@ -37,12 +74,6 @@ public abstract class Cell {
 	 */
 	abstract public String getType();
 
-	/**
-	 * paraméter nélküli konstruktor
-	 */
-	protected Cell() {
-		Logging.log(">> Cell.Cell() konstruktor hívás");
-	}
 
 	/**
 	 * koordinátákat beállító konstruktor
@@ -58,7 +89,7 @@ public abstract class Cell {
 		coords[1] = y;
 		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
 				+ x + ", y:" + y);
-		for(int i = 0;i<4;++i) {
+		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
 	}
@@ -77,16 +108,16 @@ public abstract class Cell {
 	/**
 	 * Szomszédokat beállító függvény
 	 * 
-	 * @param n
-	 *            Melyik szomszéd. óra járásának megfelelően 0-tól
+	 * @param d
+	 *            Melyik szomszéd.
 	 * @param szomszed
 	 *            Ki az a bizonyos szomszéd. Lehet null, ez pályaszélet jelent.
 	 */
-	public void setSzomszed(int n, Cell szomszed) {
-		Logging.log(">> Cell.setSzomszedok() hívás, paraméterek: " + "n: " + n
-				+ ", szomszed: " + szomszed.toString());
+	public void setSzomszed(Dir d, Cell szomszed) {
+		Logging.log(">> Cell.setSzomszedok() hívás, paraméterek: " + "n: "
+				+ d.toString() + ", szomszed: " + (szomszed == null ? "null" : szomszed.toString()));
+		szomszedok.put(d.getValue(), szomszed);
 		Logging.log("<< void");
-		szomszedok.put(n, szomszed);
 	}
 
 	/**
@@ -127,14 +158,14 @@ public abstract class Cell {
 		return "Cella, típusa: " + getType() + ", ID: " + ID + ", helyzet: "
 				+ coords[0] + "," + coords[1];
 	}
-	
+
 	public static double Distance(Cell c1, Cell c2) {
 		double ret = 0.0f;
 		int x1 = c1.getCoords()[0];
 		int y1 = c1.getCoords()[1];
 		int x2 = c2.getCoords()[0];
 		int y2 = c2.getCoords()[1];
-		ret = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+		ret = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 		return ret;
 	}
 }

@@ -14,10 +14,6 @@ public class SpawnPointCell extends RouteCell {
 				+ y);
 	}
 
-	public SpawnPointCell() {
-		Logging.log(">> SpawnPointCell default konstruktor hívás");
-	}
-
 	@Override
 	public String getType() {
 		return "SpawnPointCell";
