@@ -46,10 +46,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * mapHeight - 1.
 	 */
 	private int mapHeight;
+
 	/**
 	 * Maximum hány enemy indulhat el.
 	 */
 	private int maxEnemyNum;
+
+	/**
+	 * Az eddig harcba küldött ellenségek.
+	 */
+	private int sentEnemies;
 
 	/**
 	 * A pályán lévő csapdák
@@ -151,7 +157,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 							}
 						}
 						break;
-					case 1: // A SpawnPoint/Mordor helyét megadó részben vagyunk
+					case 1: // A maxEnemyNum-ot megadó részen vagyunk.
+						if (sp.length >= 1) {
+							maxEnemyNum = Integer.parseInt(sp[0]);
+						}
+						break;
+					case 2: // A SpawnPoint/Mordor helyét megadó részben vagyunk
 						if (sp.length >= 4) {
 							if (sp[0].equalsIgnoreCase("S")) {
 								// Ha a SpawnPoint helyét adta meg
@@ -178,7 +189,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 							}
 						}
 						break;
-					case 2: // A RouteCell-ek helyét és ID-jét megadó részben
+					case 3: // A RouteCell-ek helyét és ID-jét megadó részben
 							// vagyunk
 						if (sp.length >= 3) {
 							int rx = Integer.parseInt(sp[0]);
@@ -301,6 +312,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		saruman.rmManna(Tower.getBaseCost());
 	}
 
+	// RouteCellListener
+
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
 		Logging.log(">> Controller.onEnter() hívás, paraméterek: "
@@ -373,8 +386,21 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	}
 
+	// EnemyListener
+
 	@Override
 	public void onSlice(Enemy e) {
+		Logging.log(">> Controller.onSlice() hívás, paraméter: " + e.toString());
+		e.addEnemyListener(this);
 		enemies.add(e);
+	}
+
+	@Override
+	public void onDie(Enemy e) {
+		Logging.log(">> Controller.onDie() hívás, paraméter: " + e.toString());
+		enemies.remove(e);
+		if (sentEnemies == maxEnemyNum) {
+			winner = new StringBuffer("saruman");
+		}
 	}
 }

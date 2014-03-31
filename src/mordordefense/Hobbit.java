@@ -56,7 +56,7 @@ public class Hobbit extends Enemy
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
 		for (Cell rc : routeCell.getSzomszedok().values()) {
 			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
-					&& rc.getID() > stepNumber) {
+					&& rc.getID() > routeCell.getID()) {
 				possibleNext.add((RouteCell) rc);
 			}
 		}
@@ -79,8 +79,25 @@ public class Hobbit extends Enemy
 	}
 
 	@Override
-	protected void slice() {
-		// TODO Auto-generated method stub
+	public void sebez(Bullet b) {
+		Logging.log(">> Hobbit.sebez() hívás, paraméter: " + b.toString());
+		if (b.isSlicing()) {
+			slice();
+		} else {
+			lifePoint -= b.getDamage(this);
+			Logging.log("\t új életerő: " + lifePoint);
+		}
+	}
 
+	@Override
+	protected void slice() {
+		Logging.log(">> Hobbit.slice() hívás");
+		Hobbit newEnemy = new Hobbit(lifePoint/2,speed);
+		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		newEnemy.setRouteCell(routeCell);
+		for (EnemyListener l : listeners) {
+			l.onSlice(newEnemy);
+		}
+		Logging.log("<< Hobbit.slice()");
 	}
 }

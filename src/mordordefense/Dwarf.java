@@ -44,15 +44,14 @@ public class Dwarf extends Enemy {
 			throw new EnemyDeadException();
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
-		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
-		// lépni,
+		// Kis szépséghiba, hogy ha több olyan cellatípus is van,
+		// akire nem tud lépni,
 		// akkor azokra külön-külön le kell csekkolni a getType()-ot.
-		// Szerencsére
-		// jelenleg ez a helyzet nem áll fenn.
+		// Szerencsére most ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
 		for (Cell rc : routeCell.getSzomszedok().values()) {
 			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
-					&& rc.getID() > stepNumber) {
+					&& rc.getID() > routeCell.getID()) {
 				possibleNext.add((RouteCell) rc);
 			}
 		}
@@ -75,8 +74,25 @@ public class Dwarf extends Enemy {
 	}
 
 	@Override
-	protected void slice() {
-		// TODO Auto-generated method stub
+	public void sebez(Bullet b) {
+		Logging.log(">> Dwarf.sebez() hívás, paraméter: " + b.toString());
+		if (b.isSlicing()) {
+			slice();
+		} else {
+			lifePoint -= b.getDamage(this);
+			Logging.log("\t új életerő: " + lifePoint);
+		}
+	}
 
+	@Override
+	protected void slice() {
+		Logging.log(">> Dwarf.slice() hívás");
+		Dwarf newEnemy = new Dwarf(lifePoint/2,speed);
+		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		newEnemy.setRouteCell(routeCell);
+		for (EnemyListener l : listeners) {
+			l.onSlice(newEnemy);
+		}
+		Logging.log("<< Elf.slice()");
 	}
 }

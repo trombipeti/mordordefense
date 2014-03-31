@@ -74,51 +74,39 @@ public class Bullet {
 		this.humanDamage = humanDamage;
 		this.slicing = slicing;
 	}
-
+	
 	/**
-	 * Megsebzi a paraméterként kapott {@link Elf} ellenséget.
-	 * 
-	 * @param e
-	 *            Elf (tünde) típusú ellenség
+	 * @param h Egy {@link Hobbit}.
+	 * @return A hobbitokra ható sebzés.
 	 */
-	public void damage(Elf e) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: " + e.toString());
-		e.sebez(elfDamage);
+	public int getDamage(Hobbit h) {
+		return hobbitDamage;
 	}
-
+	
 	/**
-	 * Megsebzi a paraméterként kapott {@link Hobbit} ellenséget.
-	 * 
-	 * @param h
-	 *            Hobbit típusú ellenség
+	 * @param h Egy {@link Human}.
+	 * @return A humanokra ható sebzés.
 	 */
-	public void damage(Hobbit h) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: " + h.toString());
-		h.sebez(hobbitDamage);
+	public int getDamage(Human h) {
+		return humanDamage;
 	}
-
+	
 	/**
-	 * Megsebzi a paraméterként kapott {@link Dwarf} ellenséget.
-	 * 
-	 * @param d
-	 *            Dwarf (törp) típusú ellenség
+	 * @param d Egy {@link Dwarf}.
+	 * @return A törpökre ható sebzés.
 	 */
-	public void damage(Dwarf d) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: " + d.toString());
-		d.sebez(dwarfDamage);
+	public int getDamage(Dwarf d) {
+		return dwarfDamage;
 	}
-
+	
 	/**
-	 * Megsebzi a paraméterként kapott {@link Human} ellenséget.
-	 * 
-	 * @param h
-	 *            Human (ember) típusú ellenség.
+	 * @param e Egy {@link Elf}.
+	 * @return A tündékre ható sebzés.
 	 */
-	public void damage(Human h) {
-		Logging.log(">> Bullet.damage() hívás, paraméter: " + h.toString());
-		h.sebez(humanDamage);
+	public int getDamage(Elf e) {
+		return elfDamage;
 	}
-
+	
 	@Override
 	public String toString() {
 		String ret;

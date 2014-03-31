@@ -140,17 +140,10 @@ public class RouteCell extends Cell {
 		bullets.add(b);
 		for (Enemy e : enemies) {
 			for (Bullet b1 : bullets) {
-				if (e.getType().equalsIgnoreCase("Elf")) {
-					b1.damage((Elf) e);
-				} else if (e.getType().equalsIgnoreCase("Hobbit")) {
-					b1.damage((Hobbit) e);
-				} else if (e.getType().equalsIgnoreCase("Human")) {
-					b1.damage((Human) e);
-				} else if (e.getType().equalsIgnoreCase("Dwarf")) {
-					b1.damage((Dwarf) e);
-				}
+				e.sebez(b1);
 			}
 		}
+		Logging.log("<< RouteCell.addBullet()");
 	}
 
 	/**
