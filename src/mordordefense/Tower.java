@@ -149,7 +149,7 @@ public class Tower implements RouteCellListener
 	 * hatósugarában lévő utak eseményeire.
 	 * 
 	 */
-	public void setUpNeighbors() {
+	private void setUpNeighbors() {
 		Logging.log(">> Tower.setUpNeighbors() hívás");
 		getNeighbors(parentCell);
 		for (Cell c : cellsInRange) {
@@ -167,7 +167,7 @@ public class Tower implements RouteCellListener
 	 * @param c
 	 *            A cella
 	 */
-	public void getNeighbors(Cell c) {
+	private void getNeighbors(Cell c) {
 		TreeMap<Integer, Cell> neighbors = c.getSzomszedok();
 		for (Cell nc : neighbors.values()) {
 			if (nc != null && isInRange(nc) && !cellsInRange.contains(nc)) {
@@ -194,7 +194,7 @@ public class Tower implements RouteCellListener
 	 * @param c
 	 *            A megnézendő {@link Cell}
 	 */
-	public boolean isInRange(Cell c) {
+	private boolean isInRange(Cell c) {
 		Logging.log(">> Tower.isInRange() hívás, paraméter: " + c);
 		boolean ret = false;
 		double dst = Cell.Distance(parentCell, c);

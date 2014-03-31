@@ -133,14 +133,10 @@ public abstract class Enemy {
 	/**
 	 * Az enemyt sebző függvény.
 	 * 
-	 * @param mertek
-	 *            Mennyivel csökkenjen az enemy életereje.
+	 * @param b
+	 *            Az enemyt megsebző {@link Bullet}
 	 */
-	public void sebez(int mertek) {
-		Logging.log(">> Enemy.sebez() hívás, paraméter: " + mertek);
-		lifePoint -= mertek;
-		Logging.log("\t Az enemy új életereje: " + lifePoint);
-	}
+	abstract public void sebez(Bullet b);
 
 	/**
 	 * Az Enemyt kettévágó absztrakt függvény.
