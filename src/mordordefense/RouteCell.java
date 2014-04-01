@@ -61,10 +61,16 @@ public class RouteCell extends Cell {
 	 * @param t
 	 *            Az elhelyezendő csapda.
 	 */
-	public void addTrap(Trap t) {
+	public boolean addTrap(Trap t) {
 		Logging.log(">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
 		if (trap == null) {
 			trap = t;
+
+			Logging.log("<<routeCell.addTrap() return: boolean - true");
+			return true;
+		}else{
+			Logging.log("<<routeCell.addTrap() return: boolean - false");
+			return false;
 		}
 	}
 

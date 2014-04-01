@@ -32,14 +32,18 @@ public class FieldCell extends Cell {
 	 * @param t
 	 *            A lerakandó torony.
 	 */
-	public void addTower(Tower t) {
+	public boolean addTower(Tower t) {
 		Logging.log(">> FieldCell.addTower függvényhívás, paraméter: "
 				+ t.toString());
 		if (tower == null) {
 			tower = t;
 			t.setParentCell(this);
+			Logging.log("<<FieldCell.addTower return: boolean - true");
+			return true;
+		}else{
+			Logging.log("<<FieldCell.addTower return: boolean - false");
+			return false;
 		}
-		Logging.log("<<FieldCell.addTower return: void");
 	}
 
 	@Override
