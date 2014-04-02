@@ -1,11 +1,14 @@
 package mordordefense.testing;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import mordordefense.Controller;
 import mordordefense.MagicStone;
 import mordordefense.Tower;
+import mordordefense.Trap;
 
 public class ScriptInterpreter {
 
@@ -43,16 +46,22 @@ public class ScriptInterpreter {
 				cont.setRandom(false);
 		} else if(parts[0]=="help"){
 			//Help file-ban található commandok és leírásuk kilistázása
+			try {
 			BufferedReader reader= new BufferedReader(new FileReader("help.txt"));
 			String line;
 			while((line=reader.readLine())!=null)
 				System.out.println(line);
+			} catch(FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 		} else if(parts[0]=="quit"){
 			//TODO Program futásának megállítása
 		} else if(parts[0]=="start"){
 			simulationStarted=true;
-			cont.setMap(parts[2]);
+			cont.setMapFileName(parts[2]);
 			if(parts[1]=="1"){
 				stepSimulation=true;
 			}
@@ -70,9 +79,13 @@ public class ScriptInterpreter {
 			}
 		} else if(parts[0]=="tower"){
 			//Tower lerakása X:Y koordinátákra
-			cont.placeTower(new Tower(), parts[1], parts[2]);
+			int x = Integer.parseInt(parts[1]);
+			int y = Integer.parseInt(parts[2]);
+			cont.placeTower(new Tower(), x, y);
 		} else if(parts[0]=="trap"){
-			cont.placeTrap(new Trap(), parts[1], parts[2]);
+			int x = Integer.parseInt(parts[1]);
+			int y = Integer.parseInt(parts[2]);
+			cont.placeTrap(new Trap(), x, y);
 		} else if(parts[0]=="magicstone"){
 			if(parts[1]=="tower"){
 				cont.getTower(Integer.valueOf(parts[2])).addStone(new MagicStone(Float.valueOf(parts[3]),Float.valueOf(parts[4]),Float.valueOf(parts[5]),Float.valueOf(parts[6]),Float.valueOf(parts[7]),Float.valueOf(parts[8]),Float.valueOf(parts[9])));

@@ -105,7 +105,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * A pálya adatait tartalmazó fájl neve.
 	 */
 	private String mapFileName;
-
+	
+	/**
+	 * A controller véletlenszerűen indítja-e az enemyket stb.
+	 */
+	private boolean random;
+	
 	/**
 	 * Konstruktor
 	 * 
@@ -335,8 +340,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 		return traps.get(i);
 	}
 	
+	public void setRandom(boolean b) {
+		random = b;
+	}
+	
+	public void setMapFileName(String mapFileName) {
+		this.mapFileName = mapFileName;
+	}
 	
 	// RouteCellListener
+
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
@@ -427,4 +440,5 @@ public class Controller implements RouteCellListener, EnemyListener {
 			winner = new StringBuffer("saruman");
 		}
 	}
+
 }

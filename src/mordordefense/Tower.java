@@ -80,6 +80,16 @@ public class Tower implements RouteCellListener
 	 */
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
+	public Tower() {
+		Logging.log(">> Tower default konstruktor hívás");
+		// TODO default értékek valahonnan
+		this.freq = 1;
+		this.radius = 1;
+		this.baseDamage = 1;
+		this.hasFog = false;
+		Logging.log("<< Tower default konstruktor");
+	}
+	
 	/**
 	 * Tower konstruktor
 	 * 
@@ -91,7 +101,7 @@ public class Tower implements RouteCellListener
 	 *            alap sebzési érték
 	 */
 	public Tower(int freq, int radius, int damage) {
-		Logging.log("<< Tower konstruktor hívás, paraméterek: freq: " + freq
+		Logging.log(">> Tower konstruktor hívás, paraméterek: freq: " + freq
 				+ ", radius: " + radius + ", damage: " + damage);
 		this.freq = freq;
 		this.radius = radius;
