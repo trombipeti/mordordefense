@@ -43,6 +43,10 @@ public class Dwarf extends Enemy {
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
+		long _time = System.currentTimeMillis();
+		if(_time - timeOfLastStep < speed) {
+			Logging.log("<< Dwarf.leptet(), nem tud meg lepni");
+		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van,
 		// akire nem tud lépni,
@@ -93,6 +97,6 @@ public class Dwarf extends Enemy {
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}
-		Logging.log("<< Elf.slice()");
+		Logging.log("<< Dwarf.slice()");
 	}
 }

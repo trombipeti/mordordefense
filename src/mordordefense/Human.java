@@ -41,6 +41,10 @@ public class Human extends Enemy {
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
+		long _time = System.currentTimeMillis();
+		if(_time - timeOfLastStep < speed) {
+			Logging.log("<< Human.leptet(), nem tud meg lepni");
+		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
 		// lépni,
