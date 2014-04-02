@@ -307,11 +307,35 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	public void placeTower(Tower t, int x, int y) {
-		FieldCell fc = (FieldCell) cells.get(x).get(y);
-		fc.addTower(t);
-		saruman.rmManna(Tower.getBaseCost());
+		if(cells.get(x).get(y).getType()=="FieldCell"){
+			FieldCell fc = (FieldCell) cells.get(x).get(y);
+			if(fc.addTower(t))
+				saruman.rmManna(Tower.getBaseCost());
+		} else{
+			//TODO kivétel / kiírás hogy rossz helyre raktuk
+		}
+	}
+	
+	public void placeTrap(Trap t,int x, int y){
+		if(cells.get(x).get(y).getType()=="RouteCell"){
+			RouteCell rc=(RouteCell) cells.get(x).get(y);
+			if(rc.addTrap(t))
+				saruman.rmManna(Trap.getBaseCost());
+		} else{
+			//TODO Kivétel dobás / kiírás hogy nem jó helyre raktuk
+		}
+		
 	}
 
+	public Tower getTower(int i){
+		return towers.get(i);
+	}
+	
+	public Trap getTrap(int i){
+		return traps.get(i);
+	}
+	
+	
 	// RouteCellListener
 
 	@Override
