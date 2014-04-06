@@ -117,9 +117,20 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param n
 	 *            hány ellenséget tehet le
 	 */
-	public Controller(int n, String fileName) {
-		Logging.log(">> Controller konstruktor hívás, paraméter:" + n);
-		maxEnemyNum = n;
+	public Controller(int n,String fileName) {
+		Logging.log(">> Controller konstruktor hívás, paraméter:"+n);
+		maxEnemyNum=n;
+		mapFileName = fileName;
+	}
+	
+	/**
+	 * Konstruktor
+	 * 
+	 * @param n
+	 *            hány ellenséget tehet le
+	 */
+	public Controller(String fileName) {
+		Logging.log(">> Controller konstruktor hívás, paraméter:"+fileName);
 		mapFileName = fileName;
 	}
 
