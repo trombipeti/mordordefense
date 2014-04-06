@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import mordordefense.Controller;
 import mordordefense.MagicStone;
 import mordordefense.Tower;
@@ -22,92 +21,170 @@ public class ScriptInterpreter {
 		simulationStarted = false;
 	}
 
+	public void inputFromFile(String filename) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			try {
+				String line;
+				while ((line = br.readLine()) != null)
+					interpret(line);
+
+			} catch (Exception e) {
+				Logging.log(e.getMessage());
+			} finally {
+				br.close();
+			}
+
+		} catch (Exception e) {
+			Logging.log(e.getMessage());
+		}
+	}
+
 	public void interpret(String s) {
 		String[] parts = s.split(" ");
+
 		// Input értelmező else-if
-
-		if (parts[0] == "input") {
-			// Beolvasandó parancsok file-jának beállítása
-		} else if (parts[0] == "output") {
-			// Logger file-ba való logolásának beállítása
-			if (parts[1] == null)
-				Logging.setLogFileName(null);
-			else
-				Logging.setLogFileName(parts[1]);
-		} else if (parts[0] == "random") {
-			// Determinisztikus működés megválasztása
-			if (parts[1] == "on")
-				cont.setRandom(true);
-			else
-				cont.setRandom(false);
-		} else if (parts[0] == "help") {
-			// Help file-ban található commandok és leírásuk kilistázása
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(
-						"help.txt"));
-				try {
-					String line;
-					while ((line = reader.readLine()) != null)
-						System.out.println(line);
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally {
-					reader.close();
+		try {
+			if (parts[0].equalsIgnoreCase("input")) {
+				// Beolvasandó parancsok file-jának beállítása
+				if (parts.length == 2) {
+					inputFromFile(parts[1]);
+				} else {
+					throw new Exception(
+							"!! Nem megfelelo az argumentumok szama");
 				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			} else if (parts[0].equalsIgnoreCase("output")) {
+				// ---------------- Logger file beállítása----------------
+				if (parts.length == 1)
+					Logging.setLogFileName(null);
+				else if(parts.length==2)
+					Logging.setLogFileName(parts[1]);
+				else
+					throw new Exception("!! Nem megfelelo az argumentumok szama");
+			} else if (parts[0].equalsIgnoreCase("random")) {
+				// ---------------- Random működés megválasztása----------------
+				if (parts.length == 2) {
+					if (parts[1] == "on")
+						cont.setRandom(true);
+					else
+						cont.setRandom(false);
+				} else {
+					throw new Exception("!!Nem megfelelo az argumentumok szama!");
+				}
 
-		} else if (parts[0] == "quit") {
-			// TODO Program futásának megállítása
-		} else if (parts[0] == "start") {
-			simulationStarted = true;
-			cont.setMapFileName(parts[2]);
-			if (parts[1] == "1") {
-				stepSimulation = true;
+			} else if (parts[0].equalsIgnoreCase("help")) {
+				// ---------------- Parancsok kiírása----------------
+				//try {
+					BufferedReader reader = new BufferedReader(new FileReader(
+							"help.txt"));
+					try {
+						String line;
+						while ((line = reader.readLine()) != null)
+							System.out.println(line);
+					} catch (Exception e) {
+						Logging.log(e.getMessage());
+					} finally {
+						reader.close();
+					}
+				/*} catch (Exception e) {
+
+					Logging.log(e.getMessage());
+				}*/
+
+			} else if (parts[0].equalsIgnoreCase("quit")) {
+				System.gc();
+				System.exit(0);
+			} else if (parts[0].equalsIgnoreCase("start")) {
+				// ---------------- Program indító ----------------
+				//try {
+					if (parts.length == 3) {
+						simulationStarted = true;
+						cont.setMapFileName(parts[2]);
+						if (parts[1].equalsIgnoreCase("1")) {
+							stepSimulation = true;
+						} else {
+							stepSimulation = false;
+							cont.init();
+							cont.run();
+						}
+					} else
+						throw new Exception(
+								"!!Az argumentumok szama nem megfelelo");
+				/*} catch (Exception e) {
+					Logging.log(e.getMessage());
+				}*/
+
+			} else if (parts[0].equalsIgnoreCase("step")) {
+				// ---------------- Léptetés ----------------
+				if (simulationStarted) {
+					if (stepSimulation)
+						cont.stepAllEnemies();
+					else
+						throw new Exception(">>!! Nem leptetos modban fut a jatek");
+				} else
+					throw new Exception(">>!! Nem fut a jatek");
+
+			} else if (parts[0].equalsIgnoreCase("tower")) {
+				// ---------------- Tower lerakása X,Y
+				// koordinátákra----------------
+				//try {
+					if (parts.length == 3) {
+						int x = Integer.parseInt(parts[1]);
+						int y = Integer.parseInt(parts[2]);
+						cont.placeTower(new Tower(), x, y);
+					} else
+						throw new Exception("Nem valid a bemenet");
+				/*} catch (Exception e) {
+					Logging.log(e.getMessage());
+				}*/
+
+			} else if (parts[0].equalsIgnoreCase("trap")) {
+				//Trap lerakása X,Y koordinátákra
+				//try {
+					if (parts.length == 3) {
+						int x = Integer.parseInt(parts[1]);
+						int y = Integer.parseInt(parts[2]);
+						cont.placeTrap(new Trap(), x, y);
+					} else
+						throw new Exception("Nem valid a bemenet");
+				/*} catch (Exception e) {
+					Logging.log(e.getMessage());
+				}*/
+
+			} else if (parts[0].equalsIgnoreCase("magicstone")) {
+				// ---------------- MagicStone hozzáadás----------------
+				//try {
+					if (parts.length == 10) {
+						if (parts[1].equalsIgnoreCase("tower")) {
+							cont.getTower(Integer.valueOf(parts[2])).addStone(
+									new MagicStone(Float.parseFloat(parts[3]),
+											Float.parseFloat(parts[4]), Float
+													.parseFloat(parts[5]),
+											Float.parseFloat(parts[6]), Float
+													.parseFloat(parts[7]),
+											Float.parseFloat(parts[8]), Float
+													.parseFloat(parts[9])));
+						} else if (parts[1].equalsIgnoreCase("trap")) {
+							cont.getTrap(Integer.valueOf(parts[2])).addStone(
+									new MagicStone(Float.parseFloat(parts[3]),
+											Float.parseFloat(parts[4]), Float
+													.parseFloat(parts[5]),
+											Float.parseFloat(parts[6]), Float
+													.parseFloat(parts[7]),
+											Float.parseFloat(parts[8]), Float
+													.parseFloat(parts[9])));
+						}
+					}
+
+				/*} catch (Exception e) {
+					Logging.log(e.getMessage());
+				}*/
 			} else {
-				stepSimulation = false;
-				cont.init();
-				cont.run();
+				System.out.println("Nem valid Bementei parancs!");
 			}
+		} catch (Exception e) {
 
-		} else if (parts[0] == "step") {
-			// Lépéses szimuláció esetén ezzel a parancssal léptetünk
-			if (simulationStarted) {
-				if (stepSimulation)
-					cont.stepAllEnemies();
-			}
-		} else if (parts[0] == "tower") {
-			// Tower lerakása X:Y koordinátákra
-			int x = Integer.parseInt(parts[1]);
-			int y = Integer.parseInt(parts[2]);
-			cont.placeTower(new Tower(), x, y);
-		} else if (parts[0] == "trap") {
-			int x = Integer.parseInt(parts[1]);
-			int y = Integer.parseInt(parts[2]);
-			cont.placeTrap(new Trap(), x, y);
-		} else if (parts[0] == "magicstone") {
-			if (parts[1] == "tower") {
-				cont.getTower(Integer.valueOf(parts[2])).addStone(
-						new MagicStone(Float.valueOf(parts[3]), Float
-								.valueOf(parts[4]), Float.valueOf(parts[5]),
-								Float.valueOf(parts[6]), Float
-										.valueOf(parts[7]), Float
-										.valueOf(parts[8]), Float
-										.valueOf(parts[9])));
-			} else if (parts[1] == "trap") {
-				cont.getTrap(Integer.valueOf(parts[2])).addStone(
-						new MagicStone(Float.valueOf(parts[3]), Float
-								.valueOf(parts[4]), Float.valueOf(parts[5]),
-								Float.valueOf(parts[6]), Float
-										.valueOf(parts[7]), Float
-										.valueOf(parts[8]), Float
-										.valueOf(parts[9])));
-			}
-		} else {
-			System.out.println("Nem valid Bementei parancs!");
 		}
 	}
 }
+
