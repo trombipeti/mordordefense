@@ -100,11 +100,11 @@ public class ScriptInterpreter {
 					if (parts.length == 3) {
 						simulationStarted = true;
 						cont.setMapFileName(parts[2]);
+						cont.init();
 						if (parts[1].equalsIgnoreCase("1")) {
 							stepSimulation = true;
 						} else {
 							stepSimulation = false;
-							cont.init();
 							cont.run();
 						}
 					} else
