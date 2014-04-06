@@ -44,7 +44,7 @@ public class Elf extends Enemy {
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if(_time - timeOfLastStep < speed) {
+		if (_time - timeOfLastStep < speed) {
 			Logging.log("<< Elf.leptet(), nem tud meg lepni.");
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
@@ -92,8 +92,8 @@ public class Elf extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(">> Elf.slice() hívás");
-		Elf newEnemy = new Elf(lifePoint/2,speed);
-		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		Elf newEnemy = new Elf(lifePoint / 2, speed);
+		lifePoint = (int) (Math.floor(lifePoint + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);

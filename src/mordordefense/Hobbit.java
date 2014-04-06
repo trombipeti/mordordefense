@@ -48,7 +48,7 @@ public class Hobbit extends Enemy
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if(_time - timeOfLastStep < speed) {
+		if (_time - timeOfLastStep < speed) {
 			Logging.log("<< Hobbit.leptet(), nem tud meg lepni.");
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
@@ -96,8 +96,8 @@ public class Hobbit extends Enemy
 	@Override
 	protected void slice() {
 		Logging.log(">> Hobbit.slice() hívás");
-		Hobbit newEnemy = new Hobbit(lifePoint/2,speed);
-		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		Hobbit newEnemy = new Hobbit(lifePoint / 2, speed);
+		lifePoint = (int) (Math.floor(lifePoint + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);

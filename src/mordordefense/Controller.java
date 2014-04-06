@@ -105,12 +105,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * A pálya adatait tartalmazó fájl neve.
 	 */
 	private String mapFileName;
-	
+
 	/**
 	 * A controller véletlenszerűen indítja-e az enemyket stb.
 	 */
 	private boolean random;
-	
+
 	/**
 	 * Konstruktor
 	 * 
@@ -312,44 +312,43 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	public void placeTower(Tower t, int x, int y) {
-		if(cells.get(x).get(y).getType()=="FieldCell"){
+		if (cells.get(x).get(y).getType() == "FieldCell") {
 			FieldCell fc = (FieldCell) cells.get(x).get(y);
-			if(fc.addTower(t))
+			if (fc.addTower(t))
 				saruman.rmManna(Tower.getBaseCost());
-		} else{
-			//TODO kivétel / kiírás hogy rossz helyre raktuk
+		} else {
+			// TODO kivétel / kiírás hogy rossz helyre raktuk
 		}
-	}
-	
-	public void placeTrap(Trap t,int x, int y){
-		if(cells.get(x).get(y).getType()=="RouteCell"){
-			RouteCell rc=(RouteCell) cells.get(x).get(y);
-			if(rc.addTrap(t))
-				saruman.rmManna(Trap.getBaseCost());
-		} else{
-			//TODO Kivétel dobás / kiírás hogy nem jó helyre raktuk
-		}
-		
 	}
 
-	public Tower getTower(int i){
+	public void placeTrap(Trap t, int x, int y) {
+		if (cells.get(x).get(y).getType() == "RouteCell") {
+			RouteCell rc = (RouteCell) cells.get(x).get(y);
+			if (rc.addTrap(t))
+				saruman.rmManna(Trap.getBaseCost());
+		} else {
+			// TODO Kivétel dobás / kiírás hogy nem jó helyre raktuk
+		}
+
+	}
+
+	public Tower getTower(int i) {
 		return towers.get(i);
 	}
-	
-	public Trap getTrap(int i){
+
+	public Trap getTrap(int i) {
 		return traps.get(i);
 	}
-	
+
 	public void setRandom(boolean b) {
 		random = b;
 	}
-	
+
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
 	}
-	
-	// RouteCellListener
 
+	// RouteCellListener
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {

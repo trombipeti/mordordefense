@@ -89,7 +89,7 @@ public class Tower implements RouteCellListener
 		this.hasFog = false;
 		Logging.log("<< Tower default konstruktor");
 	}
-	
+
 	/**
 	 * Tower konstruktor
 	 * 

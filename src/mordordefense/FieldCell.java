@@ -40,7 +40,7 @@ public class FieldCell extends Cell {
 			t.setParentCell(this);
 			Logging.log("<<FieldCell.addTower return: boolean - true");
 			return true;
-		}else{
+		} else {
 			Logging.log("<<FieldCell.addTower return: boolean - false");
 			return false;
 		}

@@ -43,7 +43,8 @@ public class ScriptInterpreter {
 		} else if (parts[0] == "help") {
 			// Help file-ban található commandok és leírásuk kilistázása
 			try {
-				BufferedReader reader = new BufferedReader(new FileReader("help.txt"));
+				BufferedReader reader = new BufferedReader(new FileReader(
+						"help.txt"));
 				try {
 					String line;
 					while ((line = reader.readLine()) != null)
@@ -55,7 +56,7 @@ public class ScriptInterpreter {
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 

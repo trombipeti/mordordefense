@@ -42,7 +42,7 @@ public class Human extends Enemy {
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if(_time - timeOfLastStep < speed) {
+		if (_time - timeOfLastStep < speed) {
 			Logging.log("<< Human.leptet(), nem tud meg lepni");
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
@@ -90,8 +90,8 @@ public class Human extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(">> Human.slice() hívás");
-		Human newEnemy = new Human(lifePoint/2,speed);
-		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		Human newEnemy = new Human(lifePoint / 2, speed);
+		lifePoint = (int) (Math.floor(lifePoint + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);

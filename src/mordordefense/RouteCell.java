@@ -68,7 +68,7 @@ public class RouteCell extends Cell {
 
 			Logging.log("<<routeCell.addTrap() return: boolean - true");
 			return true;
-		}else{
+		} else {
 			Logging.log("<<routeCell.addTrap() return: boolean - false");
 			return false;
 		}
