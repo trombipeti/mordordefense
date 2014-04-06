@@ -17,6 +17,12 @@ public class Tower implements RouteCellListener
 
 {
 
+	public static int globalDamage;
+
+	public static int globalFreq;
+
+	public static int globalRadius;
+
 	/**
 	 * A torony tüzelési frekvenciája.
 	 */
@@ -83,9 +89,9 @@ public class Tower implements RouteCellListener
 	public Tower() {
 		Logging.log(">> Tower default konstruktor hívás");
 		// TODO default értékek valahonnan
-		this.freq = 1;
-		this.radius = 1;
-		this.baseDamage = 1;
+		this.freq = globalFreq;
+		this.radius = globalRadius;
+		this.baseDamage = globalDamage;
 		this.hasFog = false;
 		Logging.log("<< Tower default konstruktor");
 	}
@@ -254,8 +260,9 @@ public class Tower implements RouteCellListener
 		Bullet b = new Bullet(dw, el, hu, ho, slice);
 		rc.addBullet(b);
 		timeOfLastShoot = System.currentTimeMillis();
-		Logging.log(b.toString() + " from: " + parentCell.getCoords()[0]+" "+parentCell.getCoords()[1] + " to: "
-				+ rc.getCoords()[0]+" "+rc.getCoords()[1]);
+		Logging.log(b.toString() + " from: " + parentCell.getCoords()[0] + " "
+				+ parentCell.getCoords()[1] + " to: " + rc.getCoords()[0] + " "
+				+ rc.getCoords()[1]);
 	}
 
 	/**
@@ -274,7 +281,7 @@ public class Tower implements RouteCellListener
 		return "Tower, radius: " + radius + ", baseDamage: " + baseDamage
 				+ ", freq: " + freq + ", utolso loves ota ideje: "
 				+ timeOfLastShoot + ", hasfog: " + hasFog + ", parentCell: "
-				+ parentCell.getCoords()[0]+" "+parentCell.getCoords()[1];
+				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1];
 	}
 
 	@Override

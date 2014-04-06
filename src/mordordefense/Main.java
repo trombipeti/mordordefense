@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.TreeMap;
 
 import mordordefense.testing.Logging;
+import mordordefense.testing.ProtoTester;
 import mordordefense.testing.SkeletonTester;
 
 public class Main {
@@ -120,7 +121,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Itt kell beállítani majd, hogy hova logoljon.
-		Logging.setLogFileName(null);
+		/*Logging.setLogFileName(null);
 		setupTestCases();
 		boolean ex = false;
 		while (!ex) {
@@ -132,7 +133,8 @@ public class Main {
 			testCases.get(run).run();
 			ranTestCases.put(run, true);
 		}
-
+		 */
+		ProtoTester.mainTestingEnvironment();
 	}
 
 }

@@ -204,7 +204,10 @@ public class ScriptInterpreter {
 								Integer.parseInt(parts[3])));
 				}
 
-			} else {
+			}else if(parts[0].equalsIgnoreCase("fog")){
+				cont.getTower(Integer.parseInt(parts[1])).addFog(Integer.parseInt(parts[2]));
+			}
+			else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
