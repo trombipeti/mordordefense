@@ -200,6 +200,7 @@ public abstract class Enemy {
 	public String toString() {
 		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
 				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
-				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep;
+				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep
+				+ ", pozíciója: " + routeCell.getCoords()[0]+" "+routeCell.getCoords()[1];
 	}
 }

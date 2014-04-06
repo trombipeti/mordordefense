@@ -18,20 +18,20 @@ public class Trap implements RouteCellListener {
 	 * A csapdán lévő varázskövek.
 	 */
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
-	
+
 	public Trap() {
 		Logging.log(">> Trap default konstruktor hívás");
 		// TODO default értékek valahonnan
 		this.strength = 1;
 		Logging.log("<< Trap default konstruktor");
 	}
-	
+
 	public Trap(int strength) {
 		Logging.log(">> Trap konstruktor hívás, parameter: " + strength);
 		this.strength = strength;
 		Logging.log("<< Trap konstruktor");
 	}
-	
+
 	/**
 	 * Operation
 	 * 

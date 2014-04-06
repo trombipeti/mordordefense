@@ -89,7 +89,7 @@ public class Tower implements RouteCellListener
 		this.hasFog = false;
 		Logging.log("<< Tower default konstruktor");
 	}
-	
+
 	/**
 	 * Tower konstruktor
 	 * 
@@ -251,8 +251,11 @@ public class Tower implements RouteCellListener
 			ho *= s.getHobbitMultiplier() * dmgmult;
 		}
 		boolean slice = (new Random().nextInt(10) % 10 == 0);
-		rc.addBullet(new Bullet(dw, el, hu, ho, slice));
+		Bullet b = new Bullet(dw, el, hu, ho, slice);
+		rc.addBullet(b);
 		timeOfLastShoot = System.currentTimeMillis();
+		Logging.log(b.toString() + " from: " + parentCell.getCoords()[0]+" "+parentCell.getCoords()[1] + " to: "
+				+ rc.getCoords()[0]+" "+rc.getCoords()[1]);
 	}
 
 	/**
@@ -268,9 +271,10 @@ public class Tower implements RouteCellListener
 
 	@Override
 	public String toString() {
-		return "Tower, freq: " + freq + ", radius: " + radius
-				+ ", baseDamage: " + baseDamage + ", utolso loves ota ideje: "
-				+ timeOfLastShoot;
+		return "Tower, radius: " + radius + ", baseDamage: " + baseDamage
+				+ ", freq: " + freq + ", utolso loves ota ideje: "
+				+ timeOfLastShoot + ", hasfog: " + hasFog + ", parentCell: "
+				+ parentCell.getCoords()[0]+" "+parentCell.getCoords()[1];
 	}
 
 	@Override

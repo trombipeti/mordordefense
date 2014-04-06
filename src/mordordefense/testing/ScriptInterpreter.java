@@ -187,6 +187,7 @@ public class ScriptInterpreter {
 				/*
 				 * } catch (Exception e) { Logging.log(e.getMessage()); }
 				 */
+<<<<<<< HEAD
 			} else if (parts[0].equalsIgnoreCase("enemy")) {
 				if(parts.length==4){
 					if(parts[1].equalsIgnoreCase("d"))
@@ -198,6 +199,8 @@ public class ScriptInterpreter {
 					else if(parts[1].equalsIgnoreCase("ho"))
 						cont.addHobbit(new Hobbit(Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
 				}
+=======
+>>>>>>> origin/master
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
