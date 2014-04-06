@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import mordordefense.Controller;
+import mordordefense.Dwarf;
+import mordordefense.Elf;
+import mordordefense.Hobbit;
+import mordordefense.Human;
 import mordordefense.MagicStone;
 import mordordefense.Tower;
 import mordordefense.Trap;
@@ -182,6 +187,17 @@ public class ScriptInterpreter {
 				/*
 				 * } catch (Exception e) { Logging.log(e.getMessage()); }
 				 */
+			} else if (parts[0].equalsIgnoreCase("enemy")) {
+				if(parts.length==4){
+					if(parts[1].equalsIgnoreCase("d"))
+						cont.addDwarf(new Dwarf(Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+					else if(parts[1].equalsIgnoreCase("e"))
+						cont.addElf(new Elf(Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+					else if(parts[1].equalsIgnoreCase("hu"))
+						cont.addHuman(new Human(Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+					else if(parts[1].equalsIgnoreCase("ho"))
+						cont.addHobbit(new Hobbit(Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+				}
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
