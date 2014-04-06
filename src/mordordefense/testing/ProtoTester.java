@@ -12,7 +12,7 @@ public class ProtoTester {
 
 	public static void TestCase2() {
 		// Ez a kiadott kötelező teszt.
-		Controller cont = new Controller("");
+		Controller cont = new Controller("6_2_es.p");
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
 		Tower.globalDamage=1;
 		Tower.globalFreq=1;
@@ -49,6 +49,9 @@ public class ProtoTester {
 			break;
 		case 2:
 			TestCase2();
+			break;
+		case 3:
+			TestCase3();
 			break;
 		default:
 			break;
