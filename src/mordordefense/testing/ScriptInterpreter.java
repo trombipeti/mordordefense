@@ -123,6 +123,7 @@ public class ScriptInterpreter {
 
 			} else if (parts[0].equalsIgnoreCase("step")) {
 				// ---------------- Léptetés ----------------
+				System.out.println("asd");
 				if (simulationStarted) {
 					if (stepSimulation)
 						cont.stepAllEnemies();
