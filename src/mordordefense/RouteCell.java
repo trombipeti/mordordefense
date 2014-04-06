@@ -81,7 +81,7 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Elf}
 	 */
 	public void enter(Elf e) {
-		Logging.log(">> RouteCell.enter() hívás, paraméter: " + e.toString());
+		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + e.toString());
 		e.setRouteCell(this);
 		enemies.add(e);
 		for (RouteCellListener l : listeners) {
@@ -96,7 +96,7 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Human}
 	 */
 	public void enter(Human h) {
-		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
 		h.setRouteCell(this);
 		enemies.add(h);
 		for (RouteCellListener l : listeners) {
@@ -111,7 +111,7 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Hobbit}
 	 */
 	public void enter(Hobbit h) {
-		Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
 		h.setRouteCell(this);
 		enemies.add(h);
 		for (RouteCellListener l : listeners) {
@@ -126,7 +126,7 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Dwarf}
 	 */
 	public void enter(Dwarf d) {
-		Logging.log(">> RouteCell.enter() hívás, paraméter: " + d.toString());
+		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + d.toString());
 		d.setRouteCell(this);
 		enemies.add(d);
 		for (RouteCellListener l : listeners) {
