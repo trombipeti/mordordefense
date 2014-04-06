@@ -123,7 +123,6 @@ public class ScriptInterpreter {
 
 			} else if (parts[0].equalsIgnoreCase("step")) {
 				// ---------------- Léptetés ----------------
-				System.out.println("asd");
 				if (simulationStarted) {
 					if (stepSimulation)
 						cont.stepAllEnemies();
@@ -140,6 +139,8 @@ public class ScriptInterpreter {
 				if (parts.length == 3) {
 					int x = Integer.parseInt(parts[1]);
 					int y = Integer.parseInt(parts[2]);
+					System.out.print(x);
+					System.out.println(y);
 					cont.placeTower(new Tower(), x, y);
 				} else
 					throw new Exception("Nem valid a bemenet");
@@ -205,13 +206,15 @@ public class ScriptInterpreter {
 								Integer.parseInt(parts[3])));
 				}
 
-			}else if(parts[0].equalsIgnoreCase("fog")){
-				cont.getTower(Integer.parseInt(parts[1])).addFog(Integer.parseInt(parts[2]));
-			}
-			else {
+			} else if (parts[0].equalsIgnoreCase("fog")) {
+				cont.getTower(Integer.parseInt(parts[1])).addFog(
+						Integer.parseInt(parts[2]));
+			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
+			Logging.log(e.getMessage());
+			interpret("quit");
 
 		}
 	}
