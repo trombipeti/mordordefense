@@ -226,6 +226,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Logging.log("<< void Controller.init()");
 	}
 
 	/**
@@ -328,7 +329,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			if (fc.addTower(t))
 				saruman.rmManna(Tower.getBaseCost());
 		} else {
-			// TODO kivétel / kiírás hogy rossz helyre raktuk
+			Logging.log("!!! Towert nem FieldCell-re raktuk!");
 		}
 	}
 

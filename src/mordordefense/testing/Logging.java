@@ -9,7 +9,7 @@ public class Logging {
 	private static String logFileName = null;
 
 	public static void log(String message, String file) throws IOException {
-		PrintWriter pw = new PrintWriter(new FileWriter(file,true));
+		PrintWriter pw = new PrintWriter(new FileWriter(file, true));
 		pw.println(message);
 		pw.close();
 	}
