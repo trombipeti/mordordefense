@@ -314,11 +314,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 			try {
 				en.leptet();
 			} catch (EnemyDeadException e1) {
+				Logging.log(">> Az enemy meghalt: " + en.toString());
 				saruman.addManna(en.getMaxLifePoint());
-				e1.printStackTrace();
+				// e1.printStackTrace();
 				enemies.remove(en);
 			} catch (EnemyCannotStepException e1) {
-				e1.printStackTrace();
+				// e1.printStackTrace();
 			}
 		}
 	}
@@ -326,8 +327,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void placeTower(Tower t, int x, int y) {
 		if (cells.get(x).get(y).getType() == "FieldCell") {
 			FieldCell fc = (FieldCell) cells.get(x).get(y);
-			if (fc.addTower(t))
+			if (fc.addTower(t)) {
+				towers.add(t);
 				saruman.rmManna(Tower.getBaseCost());
+			}
 		} else {
 			Logging.log("!!! Towert nem FieldCell-re raktuk!");
 		}

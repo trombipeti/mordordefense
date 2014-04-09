@@ -93,6 +93,7 @@ public class Tower implements RouteCellListener
 		this.radius = globalRadius;
 		this.baseDamage = globalDamage;
 		this.hasFog = false;
+		timeOfLastShoot = -1;
 		Logging.log("<< Tower default konstruktor");
 	}
 
@@ -280,8 +281,9 @@ public class Tower implements RouteCellListener
 	public String toString() {
 		return "Tower, radius: " + radius + ", baseDamage: " + baseDamage
 				+ ", freq: " + freq + ", utolso loves ota ideje: "
-				+ timeOfLastShoot + ", hasfog: " + hasFog + ", parentCell: "
-				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1];
+				+ (System.currentTimeMillis() - timeOfLastShoot) + ", hasfog: "
+				+ hasFog + ", parentCell: " + parentCell.getCoords()[0] + " "
+				+ parentCell.getCoords()[1];
 	}
 
 	@Override
