@@ -124,6 +124,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
+	 * Konstruktor
+	 * 
+	 * @param n
+	 *            hány ellenséget tehet le
+	 */
+	public Controller(String fileName) {
+		Logging.log(">> Controller konstruktor hívás, paraméter:" + fileName);
+		mapFileName = fileName;
+	}
+
+	/**
 	 * Inicializáló függvény. Beolvassa a pályafájlból a pályát és fölépíti azt.
 	 */
 	public void init() {
@@ -215,6 +226,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Logging.log("<< void Controller.init()");
 	}
 
 	/**
@@ -317,7 +329,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			if (fc.addTower(t))
 				saruman.rmManna(Tower.getBaseCost());
 		} else {
-			// TODO kivétel / kiírás hogy rossz helyre raktuk
+			Logging.log("!!! Towert nem FieldCell-re raktuk!");
 		}
 	}
 
