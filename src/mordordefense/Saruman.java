@@ -56,4 +56,9 @@ public class Saruman {
 		manna -= m;
 		Logging.log("\t Szarumán új varázserej: " + manna);
 	}
+	
+	@Override
+	public String toString(){
+		return "Saruman mana: "+manna;
+	}
 }
