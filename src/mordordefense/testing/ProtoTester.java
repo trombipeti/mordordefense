@@ -37,12 +37,17 @@ public class ProtoTester {
 		System.out.println("Melyik tesztesetet futtassam?");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int value = 0;
+		String in = "";
 		try {
-			String in = br.readLine();
+			in = br.readLine();
 			value = Integer.parseInt(in);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch(NumberFormatException e) {
+			if(in.equalsIgnoreCase("q")) {
+				System.exit(0);
+			}
 		}
 		switch (value) {
 		case 0:
