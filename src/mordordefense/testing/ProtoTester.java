@@ -32,35 +32,49 @@ public class ProtoTester {
 		sinterp.interpret("input test3.txt");
 	}
 
+	public static void TestCase4() {
+		Controller cont = new Controller("palya1.p");
+		cont.init();
+		cont.startMainLoop();
+	}
+
 	public static void mainTestingEnvironment() {
 
-		System.out.println("Melyik tesztesetet futtassam?");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int value = 0;
-		String in = "";
-		try {
-			in = br.readLine();
-			value = Integer.parseInt(in);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch(NumberFormatException e) {
-			if(in.equalsIgnoreCase("q")) {
-				System.exit(0);
+		boolean end = false;
+		while (!end) {
+			System.out.println("\nMelyik tesztesetet futtassam?");
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
+			int value = 0;
+			String in = "";
+			try {
+				in = br.readLine();
+				value = Integer.parseInt(in);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				if (in.equalsIgnoreCase("q")) {
+					end = true;
+					break;
+				}
 			}
-		}
-		switch (value) {
-		case 0:
-			System.out.println("Rossz teszteset");
-			break;
-		case 2:
-			TestCase2();
-			break;
-		case 3:
-			TestCase3();
-			break;
-		default:
-			break;
+			switch (value) {
+			case 0:
+				System.out.println("Rossz teszteset");
+				break;
+			case 2:
+				TestCase2();
+				break;
+			case 3:
+				TestCase3();
+				break;
+			case 4:
+				TestCase4();
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }

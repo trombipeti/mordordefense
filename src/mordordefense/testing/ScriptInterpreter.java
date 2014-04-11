@@ -113,7 +113,7 @@ public class ScriptInterpreter {
 						stepSimulation = true;
 					} else {
 						stepSimulation = false;
-						cont.run();
+						cont.loop();
 					}
 				} else
 					throw new Exception("!!Az argumentumok szama nem megfelelo");

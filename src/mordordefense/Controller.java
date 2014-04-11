@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
+
+import sun.org.mozilla.javascript.ast.Loop;
 
 import mordordefense.Cell.Dir;
 import mordordefense.exceptions.EnemyCannotStepException;
@@ -269,12 +273,38 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 		}
 	}
-
+	
+	private Timer scheduler = new Timer();
+	
+	/**
+	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}
+	 */
+	private TimerTask mainLoop = new TimerTask() {
+		
+		@Override
+		public void run() {
+			loop();
+		}
+	};
+	
+	/**
+	 * Ütemezi a scheduler-ben 10 ms-enkénti futásra a loop TimerTask-ot.
+	 */
+	public void startMainLoop() {
+		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
+	}
+	
+	public void stopMainLoop() {
+		mainLoop.cancel();
+	}
+	
+	
+	
 	/**
 	 * Az eseményeket vezérlő függvény
 	 * 
 	 */
-	public void run() {
+	public void loop() {
 		Logging.log("Controller.run() hívás");
 		addElf(new Elf(10, 1));
 
@@ -373,6 +403,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
 			Logging.log("Enemy nyert: " + e.toString());
+			stopMainLoop();
 		}
 	}
 
@@ -384,6 +415,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
 			Logging.log("Enemy nyert: " + d.toString());
+			stopMainLoop();
 		}
 	}
 
@@ -395,6 +427,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
 			Logging.log("Enemy nyert: " + h.toString());
+			stopMainLoop();
 		}
 	}
 
@@ -406,6 +439,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
 			Logging.log("Enemy nyert: " + h.toString());
+			stopMainLoop();
 		}
 	}
 
@@ -452,6 +486,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		enemies.remove(e);
 		if (sentEnemies == maxEnemyNum) {
 			winner = new StringBuffer("saruman");
+			stopMainLoop();
 		}
 	}
 
