@@ -35,13 +35,13 @@ public class ScriptInterpreter {
 					interpret(line);
 
 			} catch (Exception e) {
-				Logging.log(e.getMessage());
+				e.printStackTrace();
 			} finally {
 				br.close();
 			}
 
 		} catch (Exception e) {
-			Logging.log(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -89,14 +89,14 @@ public class ScriptInterpreter {
 					while ((line = reader.readLine()) != null)
 						System.out.println(line);
 				} catch (Exception e) {
-					Logging.log(e.getMessage());
+					e.printStackTrace();
 				} finally {
 					reader.close();
 				}
 				/*
 				 * } catch (Exception e) {
 				 * 
-				 * Logging.log(e.getMessage()); }
+				 * e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("quit")) {
@@ -118,7 +118,7 @@ public class ScriptInterpreter {
 				} else
 					throw new Exception("!!Az argumentumok szama nem megfelelo");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("step")) {
@@ -145,7 +145,7 @@ public class ScriptInterpreter {
 				} else
 					throw new Exception("Nem valid a bemenet");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("trap")) {
@@ -158,7 +158,7 @@ public class ScriptInterpreter {
 				} else
 					throw new Exception("Nem valid a bemenet");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("magicstone")) {
@@ -187,7 +187,7 @@ public class ScriptInterpreter {
 				}
 
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("enemy")) {
@@ -213,7 +213,7 @@ public class ScriptInterpreter {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
-			Logging.log(e.getMessage());
+			e.printStackTrace();
 			interpret("quit");
 
 		}
