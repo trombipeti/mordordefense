@@ -60,6 +60,16 @@ public abstract class Enemy {
 	protected HashSet<EnemyListener> listeners = new HashSet<EnemyListener>();
 
 	/**
+	 * Az enemy típusonként esetlegesen változó maximális életpontja.
+	 */
+	public static int defMaxLP;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó indulósebessége.
+	 */
+	public static int defSpeed;
+
+	/**
 	 * Konstruktor, amely beállítja a maximális életerőt és a kezdősebességet.
 	 * 
 	 * @param parMaxLifePoint
@@ -200,7 +210,8 @@ public abstract class Enemy {
 	public String toString() {
 		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
 				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
-				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep
-				+ ", pozíciója: " + routeCell.getCoords()[0]+" "+routeCell.getCoords()[1];
+				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep;
+//				+ ", pozíciója: " + routeCell.getCoords()[0] + " "
+//				+ routeCell.getCoords()[1];
 	}
 }

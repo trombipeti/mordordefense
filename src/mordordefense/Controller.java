@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
@@ -124,18 +125,31 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public Controller(int n, String fileName) {
 		Logging.log(">> Controller konstruktor hívás, paraméter:" + n);
 		maxEnemyNum = n;
+		sentEnemies = 0;
 		mapFileName = fileName;
 	}
 
 	/**
 	 * Konstruktor
 	 * 
-	 * @param n
-	 *            hány ellenséget tehet le
+	 * @param fileName
+	 *            A pálya leírását tartalmazó fájl neve.
 	 */
 	public Controller(String fileName) {
 		Logging.log(">> Controller konstruktor hívás, paraméter:" + fileName);
 		mapFileName = fileName;
+		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
+		Human.defMaxLP = 10;
+		Human.defSpeed = 4;
+
+		Hobbit.defMaxLP = 8;
+		Hobbit.defSpeed = 2;
+
+		Elf.defMaxLP = 10;
+		Elf.defSpeed = 4;
+
+		Dwarf.defMaxLP = 11;
+		Dwarf.defSpeed = 6;
 	}
 
 	/**
@@ -144,6 +158,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void init() {
 		Logging.log(">> Controller.init() hívás");
 		saruman = new Saruman(100);
+		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
 		try {
@@ -273,42 +288,65 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 		}
 	}
-	
+
 	private Timer scheduler = new Timer();
-	
+
 	/**
 	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}
 	 */
 	private TimerTask mainLoop = new TimerTask() {
-		
+
 		@Override
 		public void run() {
 			loop();
 		}
 	};
-	
+
 	/**
 	 * Ütemezi a scheduler-ben 10 ms-enkénti futásra a loop TimerTask-ot.
 	 */
 	public void startMainLoop() {
 		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
 	}
-	
+
 	public void stopMainLoop() {
 		mainLoop.cancel();
 	}
-	
-	
-	
+
 	/**
 	 * Az eseményeket vezérlő függvény
 	 * 
 	 */
 	public void loop() {
 		Logging.log("Controller.run() hívás");
-		addElf(new Elf(10, 1));
-
+		if (sentEnemies < maxEnemyNum) {
+			System.out.println("Adding random enemy");
+			addRandomEnemy();
+			sentEnemies++;
+		}
 		stepAllEnemies();
+	}
+
+	private void addRandomEnemy() {
+		Logging.log("Controller.addRandomEnemy() hívás");
+		Random randgen = new Random();
+		int n = randgen.nextInt(4);
+		switch (n) {
+		case 0:
+			addHuman(new Human(Human.defMaxLP, Human.defSpeed));
+			break;
+		case 1:
+			addElf(new Elf(Elf.defMaxLP, Elf.defSpeed));
+			break;
+		case 2:
+			addHobbit(new Hobbit(Hobbit.defMaxLP, Hobbit.defSpeed));
+			break;
+		case 3:
+			addDwarf(new Dwarf(Dwarf.defMaxLP, Dwarf.defSpeed));
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void addHuman(Human h) {
@@ -346,10 +384,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 			} catch (EnemyDeadException e1) {
 				Logging.log(">> Az enemy meghalt: " + en.toString());
 				saruman.addManna(en.getMaxLifePoint());
-				// e1.printStackTrace();
+				e1.printStackTrace();
 				enemies.remove(en);
 			} catch (EnemyCannotStepException e1) {
-				// e1.printStackTrace();
+				e1.printStackTrace();
 			}
 		}
 	}
