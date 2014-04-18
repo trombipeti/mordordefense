@@ -66,7 +66,7 @@ public class RouteCell extends Cell {
 		Logging.log(2, ">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
 		if (trap == null) {
 			trap = t;
-
+			listeners.add(t);
 			Logging.log(2, "<< routeCell.addTrap() return: boolean - true");
 			return true;
 		} else {

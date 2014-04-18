@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
-import sun.org.mozilla.javascript.ast.Loop;
+//import sun.org.mozilla.javascript.ast.Loop; //ez az import nem tudom, hogy kell-e, de nálam nem nagyon fordul
 
 import mordordefense.Cell.Dir;
 import mordordefense.exceptions.EnemyCannotStepException;
@@ -423,7 +423,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			RouteCell rc = (RouteCell) cells.get(x).get(y);
 			if (rc.addTrap(t)){
 				saruman.rmManna(Trap.getBaseCost());
-				traps.add(t);
+				traps.add(t);				
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
