@@ -37,7 +37,7 @@ public class Elf extends Enemy {
 		return "Elf";
 	}
 
-	/** 
+	/**
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
@@ -77,6 +77,7 @@ public class Elf extends Enemy {
 			resetSpeed();
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
 			Logging.log(2, "<< Elf.leptet() exception");
 			throw new EnemyCannotStepException();

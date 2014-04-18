@@ -75,6 +75,7 @@ public class Human extends Enemy {
 			resetSpeed();
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
 			Logging.log(2, "<< Human.leptet() exception");
 			throw new EnemyCannotStepException();

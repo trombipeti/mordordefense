@@ -76,6 +76,7 @@ public class Dwarf extends Enemy {
 			resetSpeed();
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
 			Logging.log(2, "<< Dwarf.leptet() exception");
 			throw new EnemyCannotStepException();

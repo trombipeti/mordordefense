@@ -29,12 +29,13 @@ public abstract class Enemy {
 	protected float lifePoint;
 
 	/**
-	 * Az enemy alapsebessége.
+	 * Az enemy alapsebessége. Mértékegysége: mező/másodperc
 	 */
 	protected float baseSpeed;
 
 	/**
 	 * Az enemy aktuális sebessége. Egy megadott mértéknél sose csökken lejebb.
+	 * Mező/másodperc.
 	 */
 	protected float speed;
 

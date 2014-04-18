@@ -79,6 +79,7 @@ public class Hobbit extends Enemy
 			resetSpeed();
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
 			Logging.log(2, "<< Hobbit.leptet() exception");
 			throw new EnemyCannotStepException();
