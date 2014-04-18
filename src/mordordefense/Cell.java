@@ -83,22 +83,24 @@ public abstract class Cell {
 	protected Cell(int x, int y) {
 		coords[0] = x;
 		coords[1] = y;
-		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
+		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: "
 				+ x + ", y:" + y);
 		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
+		Logging.log(4, "<< Cell konstruktor");
 	}
 
 	protected Cell(int x, int y, int ID) {
 		coords[0] = x;
 		coords[1] = y;
 		this.ID = ID;
-		Logging.log(">> Cell.Cell() konstruktor hívás, paraméterek: " + "x: "
+		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: "
 				+ x + ", y: " + y + ", ID: " + ID);
 		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
+		Logging.log(4, "<< Cell konstruktor");
 	}
 
 	/**
@@ -107,8 +109,8 @@ public abstract class Cell {
 	 * @return ArrayList<Cell> A cella szomszédai.
 	 */
 	public TreeMap<Integer, Cell> getSzomszedok() {
-		Logging.log(">> Cell.getSzomszedok() hívás");
-		Logging.log("<< " + szomszedok.toString());
+		Logging.log(3, ">> Cell.getSzomszedok() hívás");
+		Logging.log(4, "<< " + szomszedok.toString());
 		return szomszedok;
 	}
 
@@ -121,11 +123,11 @@ public abstract class Cell {
 	 *            Ki az a bizonyos szomszéd. Lehet null, ez pályaszélet jelent.
 	 */
 	public void setSzomszed(Dir d, Cell szomszed) {
-		Logging.log(">> Cell.setSzomszed() hívás, paraméterek: " + "n: "
+		Logging.log(3, ">> Cell.setSzomszed() hívás, paraméterek: " + "n: "
 				+ d.toString() + ", szomszed: "
 				+ (szomszed == null ? "null" : szomszed.toString()));
 		szomszedok.put(d.getValue(), szomszed);
-		Logging.log("<< void");
+		Logging.log(4, "<< void Cell.setSzomszed()");
 	}
 
 	/**
@@ -134,8 +136,8 @@ public abstract class Cell {
 	 * @return int A cella aktuális ID-je
 	 */
 	public int getID() {
-		Logging.log(">> Cell.getID() hívás");
-		Logging.log("<< " + ID);
+		Logging.log(3, ">> Cell.getID() hívás");
+		Logging.log(4, "<< " + ID);
 		return ID;
 	}
 
@@ -146,9 +148,9 @@ public abstract class Cell {
 	 *            A cella új ID-je
 	 */
 	public void setID(int i) {
-		Logging.log(">> Cell.setID() hívás, paraméter: " + i);
+		Logging.log(3, ">> Cell.setID() hívás, paraméter: " + i);
 		ID = i;
-		Logging.log("<< void");
+		Logging.log(4, "<< void");
 	}
 
 	/**
@@ -157,8 +159,8 @@ public abstract class Cell {
 	 * @return int[] A cella koordinátái egy két elemű int tömbben.
 	 */
 	public int[] getCoords() {
-		Logging.log(">> Cell.getCoords() hívás");
-		Logging.log("<< " + coords[0] + ", " + coords[1]);
+		Logging.log(3, ">> Cell.getCoords() hívás");
+		Logging.log(4, "<< " + coords[0] + ", " + coords[1]);
 		return coords;
 	}
 

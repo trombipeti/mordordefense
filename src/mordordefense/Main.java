@@ -134,6 +134,7 @@ public class Main {
 			ranTestCases.put(run, true);
 		}
 		 */
+		Logging.setLogLevel(2);
 		ProtoTester.mainTestingEnvironment();
 	}
 

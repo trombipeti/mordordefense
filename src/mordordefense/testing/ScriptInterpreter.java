@@ -139,8 +139,6 @@ public class ScriptInterpreter {
 				if (parts.length == 3) {
 					int x = Integer.parseInt(parts[1]);
 					int y = Integer.parseInt(parts[2]);
-					System.out.print(x);
-					System.out.println(y);
 					cont.placeTower(new Tower(), x, y);
 				} else
 					throw new Exception("Nem valid a bemenet");

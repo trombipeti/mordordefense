@@ -120,24 +120,25 @@ public abstract class Enemy {
 	 *            Mennyivel csökkenjen a sebessége.
 	 */
 	public void lassit(int mertek) {
-		Logging.log(">> Enemy.lassit() hívás, paraméter: " + mertek);
+		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
 		if (speed - mertek >= 1) {
 			speed -= mertek;
-			Logging.log("\t A sebessége ennyire csökkent: " + speed);
+			Logging.log(3, "\t A sebessége ennyire csökkent: " + speed);
 		} else {
-			Logging.log("\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
-					+ speed);
+			Logging.log(3,
+					"\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
+							+ speed);
 		}
-		Logging.log("<< Enemy.lassit()");
+		Logging.log(2, "<< Enemy.lassit()");
 	}
 
 	/**
 	 * Az enemy sebességét alapértékre állító függvény.
 	 */
 	public void resetSpeed() {
-		Logging.log(">> Enemy.resetSpeed() hívás");
+		Logging.log(3, ">> Enemy.resetSpeed() hívás");
 		speed = baseSpeed;
-		Logging.log("<< Enemy.resetSpeed()");
+		Logging.log(3, "<< Enemy.resetSpeed()");
 	}
 
 	/**
@@ -181,8 +182,8 @@ public abstract class Enemy {
 	 * @return int Mennyit lépett eddig az enemy.
 	 */
 	public int getStepNumber() {
-		Logging.log(">> Enemy.getStepNumber() hívás");
-		Logging.log("<< " + stepNumber);
+		Logging.log(3, ">> Enemy.getStepNumber() hívás");
+		Logging.log(3, "<< " + stepNumber);
 		return stepNumber;
 	}
 
@@ -208,10 +209,13 @@ public abstract class Enemy {
 
 	@Override
 	public String toString() {
-		return "Enemy, tipus: " + getType() + ", eletero: " + lifePoint + "/"
-				+ maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
+		String ret = "Enemy, tipus: " + getType() + ", eletero: " + lifePoint
+				+ "/" + maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
 				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep;
-//				+ ", pozíciója: " + routeCell.getCoords()[0] + " "
-//				+ routeCell.getCoords()[1];
+		if (routeCell != null) {
+			ret += ", pozíciója: " + routeCell.getCoords()[0] + " "
+					+ routeCell.getCoords()[1];
+		}
+		return ret;
 	}
 }

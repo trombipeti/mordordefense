@@ -17,8 +17,8 @@ public class Elf extends Enemy {
 	 * Alap konstruktor.
 	 */
 	public Elf() {
-		Logging.log(">> Elf default konstruktor hívás");
-		Logging.log("<< Elf deafult konstruktor");
+		Logging.log(2, ">> Elf default konstruktor hívás");
+		Logging.log(4, "<< Elf deafult konstruktor");
 	}
 
 	/**
@@ -26,9 +26,9 @@ public class Elf extends Enemy {
 	 */
 	public Elf(int parMaxLifePoint, int parSpeed) {
 		super(parMaxLifePoint, parSpeed);
-		Logging.log(">> Elf konstruktor hívás, maxLP: " + parMaxLifePoint
+		Logging.log(2, ">> Elf konstruktor hívás, maxLP: " + parMaxLifePoint
 				+ " speed: " + parSpeed);
-		Logging.log("<< Elf konstruktor");
+		Logging.log(4, "<< Elf konstruktor");
 
 	}
 
@@ -39,13 +39,14 @@ public class Elf extends Enemy {
 
 	@Override
 	public void leptet() throws EnemyCannotStepException, EnemyDeadException {
-		Logging.log(">> Elf.leptet() hívás");
+		Logging.log(2, ">> Elf.leptet() hívás");
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
 		if (_time - timeOfLastStep < speed) {
-			Logging.log("<< Elf.leptet(), nem tud meg lepni.");
+			Logging.log(2, "<< Elf.leptet(), nem tud meg lepni.");
+			return;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -66,7 +67,7 @@ public class Elf extends Enemy {
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
+			Logging.log(3, "\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
 			nextCell.enter(this);
 			resetSpeed();
@@ -75,29 +76,30 @@ public class Elf extends Enemy {
 		} else {
 			throw new EnemyCannotStepException();
 		}
-		Logging.log("<< Elf.leptet()");
+		Logging.log(2, "<< Elf.leptet()");
 	}
 
 	@Override
 	public void sebez(Bullet b) {
-		Logging.log(">> Elf.sebez() hívás, paraméter: " + b.toString());
+		Logging.log(2, ">> Elf.sebez() hívás, paraméter: " + b.toString());
 		if (b.isSlicing()) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);
-			Logging.log("\t új életerő: " + lifePoint);
+			Logging.log(3, "\t új életerő: " + lifePoint);
 		}
+		Logging.log(2, "<< Elf.sebez()");
 	}
 
 	@Override
 	protected void slice() {
-		Logging.log(">> Elf.slice() hívás");
+		Logging.log(2, ">> Elf.slice() hívás");
 		Elf newEnemy = new Elf(lifePoint / 2, speed);
 		lifePoint = (int) (Math.floor(lifePoint + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}
-		Logging.log("<< Elf.slice()");
+		Logging.log(2, "<< Elf.slice()");
 	}
 }

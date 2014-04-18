@@ -18,7 +18,7 @@ import mordordefense.exceptions.EnemyDeadException;
 public class SkeletonTester {
 
 	public static void runSpawnTestCase() {
-		Logging.log("=== SkeletonTester: spawnTestCase futtatása ===");
+		Logging.log(0, "=== SkeletonTester: spawnTestCase futtatása ===");
 		Hobbit h = new Hobbit(8, 1);
 		Elf e = new Elf(13, 1);
 		SpawnPointCell sp = new SpawnPointCell(0, 0, 0);
@@ -42,13 +42,13 @@ public class SkeletonTester {
 			e1.printStackTrace();
 		} catch (EnemyDeadException e1) {
 			e1.printStackTrace();
-			Logging.log("!!! Az enemy meghalt: " + e.toString() + " !!!");
+			Logging.log(0, "!!! Az enemy meghalt: " + e.toString() + " !!!");
 		}
-		Logging.log("=== SkeletonTester: spawnTestCase vége ===");
+		Logging.log(0, "=== SkeletonTester: spawnTestCase vége ===");
 	}
 
 	public static void runTowerTestCase() {
-		Logging.log("=== SkeletonTester: towerTestCase futtatása ===");
+		Logging.log(0, "=== SkeletonTester: towerTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
 		Tower t = new Tower(1, 10, 1);
 		RouteCell rc1 = new RouteCell(3, 1, 1);
@@ -73,15 +73,15 @@ public class SkeletonTester {
 			d.leptet();
 		} catch (EnemyDeadException e) {
 			// e.printStackTrace();
-			Logging.log("!!! Az enemy meghalt: " + d.toString() + " !!!");
+			Logging.log(0, "!!! Az enemy meghalt: " + d.toString() + " !!!");
 		} catch (EnemyCannotStepException e) {
 			e.printStackTrace();
 		}
-		Logging.log("=== SkeletonTester: towerTestCase vége ===");
+		Logging.log(0, "=== SkeletonTester: towerTestCase vége ===");
 	}
 
 	public static void runMordorTestCase() {
-		Logging.log("=== SkeletonTester: mordorTestCase futtatása ===");
+		Logging.log(0, "=== SkeletonTester: mordorTestCase futtatása ===");
 		Human h = new Human(10, 1);
 		RouteCell rc = new RouteCell(0, 0, 0);
 		rc.setID(0);
@@ -100,14 +100,14 @@ public class SkeletonTester {
 			e1.printStackTrace();
 		} catch (EnemyDeadException e1) {
 			e1.printStackTrace();
-			Logging.log("!!! Az enemy meghalt: " + h.toString() + " !!!");
+			Logging.log(0, "!!! Az enemy meghalt: " + h.toString() + " !!!");
 		}
 
-		Logging.log("=== SkeletonTester: mordorTestCase vége ===");
+		Logging.log(0, "=== SkeletonTester: mordorTestCase vége ===");
 	}
 
 	public static void runControllerTestCase() {
-		Logging.log("=== SkeletonTester: controllerTestCase futtatása ===");
+		Logging.log(0, "=== SkeletonTester: controllerTestCase futtatása ===");
 		Controller c = new Controller(1, "palya1.p");
 		c.init();
 		c.addDwarf(new Dwarf(10, 2));
@@ -120,12 +120,12 @@ public class SkeletonTester {
 		c.stepAllEnemies();
 		c.stepAllEnemies();
 		c.stepAllEnemies();
-		Logging.log("=== SkeletonTester: controllerTestCase vége ===");
+		Logging.log(0, "=== SkeletonTester: controllerTestCase vége ===");
 
 	}
 
 	public static void runTrapTestCase() {
-		Logging.log("=== SkeletonTester: trapTestCase futtatása ===");
+		Logging.log(0, "=== SkeletonTester: trapTestCase futtatása ===");
 		Dwarf d = new Dwarf(10, 1);
 		Trap t = new Trap();
 		RouteCell rc1 = new RouteCell(3, 1, 1);
@@ -146,10 +146,10 @@ public class SkeletonTester {
 			d.leptet();
 		} catch (EnemyDeadException e) {
 			// e.printStackTrace();
-			Logging.log("!!! Az enemy meghalt: " + d.toString() + " !!!");
+			Logging.log(0, "!!! Az enemy meghalt: " + d.toString() + " !!!");
 		} catch (EnemyCannotStepException e) {
 			e.printStackTrace();
 		}
-		Logging.log("=== SkeletonTester: trapTestCase vége ===");
+		Logging.log(0, "=== SkeletonTester: trapTestCase vége ===");
 	}
 }

@@ -18,8 +18,8 @@ public class Hobbit extends Enemy
 	 * Alap konstruktor
 	 */
 	public Hobbit() {
-		Logging.log(">> Hobbit default konstruktor hívás");
-		Logging.log("<< Hobbit default konstruktor");
+		Logging.log(2, ">> Hobbit default konstruktor hívás");
+		Logging.log(4, "<< Hobbit default konstruktor");
 	}
 
 	/**
@@ -27,9 +27,9 @@ public class Hobbit extends Enemy
 	 */
 	public Hobbit(int parMaxLifePoint, int parSpeed) {
 		super(parMaxLifePoint, parSpeed);
-		Logging.log(">> Hobbit konstruktor hívás, maxLP: " + parMaxLifePoint
+		Logging.log(2, ">> Hobbit konstruktor hívás, maxLP: " + parMaxLifePoint
 				+ " speed: " + parSpeed);
-		Logging.log("<< Hobbit konstruktor");
+		Logging.log(4, "<< Hobbit konstruktor");
 
 	}
 
@@ -43,13 +43,14 @@ public class Hobbit extends Enemy
 	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
-		Logging.log(">> Hobbit.leptet() hívás");
+		Logging.log(2, ">> Hobbit.leptet() hívás");
 		if (lifePoint <= 0) {
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
 		if (_time - timeOfLastStep < speed) {
-			Logging.log("<< Hobbit.leptet(), nem tud meg lepni.");
+			Logging.log(2, "<< Hobbit.leptet(), nem tud meg lepni.");
+			return;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -70,7 +71,7 @@ public class Hobbit extends Enemy
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
+			Logging.log(3, "\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
 			nextCell.enter(this);
 			resetSpeed();
@@ -79,29 +80,30 @@ public class Hobbit extends Enemy
 		} else {
 			throw new EnemyCannotStepException();
 		}
-		Logging.log("<< Hobbit.leptet()");
+		Logging.log(2, "<< Hobbit.leptet()");
 	}
 
 	@Override
 	public void sebez(Bullet b) {
-		Logging.log(">> Hobbit.sebez() hívás, paraméter: " + b.toString());
+		Logging.log(2, ">> Hobbit.sebez() hívás, paraméter: " + b.toString());
 		if (b.isSlicing()) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);
-			Logging.log("\t új életerő: " + lifePoint);
+			Logging.log(3, "\t új életerő: " + lifePoint);
 		}
+		Logging.log(2, "<< Hobbit.sebez()");
 	}
 
 	@Override
 	protected void slice() {
-		Logging.log(">> Hobbit.slice() hívás");
+		Logging.log(2, ">> Hobbit.slice() hívás");
 		Hobbit newEnemy = new Hobbit(lifePoint / 2, speed);
 		lifePoint = (int) (Math.floor(lifePoint + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}
-		Logging.log("<< Hobbit.slice()");
+		Logging.log(2, "<< Hobbit.slice()");
 	}
 }

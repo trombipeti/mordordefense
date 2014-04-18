@@ -63,8 +63,8 @@ public class Bullet {
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
 			int humanDamage, boolean slicing) {
-		Logging.log(">> Bullet konstruktor hivas, parameterek:");
-		Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
+		Logging.log(2, ">> Bullet konstruktor hivas, parameterek:");
+		Logging.log(2, "\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
 				+ elfDamage + ", hobbitDamage: " + hobbitDamage
 				+ ", humanDamage: " + humanDamage + ", slicing: " + slicing);
 
@@ -73,6 +73,7 @@ public class Bullet {
 		this.hobbitDamage = hobbitDamage;
 		this.humanDamage = humanDamage;
 		this.slicing = slicing;
+		Logging.log(4, "<< Bullet konstruktor");
 	}
 
 	/**

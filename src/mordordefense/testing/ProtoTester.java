@@ -18,9 +18,6 @@ public class ProtoTester {
 		Tower.globalFreq = 1;
 		Tower.globalRadius = 1;
 		sinterp.interpret("input test2.txt");
-		String s = cont.getTower(0).getClosestCellsWithEnemy().toString();
-		System.out.println(cont.getTower(0).toString());
-		System.out.print(s);
 	}
 
 	public static void TestCase3() {
