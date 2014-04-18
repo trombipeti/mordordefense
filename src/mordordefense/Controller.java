@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -262,11 +263,11 @@ public class Controller implements RouteCellListener, EnemyListener {
 				3,
 				">> Controller.calcSzomszedok() hívás, paraméter: "
 						+ c.toString());
-		
+
 		int[] coords = c.getCoords();
 		int x = coords[0];
 		int y = coords[1];
-		
+
 		if (x == 0) { // Bal széle
 			c.setSzomszed(Dir.LEFT, null);
 		} else {
@@ -287,14 +288,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} else {
 			c.setSzomszed(Dir.DOWN, cells.get(x).get(y + 1));
 		}
-		
+
 		c.setNeighborsKnown(true);
 		for (Cell nc : c.getSzomszedok().values()) {
 			if (nc != null && !nc.isNeighborsKnown()) {
 				calcSzomszedok(nc);
 			}
 		}
-		
+
 		Logging.log(4, "<< Controller.calcSzomszedok()");
 	}
 
@@ -388,16 +389,18 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	public void stepAllEnemies() {
-		Logging.log(3, ">> Controller.stepAllEnemies() hívás");
-		for (Enemy en : enemies) {
+		Logging.log(2, ">> Controller.stepAllEnemies() hívás");
+		Iterator<Enemy> iter = enemies.iterator();
+		while (iter.hasNext()) {
+			Enemy en = iter.next();
 			try {
 				en.leptet();
 			} catch (EnemyDeadException e1) {
-				Logging.log(2, "\tAz enemy meghalt: " + en.toString());
+				Logging.log(1, "\tAz enemy meghalt: " + en.toString());
 				saruman.addManna(en.getMaxLifePoint());
-				enemies.remove(en);
+				iter.remove();
 			} catch (EnemyCannotStepException e1) {
-				e1.printStackTrace();
+				// e1.printStackTrace();
 			}
 		}
 		Logging.log(4, "<< Controller.stepAllEnemies() hívás");
@@ -449,13 +452,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
 		Logging.log(
-				3,
+				2,
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log(0, "Enemy nyert: " + e.toString());
+			Logging.log(1, "Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "Controller.onEnter() hívás");
@@ -464,13 +467,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
 		Logging.log(
-				3,
+				2,
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log(0, "Enemy nyert: " + d.toString());
+			Logging.log(1, "Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "Controller.onEnter() hívás");
@@ -479,13 +482,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
 		Logging.log(
-				3,
+				2,
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log(0, "Enemy nyert: " + h.toString());
+			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "Controller.onEnter() hívás");
@@ -494,13 +497,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
 		Logging.log(
-				3,
+				2,
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			gameEnded = true;
 			winner = new StringBuffer("enemies");
-			Logging.log(0, "Enemy nyert: " + h.toString());
+			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "Controller.onEnter() hívás");
@@ -508,37 +511,37 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-//		Logging.log(
-//				4,
-//				">> Controller.onLeave() hívás, paraméterek: "
-//						+ sender.toString() + ", " + e.toString());
+		// Logging.log(
+		// 4,
+		// ">> Controller.onLeave() hívás, paraméterek: "
+		// + sender.toString() + ", " + e.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-//		Logging.log(
-//				4,
-//				">> Controller.onLeave() hívás, paraméterek: "
-//						+ sender.toString() + ", " + d.toString());
+		// Logging.log(
+		// 4,
+		// ">> Controller.onLeave() hívás, paraméterek: "
+		// + sender.toString() + ", " + d.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-//		Logging.log(
-//				4,
-//				">> Controller.onLeave() hívás, paraméterek: "
-//						+ sender.toString() + ", " + h.toString());
+		// Logging.log(
+		// 4,
+		// ">> Controller.onLeave() hívás, paraméterek: "
+		// + sender.toString() + ", " + h.toString());
 
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-//		Logging.log(
-//				4,
-//				">> Controller.onLeave() hívás, paraméterek: "
-//						+ sender.toString() + ", " + h.toString());
+		// Logging.log(
+		// 4,
+		// ">> Controller.onLeave() hívás, paraméterek: "
+		// + sender.toString() + ", " + h.toString());
 
 	}
 
@@ -560,7 +563,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		enemies.remove(e);
 		if (sentEnemies == maxEnemyNum) {
 			winner = new StringBuffer("saruman");
-			Logging.log(0, "!!! Szarumán nyert !!!");
+			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();
 		}
 		Logging.log(4, "Controller.onDie() hívás");
