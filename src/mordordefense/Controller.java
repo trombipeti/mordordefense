@@ -400,6 +400,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 				saruman.addManna(en.getMaxLifePoint());
 				iter.remove();
 			} catch (EnemyCannotStepException e1) {
+				Logging.log(0, "Valamiért nem tud lépni az enemy!!!");
+				stopMainLoop();
 				// e1.printStackTrace();
 			}
 		}
@@ -421,7 +423,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			RouteCell rc = (RouteCell) cells.get(x).get(y);
-			if (rc.addTrap(t)){
+			if (rc.addTrap(t)) {
 				saruman.rmManna(Trap.getBaseCost());
 				traps.add(t);
 			}
@@ -461,7 +463,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -476,7 +478,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -491,7 +493,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -506,7 +508,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -553,7 +555,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
 		enemies.add(e);
-		Logging.log(4, "Controller.onSlice() hívás");
+		Logging.log(4, "<< Controller.onSlice() hívás");
 	}
 
 	@Override
@@ -566,7 +568,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onDie() hívás");
+		Logging.log(4, "<< Controller.onDie() hívás");
 	}
 
 }
