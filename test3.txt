@@ -7,9 +7,8 @@ step
 step
 step
 step
-fog 1 1000
+fog 0 1000
 enemy e 3 1
-step
 step
 step
 step
