@@ -1,4 +1,4 @@
-output out_4.txt
+output 
 random off
 start 1 3_1_es.p
 trap 1 0
