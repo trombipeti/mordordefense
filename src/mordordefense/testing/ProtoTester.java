@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import mordordefense.Controller;
 import mordordefense.Enemy;
 import mordordefense.Tower;
+import mordordefense.Trap;
 
 public class ProtoTester {
 
@@ -33,6 +34,13 @@ public class ProtoTester {
 		Controller cont = new Controller("palya1.p");
 		cont.init();
 		cont.startMainLoop();
+	}
+	
+	public static void TestCase5(){
+		Controller cont=new Controller("3_1_es.p");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		Trap.globalStrength=1;
+		sinterp.interpret("input test4.txt");
 	}
 
 	public static void mainTestingEnvironment() {
@@ -68,6 +76,9 @@ public class ProtoTester {
 				break;
 			case 4:
 				TestCase4();
+				break;
+			case 5:
+				TestCase5();
 				break;
 			default:
 				break;

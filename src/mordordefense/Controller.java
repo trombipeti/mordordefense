@@ -418,8 +418,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			RouteCell rc = (RouteCell) cells.get(x).get(y);
-			if (rc.addTrap(t))
+			if (rc.addTrap(t)){
 				saruman.rmManna(Trap.getBaseCost());
+				traps.add(t);
+			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
 		}

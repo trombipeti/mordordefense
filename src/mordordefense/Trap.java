@@ -10,7 +10,7 @@ public class Trap implements RouteCellListener {
 	/**
 	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.
 	 */
-	public static int Globalstrength;
+	public static int globalStrength;
 	protected int strength;
 
 	protected static int baseCost;
@@ -22,7 +22,7 @@ public class Trap implements RouteCellListener {
 
 	public Trap() {
 		Logging.log(2, ">> Trap default konstruktor hívás");
-		this.strength = Globalstrength;
+		this.strength = globalStrength;
 		Logging.log(4, "<< Trap default konstruktor");
 	}
 
