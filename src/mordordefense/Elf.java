@@ -22,7 +22,7 @@ public class Elf extends Enemy {
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
 	public Elf(float defMaxLP, float defSpeed) {
 		super(defMaxLP, defSpeed);
@@ -37,14 +37,18 @@ public class Elf extends Enemy {
 		return "Elf";
 	}
 
+	/** 
+	 * @see mordordefense.Enemy#leptet()
+	 */
 	@Override
 	public void leptet() throws EnemyCannotStepException, EnemyDeadException {
 		Logging.log(2, ">> Elf.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Elf.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if (_time - timeOfLastStep < speed) {
+		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Elf.leptet(), nem tud meg lepni.");
 			return;
 		}
@@ -74,6 +78,7 @@ public class Elf extends Enemy {
 			stepNumber++;
 			routeCell = nextCell;
 		} else {
+			Logging.log(2, "<< Elf.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Elf.leptet()");

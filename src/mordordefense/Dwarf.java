@@ -22,7 +22,7 @@ public class Dwarf extends Enemy {
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
 	public Dwarf(float defMaxLP, float defSpeed) {
 		super(defMaxLP, defSpeed);
@@ -37,14 +37,18 @@ public class Dwarf extends Enemy {
 		return "Dwarf";
 	}
 
+	/**
+	 * @see mordordefense.Enemy#leptet()
+	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Dwarf.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Dwarf.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if (_time - timeOfLastStep < speed) {
+		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Dwarf.leptet(), nem tud meg lepni");
 			return;
 		}
@@ -73,6 +77,7 @@ public class Dwarf extends Enemy {
 			stepNumber++;
 			routeCell = nextCell;
 		} else {
+			Logging.log(2, "<< Dwarf.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Dwarf.leptet()");

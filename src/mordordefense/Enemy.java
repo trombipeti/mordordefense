@@ -156,7 +156,9 @@ public abstract class Enemy {
 
 	/**
 	 * Az ellenségeket léptető metódus. Ha útelágazásnál több helyre is tud
-	 * lépni, akkor véletlenszerűen választ.
+	 * lépni, akkor véletlenszerűen választ. Diszkrét idő szimuláció NINCS,
+	 * vagyis ha ritkán hívjuk meg, és nagyon gyorsak az enemyk, akkor rosszul
+	 * fog működni, és mindegyik enemy csak egyet fog lépni.
 	 * 
 	 * @throws EnemyDeadException
 	 *             Ha az enemy már meghalt.

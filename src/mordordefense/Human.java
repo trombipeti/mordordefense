@@ -35,14 +35,18 @@ public class Human extends Enemy {
 		return "Human";
 	}
 
+	/** 
+	 * @see mordordefense.Enemy#leptet()
+	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Human.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Human.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if (_time - timeOfLastStep < speed) {
+		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Human.leptet(), nem tud meg lepni");
 			return;
 		}
@@ -72,6 +76,7 @@ public class Human extends Enemy {
 			stepNumber++;
 			routeCell = nextCell;
 		} else {
+			Logging.log(2, "<< Human.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Human.leptet()");

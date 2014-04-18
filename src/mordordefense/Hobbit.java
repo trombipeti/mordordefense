@@ -23,7 +23,7 @@ public class Hobbit extends Enemy
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
 	public Hobbit(float defMaxLP, float defSpeed) {
 		super(defMaxLP, defSpeed);
@@ -45,10 +45,12 @@ public class Hobbit extends Enemy
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Hobbit.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Hobbit.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if (_time - timeOfLastStep < speed) {
+		// s = v*t, vagyis ha eltelt idő*sebesség < 1, akkor nem lépünk.
+		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Hobbit.leptet(), nem tud meg lepni.");
 			return;
 		}
@@ -78,6 +80,7 @@ public class Hobbit extends Enemy
 			stepNumber++;
 			routeCell = nextCell;
 		} else {
+			Logging.log(2, "<< Hobbit.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Hobbit.leptet()");
