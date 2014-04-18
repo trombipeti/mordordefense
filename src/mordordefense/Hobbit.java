@@ -25,10 +25,10 @@ public class Hobbit extends Enemy
 	/**
 	 * @see Enemy#Enemy(int, int)
 	 */
-	public Hobbit(int parMaxLifePoint, int parSpeed) {
-		super(parMaxLifePoint, parSpeed);
-		Logging.log(2, ">> Hobbit konstruktor hívás, maxLP: " + parMaxLifePoint
-				+ " speed: " + parSpeed);
+	public Hobbit(float defMaxLP, float defSpeed) {
+		super(defMaxLP, defSpeed);
+		Logging.log(2, ">> Hobbit konstruktor hívás, maxLP: " + defMaxLP
+				+ " speed: " + defSpeed);
 		Logging.log(4, "<< Hobbit konstruktor");
 
 	}

@@ -12,8 +12,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
-import sun.org.mozilla.javascript.ast.Loop;
-
 import mordordefense.Cell.Dir;
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;

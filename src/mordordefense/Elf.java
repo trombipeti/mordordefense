@@ -24,10 +24,10 @@ public class Elf extends Enemy {
 	/**
 	 * @see Enemy#Enemy(int, int)
 	 */
-	public Elf(int parMaxLifePoint, int parSpeed) {
-		super(parMaxLifePoint, parSpeed);
-		Logging.log(2, ">> Elf konstruktor hívás, maxLP: " + parMaxLifePoint
-				+ " speed: " + parSpeed);
+	public Elf(float defMaxLP, float defSpeed) {
+		super(defMaxLP, defSpeed);
+		Logging.log(2, ">> Elf konstruktor hívás, maxLP: " + defMaxLP
+				+ " speed: " + defSpeed);
 		Logging.log(4, "<< Elf konstruktor");
 
 	}

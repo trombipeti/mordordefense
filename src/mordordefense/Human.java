@@ -21,12 +21,12 @@ public class Human extends Enemy {
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
-	public Human(int parMaxLifePoint, int parSpeed) {
-		super(parMaxLifePoint, parSpeed);
-		Logging.log(2, ">> Human konstruktor hívás, maxLP: " + parMaxLifePoint
-				+ " speed: " + parSpeed);
+	public Human(float defMaxLP, float defSpeed) {
+		super(defMaxLP, defSpeed);
+		Logging.log(2, ">> Human konstruktor hívás, maxLP: " + defMaxLP
+				+ " speed: " + defSpeed);
 		Logging.log(4, "<< Human konstruktor");
 	}
 
