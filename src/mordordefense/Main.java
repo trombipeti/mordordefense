@@ -126,7 +126,7 @@ public class Main {
 		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
 		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
 		 */
-		Logging.setLogLevel(4);
+		Logging.setLogLevel(2);
 		ProtoTester.mainTestingEnvironment();
 	}
 
