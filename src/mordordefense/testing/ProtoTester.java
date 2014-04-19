@@ -35,11 +35,11 @@ public class ProtoTester {
 		cont.init();
 		cont.startMainLoop();
 	}
-	
-	public static void TestCase5(){
-		Controller cont=new Controller("3_1_es.p");
+
+	public static void TestCase5() {
+		Controller cont = new Controller("3_1_es.p");
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
-		Trap.globalStrength=1;
+		Trap.globalStrength = 1;
 		sinterp.interpret("input test4.txt");
 	}
 

@@ -113,8 +113,10 @@ public class MagicStone {
 	 * @return elfMultiplier A tündékre ható sebzés szorzója.
 	 */
 	public float getMultiplier(Elf e) {
-		Logging.log(3, ">> MagicStone.getMultiplier() hívás, paraméter: "
-				+ e.toString());
+		Logging.log(
+				3,
+				">> MagicStone.getMultiplier() hívás, paraméter: "
+						+ e.toString());
 		Logging.log(3, "<< " + elfMultiplier);
 		return elfMultiplier;
 	}
@@ -127,8 +129,10 @@ public class MagicStone {
 	 * @return humanfMultiplier
 	 */
 	public float getMultiplier(Human h) {
-		Logging.log(3, ">> MagicStone.getMultiplier() hívás, paraméter: "
-				+ h.toString());
+		Logging.log(
+				3,
+				">> MagicStone.getMultiplier() hívás, paraméter: "
+						+ h.toString());
 		Logging.log(3, "<< " + humanMultiplier);
 		return humanMultiplier;
 	}
@@ -141,8 +145,10 @@ public class MagicStone {
 	 * @return hobbitMultiplier
 	 */
 	public float getMulitplier(Hobbit h) {
-		Logging.log(3, ">> MagicStone.getMultiplier() hívás, paraméter: "
-				+ h.toString());
+		Logging.log(
+				3,
+				">> MagicStone.getMultiplier() hívás, paraméter: "
+						+ h.toString());
 		Logging.log(3, "<< " + hobbitMultiplier);
 		return hobbitMultiplier;
 	}
@@ -155,8 +161,10 @@ public class MagicStone {
 	 * @return dwarfMultiplier
 	 */
 	public float getMultiplier(Dwarf d) {
-		Logging.log(3, ">> MagicStone.getMultiplier() hívás, paraméter: "
-				+ d.toString());
+		Logging.log(
+				3,
+				">> MagicStone.getMultiplier() hívás, paraméter: "
+						+ d.toString());
 		Logging.log(3, "<< " + dwarfMultiplier);
 		return dwarfMultiplier;
 	}
@@ -219,14 +227,15 @@ public class MagicStone {
 	}
 
 	/**
-	 * TODO Ez mit kéne csináljon pontosan???
-	 * új kő árát számoló statikus függvény
+	 * TODO Ez mit kéne csináljon pontosan??? új kő árát számoló statikus
+	 * függvény
 	 * 
 	 * @param numStones
 	 * @return Az építés ára.
 	 */
 	static public int calcCost(int numStones) {
-		Logging.log(3, ">> MagicStone.calcCost() hívás, paraméter: " + numStones);
+		Logging.log(3, ">> MagicStone.calcCost() hívás, paraméter: "
+				+ numStones);
 		int cost = baseCost;
 		Logging.log(3, "<< " + cost);
 

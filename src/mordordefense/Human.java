@@ -35,7 +35,7 @@ public class Human extends Enemy {
 		return "Human";
 	}
 
-	/** 
+	/**
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
@@ -86,7 +86,7 @@ public class Human extends Enemy {
 	@Override
 	public void sebez(Bullet b) {
 		Logging.log(2, ">> Human.sebez() hívás, paraméter: " + b.toString());
-		if (b.isSlicing()) {
+		if (b.isSlicing() && lifePoint > 1) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);

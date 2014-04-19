@@ -83,8 +83,8 @@ public abstract class Cell {
 	protected Cell(int x, int y) {
 		coords[0] = x;
 		coords[1] = y;
-		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: "
-				+ x + ", y:" + y);
+		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: " + x
+				+ ", y:" + y);
 		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
@@ -95,8 +95,8 @@ public abstract class Cell {
 		coords[0] = x;
 		coords[1] = y;
 		this.ID = ID;
-		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: "
-				+ x + ", y: " + y + ", ID: " + ID);
+		Logging.log(3, ">> Cell konstruktor hívás, paraméterek: " + "x: " + x
+				+ ", y: " + y + ", ID: " + ID);
 		for (int i = 0; i < 4; ++i) {
 			szomszedok.put(i, null);
 		}
@@ -123,9 +123,11 @@ public abstract class Cell {
 	 *            Ki az a bizonyos szomszéd. Lehet null, ez pályaszélet jelent.
 	 */
 	public void setSzomszed(Dir d, Cell szomszed) {
-		Logging.log(3, ">> Cell.setSzomszed() hívás, paraméterek: " + "n: "
-				+ d.toString() + ", szomszed: "
-				+ (szomszed == null ? "null" : szomszed.toString()));
+		Logging.log(
+				3,
+				">> Cell.setSzomszed() hívás, paraméterek: " + "n: "
+						+ d.toString() + ", szomszed: "
+						+ (szomszed == null ? "null" : szomszed.toString()));
 		szomszedok.put(d.getValue(), szomszed);
 		Logging.log(4, "<< void Cell.setSzomszed()");
 	}

@@ -87,7 +87,7 @@ public class Dwarf extends Enemy {
 	@Override
 	public void sebez(Bullet b) {
 		Logging.log(2, ">> Dwarf.sebez() hívás, paraméter: " + b.toString());
-		if (b.isSlicing()) {
+		if (b.isSlicing() && lifePoint > 1) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);
