@@ -447,6 +447,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 		this.mapFileName = mapFileName;
 	}
 
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+
+	public void setGameEnded(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+	}
+
 	// RouteCellListener
 
 	@Override
@@ -456,7 +464,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + e.toString());
 			stopMainLoop();
@@ -471,7 +479,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + d.toString());
 			stopMainLoop();
@@ -486,7 +494,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
@@ -501,7 +509,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();

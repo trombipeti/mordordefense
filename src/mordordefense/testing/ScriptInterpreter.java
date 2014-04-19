@@ -45,7 +45,17 @@ public class ScriptInterpreter {
 		}
 	}
 
+	/**
+	 * Értelmezi a paraméterként kapott parancsot. Ha a paraméter üres vagy
+	 * null, nem csinál semmit.
+	 * 
+	 * @param s
+	 *            Az értelmezendő parancs.
+	 */
 	public void interpret(String s) {
+		if (s == null || s.isEmpty()) {
+			return;
+		}
 		String[] parts = s.split(" ");
 
 		// Input értelmező else-if
@@ -113,7 +123,7 @@ public class ScriptInterpreter {
 						stepSimulation = true;
 					} else {
 						stepSimulation = false;
-						cont.loop();
+						cont.startMainLoop();
 					}
 				} else
 					throw new Exception("!!Az argumentumok szama nem megfelelo");
