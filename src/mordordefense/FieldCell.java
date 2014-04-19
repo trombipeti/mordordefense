@@ -21,8 +21,9 @@ public class FieldCell extends Cell {
 	 */
 	public FieldCell(int x, int y) {
 		super(x, y);
-		Logging.log(">> FieldCell konstruktor hívás");
+		Logging.log(2, ">> FieldCell konstruktor hívás");
 		tower = null;
+		Logging.log(4, "<< FieldCell konstruktor");
 	}
 
 	/**
@@ -33,15 +34,17 @@ public class FieldCell extends Cell {
 	 *            A lerakandó torony.
 	 */
 	public boolean addTower(Tower t) {
-		Logging.log(">> FieldCell.addTower függvényhívás, paraméter: "
-				+ t.toString());
+		Logging.log(
+				2,
+				">> FieldCell.addTower függvényhívás, paraméter: "
+						+ t.toString());
 		if (tower == null) {
 			tower = t;
 			t.setParentCell(this);
-			Logging.log("<<FieldCell.addTower return: boolean - true");
+			Logging.log(2, "<< FieldCell.addTower return: boolean - true");
 			return true;
-		}else{
-			Logging.log("<<FieldCell.addTower return: boolean - false");
+		} else {
+			Logging.log(2, "<< FieldCell.addTower return: boolean - false");
 			return false;
 		}
 	}

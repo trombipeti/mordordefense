@@ -11,16 +11,17 @@ public class Saruman {
 	/**
 	 * Szarumán varázsereje.
 	 */
-	private int manna;
+	private float manna;
 
 	/**
 	 * Szarumán konstruktora
 	 * 
 	 * @param mana
 	 */
-	public Saruman(int mana) {
-		Logging.log("Saruman konstruktor hívás, paraméter: " + mana);
+	public Saruman(float mana) {
+		Logging.log(2, ">> Saruman konstruktor hívás, paraméter: " + mana);
 		manna = mana;
+		Logging.log(4, "<< Saruman konstruktor");
 	}
 
 	/**
@@ -29,9 +30,10 @@ public class Saruman {
 	 * @param m
 	 *            A hozzáadódó varázserő
 	 */
-	public void addManna(int m) {
-		Logging.log(">> Saruman.addManna() hívás, paraméter: " + m);
+	public void addManna(float m) {
+		Logging.log(1, ">> Saruman.addManna() hívás, paraméter: " + m);
 		manna += m;
+		Logging.log(4, "<< Saruman.addManna");
 	}
 
 	/**
@@ -39,9 +41,9 @@ public class Saruman {
 	 * 
 	 * @return Szarumán varázsereje.
 	 */
-	public int getManna() {
-		Logging.log(">> Saruman.getManna() hívás.");
-		Logging.log("<< " + manna);
+	public float getManna() {
+		Logging.log(3, ">> Saruman.getManna() hívás.");
+		Logging.log(3, "<< " + manna);
 		return manna;
 	}
 
@@ -51,9 +53,15 @@ public class Saruman {
 	 * @param m
 	 *            Mennyivel csökkenjen a varázserő.
 	 */
-	public void rmManna(int m) {
-		Logging.log(">> Saruman.rmManna() hívás, paraméter: " + m);
+	public void rmManna(float m) {
+		Logging.log(1, ">> Saruman.rmManna() hívás, paraméter: " + m);
 		manna -= m;
-		Logging.log("\t Szarumán új varázserej: " + manna);
+		Logging.log(3, "\t Szarumán új varázserej: " + manna);
+		Logging.log(4, "<< Saruman.rmManna");
+	}
+
+	@Override
+	public String toString() {
+		return "Saruman, manna: " + manna;
 	}
 }

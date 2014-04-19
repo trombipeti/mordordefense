@@ -10,6 +10,7 @@ public class Trap implements RouteCellListener {
 	/**
 	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.
 	 */
+	public static int globalStrength;
 	protected int strength;
 
 	protected static int baseCost;
@@ -18,28 +19,28 @@ public class Trap implements RouteCellListener {
 	 * A csapdán lévő varázskövek.
 	 */
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
-	
+
 	public Trap() {
-		Logging.log(">> Trap default konstruktor hívás");
-		// TODO default értékek valahonnan
-		this.strength = 1;
-		Logging.log("<< Trap default konstruktor");
+		Logging.log(2, ">> Trap default konstruktor hívás");
+		this.strength = globalStrength;
+		Logging.log(4, "<< Trap default konstruktor");
 	}
-	
+
 	public Trap(int strength) {
-		Logging.log(">> Trap konstruktor hívás, parameter: " + strength);
+		Logging.log(2, ">> Trap konstruktor hívás, parameter: " + strength);
 		this.strength = strength;
-		Logging.log("<< Trap konstruktor");
+		Logging.log(4, "<< Trap konstruktor");
 	}
-	
+
 	/**
 	 * Operation
 	 * 
 	 * @param s
 	 */
 	public void addStone(MagicStone s) {
-		Logging.log(">> Trap.addStone() hívás, paraméter: " + s.toString());
+		Logging.log(3, ">> Trap.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		Logging.log(4, "<< Trap.addStone");
 	}
 
 	/**
@@ -48,8 +49,8 @@ public class Trap implements RouteCellListener {
 	 * @return int Az építés alapköltsége.
 	 */
 	public static int getBaseCost() {
-		Logging.log(">> Trap.getBaseCost() hívás.");
-		Logging.log("<< " + baseCost);
+		Logging.log(4, ">> Trap.getBaseCost() hívás.");
+		Logging.log(4, "<< " + baseCost);
 		return baseCost;
 	}
 
@@ -60,8 +61,9 @@ public class Trap implements RouteCellListener {
 	 *            Az alapár.
 	 */
 	public static void setBaseCost(int c) {
-		Logging.log(">> Trap.setBaseCost() hívás, paraméter: " + c);
+		Logging.log(4, ">> Trap.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
+		Logging.log(4, "<< Trap.setBaseCost");
 	}
 
 	@Override
@@ -71,46 +73,54 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + e.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ e.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(e);
 		}
 		e.lassit(sebzes);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + d.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ d.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(d);
 		}
 		d.lassit(sebzes);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + h.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ h.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMulitplier(h);
 		}
 		h.lassit(sebzes);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		Logging.log(">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + h.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ h.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(h);
 		}
 		h.lassit(sebzes);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override

@@ -16,18 +16,18 @@ public class Human extends Enemy {
 	 * Alap konstruktor
 	 */
 	public Human() {
-		Logging.log(">> Human default konstruktor hívás");
-		Logging.log("<< Human default konstruktor");
+		Logging.log(2, ">> Human default konstruktor hívás");
+		Logging.log(4, "<< Human default konstruktor");
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
-	public Human(int parMaxLifePoint, int parSpeed) {
-		super(parMaxLifePoint, parSpeed);
-		Logging.log(">> Human konstruktor hívás, maxLP: " + parMaxLifePoint
-				+ " speed: " + parSpeed);
-		Logging.log("<< Human konstruktor");
+	public Human(float defMaxLP, float defSpeed) {
+		super(defMaxLP, defSpeed);
+		Logging.log(2, ">> Human konstruktor hívás, maxLP: " + defMaxLP
+				+ " speed: " + defSpeed);
+		Logging.log(4, "<< Human konstruktor");
 	}
 
 	@Override
@@ -35,15 +35,20 @@ public class Human extends Enemy {
 		return "Human";
 	}
 
+	/**
+	 * @see mordordefense.Enemy#leptet()
+	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
-		Logging.log(">> Human.leptet() hívás");
+		Logging.log(2, ">> Human.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Human.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if(_time - timeOfLastStep < speed) {
-			Logging.log("<< Human.leptet(), nem tud meg lepni");
+		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+			Logging.log(2, "<< Human.leptet(), nem tud meg lepni");
+			return;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -64,38 +69,46 @@ public class Human extends Enemy {
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
+			Logging.log(3, "\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
 			nextCell.enter(this);
 			resetSpeed();
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
+			Logging.log(2, "<< Human.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
-		Logging.log("<< Human.leptet()");
+		Logging.log(2, "<< Human.leptet()");
 	}
 
 	@Override
 	public void sebez(Bullet b) {
-		Logging.log(">> Human.sebez() hívás, paraméter: " + b.toString());
-		if (b.isSlicing()) {
+		Logging.log(2, ">> Human.sebez() hívás, paraméter: " + b.toString());
+		if (b.isSlicing() && lifePoint > 1) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);
-			Logging.log("\t új életerő: " + lifePoint);
+			Logging.log(3, "\t új életerő: " + lifePoint);
+			if (lifePoint < 0) {
+				for (EnemyListener l : listeners) {
+					l.onDie(this);
+				}
+			}
 		}
+		Logging.log(2, "<< Human.sebez()");
 	}
 
 	@Override
 	protected void slice() {
-		Logging.log(">> Human.slice() hívás");
-		Human newEnemy = new Human(lifePoint/2,speed);
-		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		Logging.log(2, ">> Human.slice() hívás");
+		Human newEnemy = new Human(lifePoint / 2, speed);
+		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}
-		Logging.log("<< Human.slice()");
+		Logging.log(2, "<< Human.slice()");
 	}
 }
