@@ -100,7 +100,7 @@ public class Dwarf extends Enemy {
 	protected void slice() {
 		Logging.log(2, ">> Dwarf.slice() hívás");
 		Dwarf newEnemy = new Dwarf(lifePoint / 2, speed);
-		lifePoint = (int) (Math.floor(lifePoint + 0.5));
+		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
