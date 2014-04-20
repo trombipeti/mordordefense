@@ -297,7 +297,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.calcSzomszedok()");
 	}
 
-	private Timer scheduler = new Timer();
+	private Timer scheduler = null;
 
 	/**
 	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}. Alapjáraton null az
@@ -316,6 +316,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 				loop();
 			}
 		};
+		if(scheduler == null) {
+			scheduler = new Timer();
+		}
 		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
 	}
 
