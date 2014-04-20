@@ -335,10 +335,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.loop()");
 	}
 
+	/**
+	 * Random ellenséget a pályához adó függvény, ha a randomitás ki van
+	 * kapcsolva, akkor alapértelmezetten embert rak le
+	 */
 	private void addRandomEnemy() {
 		Logging.log(3, ">> Controller.addRandomEnemy() hívás");
 		Random randgen = new Random();
 		int n = randgen.nextInt(4);
+		if (!random) {
+			n = 0;
+		}
 		switch (n) {
 		case 0:
 			addHuman(new Human(Human.defMaxLP, Human.defSpeed));
@@ -358,6 +365,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.addRandomEnemy()");
 	}
 
+	/**
+	 * Embert a páláyhoz adó függvény
+	 * 
+	 * @param h
+	 *            a pályához adandó Human
+	 */
 	public void addHuman(Human h) {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
@@ -365,6 +378,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sp.enter(h);
 	}
 
+	/**
+	 * Tündétt a páláyhoz adó függvény
+	 * 
+	 * @param h
+	 *            a pályához adandó Elf
+	 */
 	public void addElf(Elf e) {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
@@ -372,6 +391,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sp.enter(e);
 	}
 
+	/**
+	 * Hobbitot a páláyhoz adó függvény
+	 * 
+	 * @param h
+	 *            a pályához adandó Hobbit
+	 */
 	public void addHobbit(Hobbit h) {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
@@ -379,6 +404,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sp.enter(h);
 	}
 
+	/**
+	 * Törpöt a páláyhoz adó függvény
+	 * 
+	 * @param h
+	 *            a pályához adandó Dwarf
+	 */
 	public void addDwarf(Dwarf d) {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
@@ -386,6 +417,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sp.enter(d);
 	}
 
+	/**
+	 * Minden pályán lévő ellenséget léptető függvény
+	 */
 	public void stepAllEnemies() {
 		Logging.log(2, ">> Controller.stepAllEnemies() hívás");
 		Iterator<Enemy> iter = enemies.iterator();
@@ -406,6 +440,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.stepAllEnemies() hívás");
 	}
 
+	/**
+	 * Tornyot egy adott helyre lerakó függvény. tornyot
+	 * 
+	 * @param t
+	 *            a hozzáadandó torony
+	 * @param x
+	 *            a cél cella x koordinátája
+	 * @param y
+	 *            a cél cella y koordinátája
+	 */
 	public void placeTower(Tower t, int x, int y) {
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			FieldCell fc = (FieldCell) cells.get(x).get(y);
@@ -418,6 +462,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 		}
 	}
 
+	/**
+	 * Csapdát adott helyre lerakó függvény.
+	 * 
+	 * @param t
+	 *            a hozzáadandó csapda
+	 * @param x
+	 *            a cél x koordinátája
+	 * @param y
+	 *            a cél y koordinátája
+	 */
 	public void placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			RouteCell rc = (RouteCell) cells.get(x).get(y);
@@ -431,26 +485,61 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	}
 
+	/**
+	 * visszaadja az i. tornyot
+	 * 
+	 * @param i
+	 *            sorszám
+	 * @return
+	 */
 	public Tower getTower(int i) {
 		return towers.get(i);
 	}
 
+	/**
+	 * visszaadja az i. csapdát
+	 * 
+	 * @param i
+	 *            sorszám
+	 * @return
+	 */
 	public Trap getTrap(int i) {
 		return traps.get(i);
 	}
 
+	/**
+	 * beállítja a randomitást
+	 * 
+	 * @param b
+	 */
 	public void setRandom(boolean b) {
 		random = b;
 	}
 
+	/**
+	 * a pálya fájl nevét állító függvény
+	 * 
+	 * @param mapFileName
+	 */
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
 	}
 
+	/**
+	 * a játék végét visszaadó függvény
+	 * 
+	 * @return
+	 */
 	public boolean isGameEnded() {
 		return gameEnded;
 	}
 
+	/**
+	 * a játék végét beállító függvény
+	 * 
+	 * @param gameEnded
+	 *            a játék vége
+	 */
 	public void setGameEnded(boolean gameEnded) {
 		this.gameEnded = gameEnded;
 	}
