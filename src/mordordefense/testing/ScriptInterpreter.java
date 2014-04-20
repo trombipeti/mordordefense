@@ -115,14 +115,8 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("start")) {
 				// ---------------- Program indító ----------------
 				// try {
-<<<<<<< HEAD
 				if (parts.length == 2) {
 					simulationStarted = true;
-=======
-				if (parts.length == 3) {
-					simulationStarted = true;
-					cont.setMapFileName(parts[2]);
->>>>>>> andris
 					cont.init();
 					if (parts[1].equalsIgnoreCase("1")) {
 						stepSimulation = true;
@@ -222,13 +216,10 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("fog")) {
 				cont.getTower(Integer.parseInt(parts[1])).addFog(
 						Integer.parseInt(parts[2]));
-<<<<<<< HEAD
 			} else if (parts[0].equalsIgnoreCase("map")) {
 				if (parts.length == 2) {
 					cont.setMapFileName(parts[1]);
 				}
-=======
->>>>>>> andris
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
