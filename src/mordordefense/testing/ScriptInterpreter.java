@@ -117,7 +117,6 @@ public class ScriptInterpreter {
 				// try {
 				if (parts.length == 2) {
 					simulationStarted = true;
-					cont.init();
 					if (parts[1].equalsIgnoreCase("1")) {
 						stepSimulation = true;
 					} else {
@@ -219,11 +218,12 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("map")) {
 				if (parts.length == 2) {
 					cont.setMapFileName(parts[1]);
+					cont.init();
 				}
 			} else if (parts[0].equalsIgnoreCase("slicing")) {
-				if (parts.length==2){
-					if(Integer.parseInt(parts[1])==1){
-					Tower.globalSlice=true;
+				if (parts.length == 2) {
+					if (Integer.parseInt(parts[1]) == 1) {
+						Tower.globalSlice = true;
 					}
 				}
 			} else {

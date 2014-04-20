@@ -24,6 +24,7 @@ public class ProtoTester {
 		Tower.globalDamage = 1;
 		Tower.globalFreq = 1;
 		Tower.globalRadius = 1;
+		Tower.setBaseCost(10);
 		sinterp.interpret("input test2.txt");
 	}
 
@@ -33,6 +34,7 @@ public class ProtoTester {
 		Tower.globalDamage = 1;
 		Tower.globalFreq = 1;
 		Tower.globalRadius = 1;
+		Tower.setBaseCost(10);
 		sinterp.interpret("input test3.txt");
 	}
 
@@ -40,6 +42,7 @@ public class ProtoTester {
 		Controller cont = new Controller("");
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
 		Trap.globalStrength = 1;
+		Trap.setBaseCost(10);
 		sinterp.interpret("input test4.txt");
 	}
 
@@ -55,6 +58,7 @@ public class ProtoTester {
 		Tower.globalDamage = 1;
 		Tower.globalFreq = 1;
 		Tower.globalRadius = 1;
+		Tower.setBaseCost(10);
 		sinterp.interpret("input test5.txt");
 
 	}
@@ -67,6 +71,9 @@ public class ProtoTester {
 		Tower.globalDamage = 1;
 		Tower.globalFreq = 1;
 		Tower.globalRadius = 1;
+		Tower.setBaseCost(10);
+		Trap.globalStrength = 1;
+		Trap.setBaseCost(10);
 		System.out
 				.println("Parancssor módba váltottunk, q-val visszatérsz az előzőbe.");
 		Controller cont = new Controller("");

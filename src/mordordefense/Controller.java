@@ -496,10 +496,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void placeTower(Tower t, int x, int y) {
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			FieldCell fc = (FieldCell) cells.get(x).get(y);
-			if (fc.addTower(t)) {
-				towers.add(t);
-				saruman.rmManna(Tower.getBaseCost());
+			if (saruman.getManna() >= Tower.getBaseCost()) {
+				FieldCell fc = (FieldCell) cells.get(x).get(y);
+				if (fc.addTower(t)) {
+					towers.add(t);
+					saruman.rmManna(Tower.getBaseCost());
+				}
+			} else {
+				Logging.log(0, "Nincs elég manna");
 			}
 		} else {
 			Logging.log(0, "!!! Towert nem FieldCell-re raktuk!");
@@ -518,12 +522,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			RouteCell rc = (RouteCell) cells.get(x).get(y);
-			if (rc.addTrap(t)) {
-				saruman.rmManna(Trap.getBaseCost());
-				traps.add(t);
-				Logging.log(0, t.toString() + " parentCell: " + x + ", " + y
-						+ ", index: " + traps.indexOf(t));
+			if (saruman.getManna() >= Tower.getBaseCost()) {
+				RouteCell rc = (RouteCell) cells.get(x).get(y);
+				if (rc.addTrap(t)) {
+					saruman.rmManna(Trap.getBaseCost());
+					traps.add(t);
+					Logging.log(0, t.toString() + " parentCell: " + x + ", "
+							+ y + ", index: " + traps.indexOf(t));
+				}
+			} else {
+				Logging.log(0, "Nincs elég manna");
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
