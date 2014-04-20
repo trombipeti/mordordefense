@@ -139,17 +139,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + fileName);
 		mapFileName = fileName;
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
-		Human.defMaxLP = 10;
-		Human.defSpeed = 4;
+		Human.defMaxLP = 1;
+		Human.defSpeed = 1;
 
-		Hobbit.defMaxLP = 8;
-		Hobbit.defSpeed = 2;
+		Hobbit.defMaxLP = 1;
+		Hobbit.defSpeed = 1;
 
-		Elf.defMaxLP = 10;
-		Elf.defSpeed = 4;
+		Elf.defMaxLP = 1;
+		Elf.defSpeed = 1;
 
-		Dwarf.defMaxLP = 11;
-		Dwarf.defSpeed = 6;
+		Dwarf.defMaxLP = 1;
+		Dwarf.defSpeed = 1;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
@@ -316,7 +316,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				loop();
 			}
 		};
-		if(scheduler == null) {
+		if (scheduler == null) {
 			scheduler = new Timer();
 		}
 		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
@@ -337,7 +337,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * startMainLoop már nem hívható meg!!!
 	 */
 	public void stopMainLoop() {
-		scheduler.cancel();
+		if (scheduler != null) {
+			scheduler.cancel();
+		} else {
+			Logging.log(
+					0,
+					"Londa zsidó gazembel!!! stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
+		}
 	}
 
 	/**
@@ -348,7 +354,6 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3, ">> Controller.loop() hívás");
 		if (sentEnemies < maxEnemyNum) {
 			addRandomEnemy();
-			sentEnemies++;
 		}
 		stepAllEnemies();
 		Logging.log(4, "<< Controller.loop()");
@@ -394,6 +399,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
 		enemies.add(h);
+		h.addEnemyListener(this);
+		sentEnemies++;
 		sp.enter(h);
 	}
 
@@ -407,6 +414,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
 		enemies.add(e);
+		e.addEnemyListener(this);
+		sentEnemies++;
 		sp.enter(e);
 	}
 
@@ -420,6 +429,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
 		enemies.add(h);
+		h.addEnemyListener(this);
+		sentEnemies++;
 		sp.enter(h);
 	}
 
@@ -433,6 +444,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		SpawnPointCell sp = (SpawnPointCell) cells.get(spawnCoords[0]).get(
 				spawnCoords[1]);
 		enemies.add(d);
+		d.addEnemyListener(this);
+		sentEnemies++;
 		sp.enter(d);
 	}
 
@@ -447,8 +460,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			try {
 				en.leptet();
 			} catch (EnemyDeadException e1) {
-				Logging.log(1, "\tAz enemy meghalt: " + en.toString());
-				saruman.addManna(en.getMaxLifePoint());
+				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
 				iter.remove();
 			} catch (EnemyCannotStepException e1) {
 				Logging.log(0, "Valamiért nem tud lépni az enemy!!!");
@@ -676,7 +688,6 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void onDie(Enemy e) {
 		Logging.log(2,
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
-		enemies.remove(e);
 		if (sentEnemies == maxEnemyNum) {
 			winner = new StringBuffer("saruman");
 			Logging.log(1, "!!! Szarumán nyert !!!");

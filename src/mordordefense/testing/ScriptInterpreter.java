@@ -225,7 +225,7 @@ public class ScriptInterpreter {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			interpret("quit");
+//			interpret("quit");
 
 		}
 	}
