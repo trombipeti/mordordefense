@@ -1,0 +1,7 @@
+random off
+output out_5.txt
+map 6_2_es.p
+start 0 
+slicing 1
+tower 3 1
+enemy e 2 1
