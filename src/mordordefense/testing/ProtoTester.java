@@ -3,6 +3,8 @@ package mordordefense.testing;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import mordordefense.Controller;
 import mordordefense.Tower;
@@ -46,13 +48,40 @@ public class ProtoTester {
 
 	}
 
-	public static void mainTestingEnvironment() {
-
-		boolean end = false;
-		endless: while (!end) {
-			System.out.println("\nMelyik tesztesetet futtassam?");
+	/**
+	 * Ezzel a tesztesettel tetszőleges, kézzel megadott parancsokat lehet
+	 * tesztelni.
+	 */
+	public static void TestCaseManualInput() {
+		Tower.globalDamage = 1;
+		Tower.globalFreq = 1;
+		Tower.globalRadius = 1;
+		System.out
+				.println("Parancssor módba váltottunk, q-val visszatérsz az előzőbe.");
+		Controller cont = new Controller("");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		while (true) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
+			String in = null;
+			try {
+				System.out.print("$: ");
+				in = br.readLine();
+				if (in == null || in.equals("q")) {
+					break;
+				}
+				sinterp.interpret(in);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void mainTestingEnvironment() {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		endless: while (true) {
+			System.out.println("\nMelyik tesztesetet futtassam?");
 			int value = 0;
 			String in = "";
 			try {
@@ -62,9 +91,16 @@ public class ProtoTester {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
-				if (in.equalsIgnoreCase("q")) {
-					end = true;
+				if (in == null || in.equalsIgnoreCase("q")) {
 					break endless;
+					// Gyönyörű szép one-liner
+				} else if (Arrays.asList(
+						(new String[] { "cmd", "command", "manual" }))
+						.contains(in)) {
+					TestCaseManualInput();
+					continue endless;
+				} else {
+					value = 0;
 				}
 			}
 			switch (value) {
@@ -86,6 +122,11 @@ public class ProtoTester {
 			default:
 				break;
 			}
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

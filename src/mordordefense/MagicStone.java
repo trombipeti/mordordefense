@@ -244,11 +244,11 @@ public class MagicStone {
 
 	@Override
 	public String toString() {
-		return "MagicStone, baseCost: " + baseCost + ", elfMultiplier"
-				+ elfMultiplier + ", dwarfMultiplier" + dwarfMultiplier
-				+ ", hobbitMultiplier" + hobbitMultiplier + ", humanMultiplier"
-				+ humanMultiplier + ", damageMultiplier" + damageMultiplier
-				+ ", freqMultiplier" + freqMultiplier + ", radiusMultiplier"
+		return "MagicStone, baseCost: " + baseCost + ", elfMultiplier: "
+				+ elfMultiplier + ", dwarfMultiplier: " + dwarfMultiplier
+				+ ", hobbitMultiplier: " + hobbitMultiplier + ", humanMultiplier: "
+				+ humanMultiplier + ", damageMultiplier: " + damageMultiplier
+				+ ", freqMultiplier: " + freqMultiplier + ", radiusMultiplier: "
 				+ radiusMultiplier;
 
 	}

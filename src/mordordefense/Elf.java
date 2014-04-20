@@ -93,10 +93,11 @@ public class Elf extends Enemy {
 		} else {
 			lifePoint -= b.getDamage(this);
 			Logging.log(3, "\t új életerő: " + lifePoint);
-			if (lifePoint < 0) {
+			if (lifePoint <= 0) {
 				for (EnemyListener l : listeners) {
 					l.onDie(this);
 				}
+				routeCell.leave(this);
 			}
 		}
 		Logging.log(2, "<< Elf.sebez()");
