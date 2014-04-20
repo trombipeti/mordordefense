@@ -32,9 +32,7 @@ public class ProtoTester {
 	public static void TestCase4() {
 		Controller cont = new Controller("");
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
-		Tower.globalDamage = 1;
-		Tower.globalFreq = 1;
-		Tower.globalRadius = 1;
+		Trap.globalStrength = 1;
 		sinterp.interpret("input test4.txt");
 	}
 
@@ -52,10 +50,7 @@ public class ProtoTester {
 	}
 
 	public static void TestCase5() {
-		Controller cont = new Controller("3_1_es.p");
-		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
-		Trap.globalStrength = 1;
-		sinterp.interpret("input test4.txt");
+
 	}
 
 	public static void mainTestingEnvironment() {

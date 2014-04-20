@@ -11,7 +11,7 @@ public class Trap implements RouteCellListener {
 	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.
 	 */
 	public static int globalStrength;
-	protected int strength;
+	protected float strength;
 
 	protected static int baseCost;
 
@@ -76,7 +76,7 @@ public class Trap implements RouteCellListener {
 		Logging.log(2,
 				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
 						+ e.toString());
-		int sebzes = strength;
+		float sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(e);
 		}
@@ -89,7 +89,7 @@ public class Trap implements RouteCellListener {
 		Logging.log(2,
 				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
 						+ d.toString());
-		int sebzes = strength;
+		float sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(d);
 		}
@@ -102,7 +102,7 @@ public class Trap implements RouteCellListener {
 		Logging.log(2,
 				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
 						+ h.toString());
-		int sebzes = strength;
+		float sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMulitplier(h);
 		}
@@ -115,7 +115,7 @@ public class Trap implements RouteCellListener {
 		Logging.log(2,
 				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
 						+ h.toString());
-		int sebzes = strength;
+		float sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(h);
 		}
