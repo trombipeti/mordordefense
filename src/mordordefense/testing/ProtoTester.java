@@ -4,13 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashSet;
 
 import mordordefense.Controller;
 import mordordefense.Tower;
 import mordordefense.Trap;
 
 public class ProtoTester {
+
+	public static void TestCase1() {
+		Controller cont = new Controller("");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		sinterp.interpret("input test1.txt");
+	}
 
 	public static void TestCase2() {
 		// Ez a kiadott kötelező teszt.
@@ -112,6 +117,9 @@ public class ProtoTester {
 			switch (value) {
 			case 0:
 				System.out.println("Rossz teszteset");
+				break;
+			case 1:
+				TestCase1();
 				break;
 			case 2:
 				TestCase2();
