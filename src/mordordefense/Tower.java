@@ -23,6 +23,7 @@ public class Tower implements RouteCellListener
 
 	public static int globalRadius;
 
+	public static boolean globalSlice = false;
 	/**
 	 * A torony tüzelési frekvenciája.
 	 */
@@ -261,7 +262,12 @@ public class Tower implements RouteCellListener
 			hu *= s.getHumanMultiplier() * dmgmult;
 			ho *= s.getHobbitMultiplier() * dmgmult;
 		}
-		boolean slice = (new Random().nextInt(10) % 10 == 0);
+		boolean slice;
+		if (!globalSlice) {
+			slice = (new Random().nextInt(10) % 10 == 0);
+		} else {
+			slice = globalSlice;
+		}
 		Bullet b = new Bullet(dw, el, hu, ho, slice);
 		rc.addBullet(b);
 		timeOfLastShoot = System.currentTimeMillis();
