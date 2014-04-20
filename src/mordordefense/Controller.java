@@ -11,9 +11,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
-
-//import sun.org.mozilla.javascript.ast.Loop; //ez az import nem tudom, hogy kell-e, de nálam nem nagyon fordul
-
 import mordordefense.Cell.Dir;
 import mordordefense.exceptions.EnemyCannotStepException;
 import mordordefense.exceptions.EnemyDeadException;
@@ -400,6 +397,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 				saruman.addManna(en.getMaxLifePoint());
 				iter.remove();
 			} catch (EnemyCannotStepException e1) {
+				Logging.log(0, "Valamiért nem tud lépni az enemy!!!");
+				stopMainLoop();
 				// e1.printStackTrace();
 			}
 		}
@@ -421,9 +420,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			RouteCell rc = (RouteCell) cells.get(x).get(y);
-			if (rc.addTrap(t)){
+			if (rc.addTrap(t)) {
 				saruman.rmManna(Trap.getBaseCost());
-				traps.add(t);				
+				traps.add(t);
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
@@ -447,6 +446,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 		this.mapFileName = mapFileName;
 	}
 
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+
+	public void setGameEnded(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+	}
+
 	// RouteCellListener
 
 	@Override
@@ -456,12 +463,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -471,12 +478,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -486,12 +493,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -501,12 +508,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onEnter() hívás, paraméterek: "
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
-			gameEnded = true;
+			setGameEnded(true);
 			winner = new StringBuffer("enemies");
 			Logging.log(1, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onEnter() hívás");
+		Logging.log(4, "<< Controller.onEnter() hívás");
 	}
 
 	@Override
@@ -553,7 +560,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
 		enemies.add(e);
-		Logging.log(4, "Controller.onSlice() hívás");
+		Logging.log(4, "<< Controller.onSlice() hívás");
 	}
 
 	@Override
@@ -566,7 +573,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();
 		}
-		Logging.log(4, "Controller.onDie() hívás");
+		Logging.log(4, "<< Controller.onDie() hívás");
 	}
 
 }

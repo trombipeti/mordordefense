@@ -73,8 +73,9 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		Logging.log(2, ">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + e.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ e.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(e);
@@ -85,8 +86,9 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		Logging.log(2, ">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + d.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ d.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(d);
@@ -97,8 +99,9 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		Logging.log(2, ">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + h.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ h.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMulitplier(h);
@@ -109,8 +112,9 @@ public class Trap implements RouteCellListener {
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		Logging.log(2, ">> Trap.onEnter() hívás, paraméterek: "
-				+ sender.toString() + h.toString());
+		Logging.log(2,
+				">> Trap.onEnter() hívás, paraméterek: " + sender.toString()
+						+ h.toString());
 		int sebzes = strength;
 		for (MagicStone s : stones) {
 			sebzes *= s.getMultiplier(h);

@@ -15,4 +15,3 @@ step
 step
 step
 step
-quit

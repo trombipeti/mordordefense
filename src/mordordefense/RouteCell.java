@@ -42,8 +42,8 @@ public class RouteCell extends Cell {
 	 */
 	public RouteCell(int x, int y, Trap t) {
 		super(x, y);
-		Logging.log(2, ">> RouteCell konstruktor hívás, paraméter: "
-				+ t.toString());
+		Logging.log(2,
+				">> RouteCell konstruktor hívás, paraméter: " + t.toString());
 		trap = t;
 		Logging.log(4, ">> RouteCell konstruktor");
 	}
@@ -63,7 +63,8 @@ public class RouteCell extends Cell {
 	 *            Az elhelyezendő csapda.
 	 */
 	public boolean addTrap(Trap t) {
-		Logging.log(2, ">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
+		Logging.log(2,
+				">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
 		if (trap == null) {
 			trap = t;
 			listeners.add(t);
@@ -146,8 +147,8 @@ public class RouteCell extends Cell {
 	 *            A lövedék.
 	 */
 	public void addBullet(Bullet b) {
-		Logging.log(2, ">> RouteCell.addBullet() hívás, paraméter: "
-				+ b.toString());
+		Logging.log(2,
+				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
 		for (Enemy e : enemies) {
 			for (Bullet b1 : bullets) {
@@ -242,8 +243,10 @@ public class RouteCell extends Cell {
 	 *            A leiratkozni vágyó {@link RouteCellListener}
 	 */
 	public void removeRouteCellListener(RouteCellListener l) {
-		Logging.log(3, ">> RouteCell.removeRouteCellListener() hívás, paraméter: "
-				+ l.toString());
+		Logging.log(
+				3,
+				">> RouteCell.removeRouteCellListener() hívás, paraméter: "
+						+ l.toString());
 		listeners.remove(l);
 		Logging.log(4, "<< RouteCell.removeRouteCellListener");
 	}

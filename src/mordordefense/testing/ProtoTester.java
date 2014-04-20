@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import mordordefense.Controller;
-import mordordefense.Enemy;
 import mordordefense.Tower;
 import mordordefense.Trap;
 
@@ -31,9 +30,32 @@ public class ProtoTester {
 	}
 
 	public static void TestCase4() {
+		Controller cont = new Controller("");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		Tower.globalDamage = 1;
+		Tower.globalFreq = 1;
+		Tower.globalRadius = 1;
+		sinterp.interpret("input test4.txt");
+	}
+
+	public static void TestCaseMainLoop() {
 		Controller cont = new Controller("palya1.p");
 		cont.init();
 		cont.startMainLoop();
+		while (!cont.isGameEnded()) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void TestCase5() {
+		Controller cont = new Controller("3_1_es.p");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		Trap.globalStrength = 1;
+		sinterp.interpret("input test4.txt");
 	}
 	
 	public static void TestCase5(){

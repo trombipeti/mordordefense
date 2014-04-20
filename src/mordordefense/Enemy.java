@@ -16,9 +16,9 @@ public abstract class Enemy {
 	/**
 	 * Az enemy maximális (és kezdeti) életereje.
 	 */
-	protected int maxLifePoint;
+	protected float maxLifePoint;
 
-	public int getMaxLifePoint() {
+	public float getMaxLifePoint() {
 		return maxLifePoint;
 	}
 
@@ -26,17 +26,18 @@ public abstract class Enemy {
 	 * Az enemy aktuális életereje. Ha <= 0, akkor az enemy meghalt. Ezt a
 	 * következő léptetésnél egy {@link EnemyDeadException} kivétellel jelzi.
 	 */
-	protected int lifePoint;
+	protected float lifePoint;
 
 	/**
-	 * Az enemy alapsebessége.
+	 * Az enemy alapsebessége. Mértékegysége: mező/másodperc
 	 */
-	protected int baseSpeed;
+	protected float baseSpeed;
 
 	/**
 	 * Az enemy aktuális sebessége. Egy megadott mértéknél sose csökken lejebb.
+	 * Mező/másodperc.
 	 */
-	protected int speed;
+	protected float speed;
 
 	/**
 	 * Az enemy által megtett lépések száma.
@@ -62,12 +63,12 @@ public abstract class Enemy {
 	/**
 	 * Az enemy típusonként esetlegesen változó maximális életpontja.
 	 */
-	public static int defMaxLP;
+	public static float defMaxLP;
 
 	/**
 	 * Az enemy típusonként esetlegesen változó indulósebessége.
 	 */
-	public static int defSpeed;
+	public static float defSpeed;
 
 	/**
 	 * Konstruktor, amely beállítja a maximális életerőt és a kezdősebességet.
@@ -77,7 +78,7 @@ public abstract class Enemy {
 	 * @param parSpeed
 	 *            A kezdősebesség.
 	 */
-	public Enemy(int parMaxLifePoint, int parSpeed) {
+	public Enemy(float parMaxLifePoint, float parSpeed) {
 		maxLifePoint = parMaxLifePoint;
 		lifePoint = parMaxLifePoint;
 		baseSpeed = parSpeed;
@@ -119,7 +120,7 @@ public abstract class Enemy {
 	 * @param mertek
 	 *            Mennyivel csökkenjen a sebessége.
 	 */
-	public void lassit(int mertek) {
+	public void lassit(float mertek) {
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
 		if (speed - mertek >= 1) {
 			speed -= mertek;
@@ -156,7 +157,9 @@ public abstract class Enemy {
 
 	/**
 	 * Az ellenségeket léptető metódus. Ha útelágazásnál több helyre is tud
-	 * lépni, akkor véletlenszerűen választ.
+	 * lépni, akkor véletlenszerűen választ. Diszkrét idő szimuláció NINCS,
+	 * vagyis ha ritkán hívjuk meg, és nagyon gyorsak az enemyk, akkor rosszul
+	 * fog működni, és mindegyik enemy csak egyet fog lépni.
 	 * 
 	 * @throws EnemyDeadException
 	 *             Ha az enemy már meghalt.
