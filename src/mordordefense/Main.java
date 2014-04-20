@@ -128,6 +128,7 @@ public class Main {
 		 */
 		Logging.setLogLevel(2);
 		ProtoTester.mainTestingEnvironment();
+		System.exit(0);
 	}
 
 }
