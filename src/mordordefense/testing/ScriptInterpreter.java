@@ -220,12 +220,18 @@ public class ScriptInterpreter {
 				if (parts.length == 2) {
 					cont.setMapFileName(parts[1]);
 				}
+			} else if (parts[0].equalsIgnoreCase("slicing")) {
+				if (parts.length==2){
+					if(Integer.parseInt(parts[1])==1){
+					Tower.globalSlice=true;
+					}
+				}
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-//			interpret("quit");
+			// interpret("quit");
 
 		}
 	}
