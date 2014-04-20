@@ -1,5 +1,5 @@
 random off
-output out5.txt
+output 
 map 6_2_es.p
 start 0 
 slicing 1

@@ -601,7 +601,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
 			winner = new StringBuffer("enemies");
-			Logging.log(1, "Enemy nyert: " + e.toString());
+			Logging.log(0, "Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "<< Controller.onEnter() hívás");
@@ -616,7 +616,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
 			winner = new StringBuffer("enemies");
-			Logging.log(1, "Enemy nyert: " + d.toString());
+			Logging.log(0, "Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "<< Controller.onEnter() hívás");
@@ -631,7 +631,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
 			winner = new StringBuffer("enemies");
-			Logging.log(1, "Enemy nyert: " + h.toString());
+			Logging.log(0, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "<< Controller.onEnter() hívás");
