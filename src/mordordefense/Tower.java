@@ -270,6 +270,11 @@ public class Tower implements RouteCellListener
 		}
 		Bullet b = new Bullet(dw, el, hu, ho, slice);
 		rc.addBullet(b);
+
+		Logging.log(0, b.toString() + " from: " + parentCell.getCoords()[0]
+				+ " " + parentCell.getCoords()[1] + ", to: "
+				+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
+
 		timeOfLastShoot = System.currentTimeMillis();
 		Logging.log(3, "in Tower.fire(): " + b.toString() + " from: "
 				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1]

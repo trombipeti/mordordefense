@@ -209,6 +209,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 										new SpawnPointCell(sx, sy, id));
 								spawnCoords[0] = sx;
 								spawnCoords[1] = sy;
+								Logging.log(0, cells.get(sx).get(sy).toString());
 
 							} else if (sp[0].equalsIgnoreCase("M")) {
 								// Ha a MordorCell helyét adta meg
@@ -222,6 +223,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 								cells.get(mx).put(my, mc);
 								mordorCoords[0] = mx;
 								mordorCoords[1] = my;
+								Logging.log(0, mc.toString());
 							}
 						}
 						break;
@@ -246,6 +248,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		Logging.log(2, "<< void Controller.init()");
 	}
 
@@ -353,9 +356,18 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void loop() {
 		Logging.log(3, ">> Controller.loop() hívás");
 		if (sentEnemies < maxEnemyNum) {
-			addRandomEnemy();
+			// addRandomEnemy(); //ezt egyelőre kiszedtem, hogy egyszerűbben
+			// lehessen tesztelni és kimenetet összehasonlítani
 		}
 		stepAllEnemies();
+		for (Tower t : towers) {
+			Logging.log(0, t.toString() + ", index: " + towers.indexOf(t));
+		}
+		/*
+		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
+		 */
+		Logging.log(0, saruman.toString());
+
 		Logging.log(4, "<< Controller.loop()");
 	}
 
@@ -459,7 +471,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Enemy en = iter.next();
 			try {
 				en.leptet();
-				Logging.log(1, en.toString());
+				Logging.log(0, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
 				iter.remove();
@@ -510,6 +522,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 			if (rc.addTrap(t)) {
 				saruman.rmManna(Trap.getBaseCost());
 				traps.add(t);
+				Logging.log(0, t.toString() + " parentCell: " + x + ", " + y
+						+ ", index: " + traps.indexOf(t));
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
@@ -632,7 +646,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
 			winner = new StringBuffer("enemies");
-			Logging.log(1, "Enemy nyert: " + h.toString());
+			Logging.log(0, "Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
 		Logging.log(4, "<< Controller.onEnter() hívás");
@@ -689,9 +703,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void onDie(Enemy e) {
 		Logging.log(2,
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
+		saruman.addManna(10);
 		if (sentEnemies == maxEnemyNum) {
 			winner = new StringBuffer("saruman");
-			Logging.log(1, "!!! Szarumán nyert !!!");
+			Logging.log(0, "!!! Szarumán nyert !!!");
 			stopMainLoop();
 		}
 		Logging.log(4, "<< Controller.onDie() hívás");
