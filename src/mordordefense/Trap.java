@@ -81,7 +81,7 @@ public class Trap implements RouteCellListener {
 			sebzes *= s.getMultiplier(e);
 		}
 		e.lassit(sebzes);
-		Logging.log(4, "<< Tower.onEnter");
+		Logging.log(4, "<< Trap.onEnter");
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class Trap implements RouteCellListener {
 			sebzes *= s.getMultiplier(d);
 		}
 		d.lassit(sebzes);
-		Logging.log(4, "<< Tower.onEnter");
+		Logging.log(4, "<< Trap.onEnter");
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class Trap implements RouteCellListener {
 			sebzes *= s.getMulitplier(h);
 		}
 		h.lassit(sebzes);
-		Logging.log(4, "<< Tower.onEnter");
+		Logging.log(4, "<< Trap.onEnter");
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class Trap implements RouteCellListener {
 			sebzes *= s.getMultiplier(h);
 		}
 		h.lassit(sebzes);
-		Logging.log(4, "<< Tower.onEnter");
+		Logging.log(4, "<< Trap.onEnter");
 	}
 
 	@Override

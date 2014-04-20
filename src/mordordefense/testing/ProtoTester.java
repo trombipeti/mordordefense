@@ -40,13 +40,6 @@ public class ProtoTester {
 		Controller cont = new Controller("palya1.p");
 		cont.init();
 		cont.startMainLoop();
-		while (!cont.isGameEnded()) {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public static void TestCase5() {
@@ -56,7 +49,7 @@ public class ProtoTester {
 	public static void mainTestingEnvironment() {
 
 		boolean end = false;
-		while (!end) {
+		endless: while (!end) {
 			System.out.println("\nMelyik tesztesetet futtassam?");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
@@ -71,7 +64,7 @@ public class ProtoTester {
 			} catch (NumberFormatException e) {
 				if (in.equalsIgnoreCase("q")) {
 					end = true;
-					break;
+					break endless;
 				}
 			}
 			switch (value) {

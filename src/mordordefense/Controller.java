@@ -300,25 +300,41 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private Timer scheduler = new Timer();
 
 	/**
-	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}
+	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}. Alapjáraton null az
+	 * értéke, és majd a startMainLoop fogja inicializálni.
 	 */
-	private TimerTask mainLoop = new TimerTask() {
-
-		@Override
-		public void run() {
-			loop();
-		}
-	};
+	private TimerTask mainLoop = null;
 
 	/**
 	 * Ütemezi a scheduler-ben 10 ms-enkénti futásra a loop TimerTask-ot.
 	 */
 	public void startMainLoop() {
+		mainLoop = new TimerTask() {
+
+			@Override
+			public void run() {
+				loop();
+			}
+		};
 		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
 	}
 
+	/**
+	 * Leállítja az ütemezett mainLoop TimerTaskot, de ezután a startMainLoop()
+	 * hívással ez újra ütemezhető.
+	 */
+	public void pauseMainLoop() {
+		if (mainLoop != null) {
+			mainLoop.cancel();
+		}
+	}
+
+	/**
+	 * Leállítja az összes ütemezett TimerTask-ot és a schedulert is. Ezután a
+	 * startMainLoop már nem hívható meg!!!
+	 */
 	public void stopMainLoop() {
-		mainLoop.cancel();
+		scheduler.cancel();
 	}
 
 	/**
