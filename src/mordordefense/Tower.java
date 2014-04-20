@@ -227,17 +227,21 @@ public class Tower implements RouteCellListener
 	 *            Mennyi idő múlva oszoljon fel a köd (milliszekundumban).
 	 */
 	public void addFog(long timeOut) {
+		Logging.log(2, ">> Tower.addFog hívás, paraméter: " + timeOut);
 		hasFog = true;
 		fogTimeOut = timeOut;
 		fogAddTime = System.currentTimeMillis();
+		Logging.log(4, "<< Tower.addFog");
 	}
 
 	/**
 	 * Feloszlatja a tornyon lévő ködöt.
 	 */
 	public void removeFog() {
+		Logging.log(2, ">> Tower.removeFog hívás");
 		hasFog = false;
 		fogAddTime = fogTimeOut = -1;
+		Logging.log(4, "<< Tower.removeFog");
 	}
 
 	/**
@@ -247,6 +251,7 @@ public class Tower implements RouteCellListener
 	 *            A {@link RouteCell}, ahova a lövedéket ki kell lőni.
 	 */
 	private void fire(RouteCell rc) {
+		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
 		int dw, el, hu, ho;
 		dw = el = hu = ho = baseDamage;
 		for (MagicStone s : stones) {
@@ -263,6 +268,7 @@ public class Tower implements RouteCellListener
 		Logging.log(3, "in Tower.fire(): " + b.toString() + " from: "
 				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1]
 				+ " to: " + rc.getCoords()[0] + " " + rc.getCoords()[1]);
+		Logging.log(4, "<< Tower.fire");
 	}
 
 	/**
