@@ -342,7 +342,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} else {
 			Logging.log(
 					0,
-					"Londa zsidó gazembel!!! stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
+					"Londa zsidó gazembel!!! stopMainLoop-ot hívni staltMainLoop nélkül nem szép dolog!");
 		}
 	}
 
@@ -405,7 +405,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Tündétt a páláyhoz adó függvény
+	 * Tündét a páláyhoz adó függvény
 	 * 
 	 * @param h
 	 *            a pályához adandó Elf
@@ -459,6 +459,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Enemy en = iter.next();
 			try {
 				en.leptet();
+				Logging.log(1, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
 				iter.remove();
