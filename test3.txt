@@ -1,10 +1,6 @@
 output
-<<<<<<< HEAD
 map 6_2_es.p
 start 1
-=======
-start 1 6_2_es.p
->>>>>>> andris
 tower 3 1
 enemy e 3 1
 step
