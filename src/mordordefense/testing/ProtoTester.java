@@ -32,7 +32,13 @@ public class ProtoTester {
 	public static void TestCase4() {
 		Controller cont = new Controller("");
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+<<<<<<< HEAD
 		Trap.globalStrength = 1;
+=======
+		Tower.globalDamage = 1;
+		Tower.globalFreq = 1;
+		Tower.globalRadius = 1;
+>>>>>>> andris
 		sinterp.interpret("input test4.txt");
 	}
 
@@ -40,16 +46,37 @@ public class ProtoTester {
 		Controller cont = new Controller("palya1.p");
 		cont.init();
 		cont.startMainLoop();
+<<<<<<< HEAD
 	}
 
 	public static void TestCase5() {
 
+=======
+		while (!cont.isGameEnded()) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void TestCase5() {
+		Controller cont = new Controller("3_1_es.p");
+		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
+		Trap.globalStrength = 1;
+		sinterp.interpret("input test4.txt");
+>>>>>>> andris
 	}
 
 	public static void mainTestingEnvironment() {
 
 		boolean end = false;
+<<<<<<< HEAD
 		endless: while (!end) {
+=======
+		while (!end) {
+>>>>>>> andris
 			System.out.println("\nMelyik tesztesetet futtassam?");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
@@ -64,7 +91,11 @@ public class ProtoTester {
 			} catch (NumberFormatException e) {
 				if (in.equalsIgnoreCase("q")) {
 					end = true;
+<<<<<<< HEAD
 					break endless;
+=======
+					break;
+>>>>>>> andris
 				}
 			}
 			switch (value) {
