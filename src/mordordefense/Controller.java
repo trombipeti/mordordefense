@@ -371,12 +371,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 		}
 		for (Tower t : towers) {
-			if(t.hasFog && t.fogAddTime>0)
-				t.fogAddTime-=1;
-			if(t.fogAddTime==0)
+			if (t.hasFog && t.fogTimeRemaining > 0)
+				t.fogTimeRemaining -= 1;
+			if (t.fogTimeRemaining == 0)
 				t.removeFog();
-			if(t.timeOfLastShoot>0)
-				t.timeOfLastShoot-=1;
+			if (t.timeOfLastShoot > 0)
+				t.timeOfLastShoot -= 1;
 		}
 		stepAllEnemies();
 		for (Tower t : towers) {

@@ -69,6 +69,11 @@ public class Tower implements RouteCellListener
 	protected long fogTimeOut;
 
 	/**
+	 * A ködből hátralévő idő.
+	 */
+	protected long fogTimeRemaining;
+
+	/**
 	 * A tornyot tartalmazó {@link FieldCell}.
 	 */
 	protected FieldCell parentCell;
@@ -121,7 +126,7 @@ public class Tower implements RouteCellListener
 		this.radius = radius;
 		this.baseDamage = damage;
 		this.hasFog = false;
-		timeOfLastShoot=0;
+		timeOfLastShoot = 0;
 		Logging.log(4, "<< Tower konstruktor");
 	}
 
@@ -260,7 +265,8 @@ public class Tower implements RouteCellListener
 		foglessRadius = radius;
 		radius = (int) Math.floor(radius / 2);
 		fogTimeOut = timeOut;
-		fogAddTime = timeOut;
+		fogAddTime = System.currentTimeMillis();
+		fogTimeRemaining = timeOut;
 		removeFromListeners();
 		cellsInRange.clear();
 		setUpNeighbors();
@@ -337,8 +343,7 @@ public class Tower implements RouteCellListener
 	public String toString() {
 		String ret = "Tower, radius: " + radius + ", baseDamage: " + baseDamage
 				+ ", freq: " + freq + ", utolso loves ota eltelt ido: "
-				+ (timeOfLastShoot) + ", hasfog: "
-				+ hasFog;
+				+ (timeOfLastShoot) + ", hasfog: " + hasFog;
 		if (parentCell != null) {
 			ret += ", parentCell: " + parentCell.getCoords()[0] + " "
 					+ parentCell.getCoords()[1];
