@@ -35,6 +35,13 @@ public class Tower implements RouteCellListener
 	 * listenerként.
 	 */
 	protected int radius;
+	
+	/**
+	 * A torony hatósugara, akkor használjuk csak, amikor köd ereszkedik a 
+	 * toronyra, ebben tároljuk az eredeti hatósugarat.
+	 */
+	
+	protected int foglessRadius;
 
 	/**
 	 * A torony alapsebzése.
@@ -127,9 +134,15 @@ public class Tower implements RouteCellListener
 	public void addStone(MagicStone s) {
 		Logging.log(2, ">> Tower.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		Logging.log(1, s.toString());
 		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
 		freq = (int) (freq * s.getFreqMultiplier());
 		radius = (int) (radius * s.getRadiusMultiplier());
+		if(s.getRadiusMultiplier()!=1){
+			removeFromListeners();
+			cellsInRange.clear();
+			setUpNeighbors();
+		}
 		Logging.log(2, "<< Tower.addStone()");
 	}
 
@@ -175,6 +188,19 @@ public class Tower implements RouteCellListener
 			}
 		}
 		Logging.log(4, "<< Tower.setUpNeighbors()");
+	}
+	
+	/**
+	 * Leiratkoztatja a Tornyot a hatósugarában lévő RouteCell-ekről
+	 * 
+	 */
+	
+	private void removeFromListeners(){
+		for (Cell c : cellsInRange){
+			if (!c.getType().equalsIgnoreCase("FieldCell")) {
+				((RouteCell) c).removeRouteCellListener(this);
+			}
+		}
 	}
 
 	/**
@@ -230,8 +256,13 @@ public class Tower implements RouteCellListener
 	public void addFog(long timeOut) {
 		Logging.log(2, ">> Tower.addFog hívás, paraméter: " + timeOut);
 		hasFog = true;
+		foglessRadius=radius;
+		radius=(int) Math.floor(radius/2);
 		fogTimeOut = timeOut;
 		fogAddTime = System.currentTimeMillis();
+		removeFromListeners();
+		cellsInRange.clear();
+		setUpNeighbors();
 		Logging.log(4, "<< Tower.addFog");
 	}
 
@@ -241,7 +272,10 @@ public class Tower implements RouteCellListener
 	public void removeFog() {
 		Logging.log(2, ">> Tower.removeFog hívás");
 		hasFog = false;
+		radius=foglessRadius;
 		fogAddTime = fogTimeOut = -1;
+		removeFromListeners();
+		setUpNeighbors();
 		Logging.log(4, "<< Tower.removeFog");
 	}
 
@@ -263,8 +297,13 @@ public class Tower implements RouteCellListener
 			ho *= s.getHobbitMultiplier() * dmgmult;
 		}
 		boolean slice;
-		if (globalSlice) {
-			slice = (new Random().nextInt(10) % 10 == 0);
+
+		if (!globalSlice) {
+			if (Controller.getRandom()) {
+				slice = (new Random().nextInt(10) % 10 == 0);
+			} else {
+				slice = false;
+			}
 		} else {
 			slice = globalSlice;
 		}

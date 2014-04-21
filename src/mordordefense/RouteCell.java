@@ -171,6 +171,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, e);
 		}
+		//enemies.remove(e);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -185,6 +186,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
+		//enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -199,6 +201,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
+		//enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -213,6 +216,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
+		//enemies.remove(d);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 

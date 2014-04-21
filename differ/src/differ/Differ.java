@@ -2,29 +2,33 @@ package differ;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashSet;
 
 public class Differ {
 
 	String progOutputFile;
 	String expectedOutputFile;
 
-	String keyword = null;
+	HashSet<String> keywords = null;
 
 	public Differ(String[] args) {
 		progOutputFile = args[0];
 		expectedOutputFile = args[1];
 		if (args.length >= 3) {
-			keyword = args[2];
+			keywords = new HashSet<String>();
+			for (int i = 2; i < args.length; ++i) {
+				keywords.add(args[i]);
+			}
 		}
 	}
 
 	public static void printUsage() {
 		System.out.println("Használat:");
 		System.out
-				.println("java differ.Differ program_kimenet elvárt_kimenet [kulcsszó]");
-		System.out.println("A kulcsszó megadása nem kötelező.");
+				.println("java differ.Differ program_kimenet elvárt_kimenet [kulcsszavak]");
+		System.out.println("Kulcsszó megadása nem kötelező.");
 		System.out
-				.println("Ha meg van adva, csak azok a sorok lesznek összehasonlítva, amelyek tartalmazzák.");
+				.println("Ha van megadva, csak azok a sorok lesznek összehasonlítva, amelyek tartalmazzák valamelyik kulcsszót.");
 	}
 
 	public void doDiff() {
@@ -43,11 +47,21 @@ public class Differ {
 					if (lineOut == null || lineExp == null) {
 						break;
 					}
-					if (keyword == null
-							|| (lineOut.contains(keyword) || lineExp
-									.contains(keyword))) {
+					if (keywords == null) {
 						System.out.print(i + ". sor: ");
 						diffLines(lineOut, lineExp);
+					} else {
+						boolean c = false;
+						for (String k : keywords) {
+							if (lineOut.contains(k) || lineExp.contains(k)) {
+								c = true;
+								break;
+							}
+						}
+						if (c) {
+							System.out.print(i + ". sor: ");
+							diffLines(lineOut, lineExp);
+						}
 					}
 					++i;
 				}
@@ -65,7 +79,9 @@ public class Differ {
 	}
 
 	private void diffLines(String out, String exp) {
-		if (out.equalsIgnoreCase(exp)) {
+		String nospaceout = out.trim();
+		String nospaceexp = exp.trim();
+		if (nospaceout.equalsIgnoreCase(nospaceexp)) {
 			System.out.println("Egyezik");
 		} else {
 			System.out.print("NEM EGYEZIK: \nKimenet:");
