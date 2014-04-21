@@ -76,8 +76,8 @@ public class Elf extends Enemy {
 			RouteCell nextCell = possibleNext.get(next);
 			Logging.log(3, "\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
-			nextCell.enter(this);
 			resetSpeed();
+			nextCell.enter(this);
 			stepNumber++;
 			routeCell = nextCell;
 			timeOfLastStep = System.currentTimeMillis();
