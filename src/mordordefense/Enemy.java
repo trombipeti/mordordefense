@@ -71,6 +71,20 @@ public abstract class Enemy {
 	public static float defSpeed;
 
 	/**
+	 * Enemy halálát jelző boolean
+	 */
+	protected boolean dead = false;
+
+	/**
+	 * visszaadja, hogy halott-e az enemy
+	 * 
+	 * @return
+	 */
+	public boolean getDead() {
+		return dead;
+	}
+
+	/**
 	 * Konstruktor, amely beállítja a maximális életerőt és a kezdősebességet.
 	 * 
 	 * @param parMaxLifePoint

@@ -100,6 +100,7 @@ public class Elf extends Enemy {
 				for (EnemyListener l : listeners) {
 					l.onDie(this);
 				}
+				dead = true;
 				routeCell.leave(this);
 			}
 		}

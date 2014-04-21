@@ -98,6 +98,7 @@ public class Human extends Enemy {
 				for (EnemyListener l : listeners) {
 					l.onDie(this);
 				}
+				dead = true;
 				routeCell.leave(this);
 			}
 		}
