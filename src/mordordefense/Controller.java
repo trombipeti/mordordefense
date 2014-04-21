@@ -482,7 +482,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void stepAllEnemies() {
 		Logging.log(2, ">> Controller.stepAllEnemies() hívás");
 		Iterator<Enemy> iter = enemies.iterator();
-		while (iter.hasNext() || !gameEnded) {
+		while (iter.hasNext() && !gameEnded) {
 			Enemy en = iter.next();
 			try {
 				en.leptet();
