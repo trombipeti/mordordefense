@@ -345,7 +345,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		} else {
 			Logging.log(
 					0,
-					"Londa zsidó gazembel!!! stopMainLoop-ot hívni staltMainLoop nélkül nem szép dolog!");
+					"stopMainLoop-ot hívni staltMainLoop nélkül nem szép dolog!");
 		}
 	}
 
@@ -361,7 +361,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		}
 		stepAllEnemies();
 		for (Tower t : towers) {
-			Logging.log(3, t.toString() + ", index: " + towers.indexOf(t));
+			Logging.log(1, t.toString() + ", index: " + towers.indexOf(t));
 		}
 		/*
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
@@ -471,7 +471,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Enemy en = iter.next();
 			try {
 				en.leptet();
-				Logging.log(3, en.toString());
+				Logging.log(1, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
 				iter.remove();
@@ -527,7 +527,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				if (rc.addTrap(t)) {
 					saruman.rmManna(Trap.getBaseCost());
 					traps.add(t);
-					Logging.log(3, t.toString() + " parentCell: " + x + ", "
+					Logging.log(1, t.toString() + " parentCell: " + x + ", "
 							+ y + ", index: " + traps.indexOf(t));
 				}
 			} else {
