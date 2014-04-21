@@ -65,7 +65,9 @@ public class Differ {
 	}
 
 	private void diffLines(String out, String exp) {
-		if (out.equalsIgnoreCase(exp)) {
+		String nospaceout = out.trim();
+		String nospaceexp = exp.trim();
+		if (nospaceout.equalsIgnoreCase(nospaceexp)) {
 			System.out.println("Egyezik");
 		} else {
 			System.out.print("NEM EGYEZIK: \nKimenet:");
