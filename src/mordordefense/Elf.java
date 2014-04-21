@@ -99,8 +99,9 @@ public class Elf extends Enemy {
 			if (lifePoint <= 0) {
 				for (EnemyListener l : listeners) {
 					l.onDie(this);
+					dead=true;
 				}
-				routeCell.leave(this);
+				//routeCell.leave(this);
 			}
 		}
 		Logging.log(2, "<< Elf.sebez()");
