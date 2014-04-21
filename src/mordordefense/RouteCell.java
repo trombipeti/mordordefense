@@ -2,7 +2,6 @@ package mordordefense;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import mordordefense.testing.Logging;
 
@@ -152,13 +151,9 @@ public class RouteCell extends Cell {
 		Logging.log(2,
 				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
-		for (ListIterator<Enemy> iter = enemies.listIterator(); iter.hasNext();) {
+		for (Enemy e : enemies) {
 			for (Bullet b1 : bullets) {
-				Enemy e = iter.next();
 				e.sebez(b1);
-				if (e.dead) {
-					iter.remove();
-				}
 			}
 		}
 		bullets.remove(b);
@@ -176,7 +171,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, e);
 		}
-		enemies.remove(e);
+		//enemies.remove(e);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -191,7 +186,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		enemies.remove(h);
+		//enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -206,7 +201,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		enemies.remove(h);
+		//enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 
@@ -221,7 +216,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
-		enemies.remove(d);
+		//enemies.remove(d);
 		Logging.log(4, "<< RouteCell.leave");
 	}
 

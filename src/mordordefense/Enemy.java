@@ -70,8 +70,6 @@ public abstract class Enemy {
 	 */
 	public static float defSpeed;
 
-	public boolean dead=false;
-	
 	/**
 	 * Konstruktor, amely beállítja a maximális életerőt és a kezdősebességet.
 	 * 
