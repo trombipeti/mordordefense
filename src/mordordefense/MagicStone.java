@@ -246,10 +246,11 @@ public class MagicStone {
 	public String toString() {
 		return "MagicStone, baseCost: " + baseCost + ", elfMultiplier: "
 				+ elfMultiplier + ", dwarfMultiplier: " + dwarfMultiplier
-				+ ", hobbitMultiplier: " + hobbitMultiplier + ", humanMultiplier: "
-				+ humanMultiplier + ", damageMultiplier: " + damageMultiplier
-				+ ", freqMultiplier: " + freqMultiplier + ", radiusMultiplier: "
-				+ radiusMultiplier;
+				+ ", hobbitMultiplier: " + hobbitMultiplier
+				+ ", humanMultiplier: " + humanMultiplier
+				+ ", damageMultiplier: " + damageMultiplier
+				+ ", freqMultiplier: " + freqMultiplier
+				+ ", radiusMultiplier: " + radiusMultiplier;
 
 	}
 }
