@@ -269,11 +269,11 @@ public class Tower implements RouteCellListener
 			slice = globalSlice;
 		}
 		Bullet b = new Bullet(dw, el, hu, ho, slice);
+		Logging.log(1, b.toString() + " from: " + parentCell.getCoords()[0]
+				+ " " + parentCell.getCoords()[1] + " to: " + rc.getCoords()[0]
+				+ " " + rc.getCoords()[1]);
 		rc.addBullet(b);
 		timeOfLastShoot = System.currentTimeMillis();
-		Logging.log(3, "in Tower.fire(): " + b.toString() + " from: "
-				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1]
-				+ " to: " + rc.getCoords()[0] + " " + rc.getCoords()[1]);
 		Logging.log(4, "<< Tower.fire");
 	}
 
@@ -292,7 +292,7 @@ public class Tower implements RouteCellListener
 	@Override
 	public String toString() {
 		String ret = "Tower, radius: " + radius + ", baseDamage: " + baseDamage
-				+ ", freq: " + freq + ", utolso loves ota ideje: "
+				+ ", freq: " + freq + ", utolso loves ota eltelt ido: "
 				+ (System.currentTimeMillis() - timeOfLastShoot) + ", hasfog: "
 				+ hasFog;
 		if (parentCell != null) {

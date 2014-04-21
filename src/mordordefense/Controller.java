@@ -349,9 +349,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (scheduler != null) {
 			scheduler.cancel();
 		} else {
-			Logging.log(
-					0,
-					"stopMainLoop-ot hívni staltMainLoop nélkül nem szép dolog!");
+			Logging.log(0,
+					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
 		}
 	}
 
@@ -374,7 +373,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		/*
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
-		Logging.log(3, saruman.toString());
+		Logging.log(1, saruman.toString());
 
 		Logging.log(4, "<< Controller.loop()");
 	}

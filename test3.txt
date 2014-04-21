@@ -1,18 +1,8 @@
 output
+random off
 map 6_2_es.p
-start 1
+start 0
 tower 3 1
-enemy e 3 10000
-step
-step
-step
-step
-step
 fog 0 1000
+enemy d 3 10000
 enemy e 3 10000
-step
-step
-step
-step
-step
-step
