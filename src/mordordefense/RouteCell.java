@@ -156,6 +156,7 @@ public class RouteCell extends Cell {
 				e.sebez(b1);
 			}
 		}
+		bullets.remove(b);
 		Logging.log(2, "<< RouteCell.addBullet()");
 	}
 

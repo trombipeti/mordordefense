@@ -62,6 +62,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private int sentEnemies;
 
 	/**
+	 * az eddig meghalt ellenségek
+	 */
+	private int diedEnemies;
+	/**
 	 * A pályán lévő csapdák
 	 */
 	private List<Trap> traps = new ArrayList<Trap>();
@@ -130,7 +134,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public Controller(int n, String fileName) {
 		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + n);
 		maxEnemyNum = n;
-		sentEnemies = 0;
+		sentEnemies = diedEnemies = 0;
 		mapFileName = fileName;
 		Logging.log(4, "<< Controller konstruktor");
 	}
@@ -349,9 +353,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (scheduler != null) {
 			scheduler.cancel();
 		} else {
-			Logging.log(
-					0,
-					"stopMainLoop-ot hívni staltMainLoop nélkül nem szép dolog!");
+			Logging.log(0,
+					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
 		}
 	}
 
@@ -374,7 +377,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		/*
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
-		Logging.log(3, saruman.toString());
+		Logging.log(1, saruman.toString());
 
 		Logging.log(4, "<< Controller.loop()");
 	}
@@ -731,7 +734,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(2,
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
 		saruman.addManna(10);
-		if (sentEnemies == maxEnemyNum) {
+		diedEnemies++;
+		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
 			winner = new StringBuffer("saruman");
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();

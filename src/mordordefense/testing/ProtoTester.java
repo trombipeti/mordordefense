@@ -33,7 +33,7 @@ public class ProtoTester {
 		ScriptInterpreter sinterp = new ScriptInterpreter(cont);
 		Tower.globalDamage = 1;
 		Tower.globalFreq = 1;
-		Tower.globalRadius = 1;
+		Tower.globalRadius = 2;
 		Tower.setBaseCost(10);
 		sinterp.interpret("input test3.txt");
 	}

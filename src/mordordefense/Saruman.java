@@ -31,7 +31,7 @@ public class Saruman {
 	 *            A hozzáadódó varázserő
 	 */
 	public void addManna(float m) {
-		Logging.log(1, ">> Saruman.addManna() hívás, paraméter: " + m);
+		Logging.log(2, ">> Saruman.addManna() hívás, paraméter: " + m);
 		manna += m;
 		Logging.log(4, "<< Saruman.addManna");
 	}
@@ -54,7 +54,7 @@ public class Saruman {
 	 *            Mennyivel csökkenjen a varázserő.
 	 */
 	public void rmManna(float m) {
-		Logging.log(1, ">> Saruman.rmManna() hívás, paraméter: " + m);
+		Logging.log(2, ">> Saruman.rmManna() hívás, paraméter: " + m);
 		manna -= m;
 		Logging.log(3, "\t Szarumán új varázserej: " + manna);
 		Logging.log(4, "<< Saruman.rmManna");
