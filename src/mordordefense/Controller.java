@@ -370,6 +370,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 				// lehessen tesztelni és kimenetet összehasonlítani
 			}
 		}
+		for (Tower t : towers) {
+			if(t.hasFog && t.fogAddTime>0)
+				t.fogAddTime-=1;
+			if(t.fogAddTime==0)
+				t.removeFog();
+			if(t.timeOfLastShoot>0)
+				t.timeOfLastShoot-=1;
+		}
 		stepAllEnemies();
 		for (Tower t : towers) {
 			Logging.log(1, t.toString() + ", index: " + towers.indexOf(t));

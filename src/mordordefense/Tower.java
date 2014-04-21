@@ -35,12 +35,12 @@ public class Tower implements RouteCellListener
 	 * listenerként.
 	 */
 	protected int radius;
-	
+
 	/**
-	 * A torony hatósugara, akkor használjuk csak, amikor köd ereszkedik a 
+	 * A torony hatósugara, akkor használjuk csak, amikor köd ereszkedik a
 	 * toronyra, ebben tároljuk az eredeti hatósugarat.
 	 */
-	
+
 	protected int foglessRadius;
 
 	/**
@@ -100,7 +100,7 @@ public class Tower implements RouteCellListener
 		this.radius = globalRadius;
 		this.baseDamage = globalDamage;
 		this.hasFog = false;
-		timeOfLastShoot = -1;
+		timeOfLastShoot = 0;
 		Logging.log(4, "<< Tower default konstruktor");
 	}
 
@@ -121,6 +121,7 @@ public class Tower implements RouteCellListener
 		this.radius = radius;
 		this.baseDamage = damage;
 		this.hasFog = false;
+		timeOfLastShoot=0;
 		Logging.log(4, "<< Tower konstruktor");
 	}
 
@@ -138,7 +139,7 @@ public class Tower implements RouteCellListener
 		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
 		freq = (int) (freq * s.getFreqMultiplier());
 		radius = (int) (radius * s.getRadiusMultiplier());
-		if(s.getRadiusMultiplier()!=1){
+		if (s.getRadiusMultiplier() != 1) {
 			removeFromListeners();
 			cellsInRange.clear();
 			setUpNeighbors();
@@ -189,14 +190,14 @@ public class Tower implements RouteCellListener
 		}
 		Logging.log(4, "<< Tower.setUpNeighbors()");
 	}
-	
+
 	/**
 	 * Leiratkoztatja a Tornyot a hatósugarában lévő RouteCell-ekről
 	 * 
 	 */
-	
-	private void removeFromListeners(){
-		for (Cell c : cellsInRange){
+
+	private void removeFromListeners() {
+		for (Cell c : cellsInRange) {
 			if (!c.getType().equalsIgnoreCase("FieldCell")) {
 				((RouteCell) c).removeRouteCellListener(this);
 			}
@@ -256,10 +257,10 @@ public class Tower implements RouteCellListener
 	public void addFog(long timeOut) {
 		Logging.log(2, ">> Tower.addFog hívás, paraméter: " + timeOut);
 		hasFog = true;
-		foglessRadius=radius;
-		radius=(int) Math.floor(radius/2);
+		foglessRadius = radius;
+		radius = (int) Math.floor(radius / 2);
 		fogTimeOut = timeOut;
-		fogAddTime = System.currentTimeMillis();
+		fogAddTime = timeOut;
 		removeFromListeners();
 		cellsInRange.clear();
 		setUpNeighbors();
@@ -272,7 +273,7 @@ public class Tower implements RouteCellListener
 	public void removeFog() {
 		Logging.log(2, ">> Tower.removeFog hívás");
 		hasFog = false;
-		radius=foglessRadius;
+		radius = foglessRadius;
 		fogAddTime = fogTimeOut = -1;
 		removeFromListeners();
 		setUpNeighbors();
@@ -287,32 +288,36 @@ public class Tower implements RouteCellListener
 	 */
 	private void fire(RouteCell rc) {
 		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
-		int dw, el, hu, ho;
-		dw = el = hu = ho = baseDamage;
-		for (MagicStone s : stones) {
-			float dmgmult = s.getDamageMultiplier();
-			dw *= s.getDwarfMultiplier() * dmgmult;
-			el *= s.getElfMultiplier() * dmgmult;
-			hu *= s.getHumanMultiplier() * dmgmult;
-			ho *= s.getHobbitMultiplier() * dmgmult;
-		}
-		boolean slice;
-
-		if (!globalSlice) {
-			if (Controller.getRandom()) {
-				slice = (new Random().nextInt(10) % 10 == 0);
-			} else {
-				slice = false;
+		if (timeOfLastShoot == 0) {
+			int dw, el, hu, ho;
+			dw = el = hu = ho = baseDamage;
+			for (MagicStone s : stones) {
+				float dmgmult = s.getDamageMultiplier();
+				dw *= s.getDwarfMultiplier() * dmgmult;
+				el *= s.getElfMultiplier() * dmgmult;
+				hu *= s.getHumanMultiplier() * dmgmult;
+				ho *= s.getHobbitMultiplier() * dmgmult;
 			}
-		} else {
-			slice = globalSlice;
+			boolean slice;
+
+			if (!globalSlice) {
+				if (Controller.getRandom()) {
+					slice = (new Random().nextInt(10) % 10 == 0);
+				} else {
+					slice = false;
+				}
+			} else {
+				slice = globalSlice;
+			}
+			Bullet b = new Bullet(dw, el, hu, ho, slice);
+			Logging.log(
+					1,
+					b.toString() + " from: " + parentCell.getCoords()[0] + " "
+							+ parentCell.getCoords()[1] + " to: "
+							+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
+			rc.addBullet(b);
+			timeOfLastShoot = freq;
 		}
-		Bullet b = new Bullet(dw, el, hu, ho, slice);
-		Logging.log(1, b.toString() + " from: " + parentCell.getCoords()[0]
-				+ " " + parentCell.getCoords()[1] + " to: " + rc.getCoords()[0]
-				+ " " + rc.getCoords()[1]);
-		rc.addBullet(b);
-		timeOfLastShoot = System.currentTimeMillis();
 		Logging.log(4, "<< Tower.fire");
 	}
 
@@ -332,7 +337,7 @@ public class Tower implements RouteCellListener
 	public String toString() {
 		String ret = "Tower, radius: " + radius + ", baseDamage: " + baseDamage
 				+ ", freq: " + freq + ", utolso loves ota eltelt ido: "
-				+ (System.currentTimeMillis() - timeOfLastShoot) + ", hasfog: "
+				+ (timeOfLastShoot) + ", hasfog: "
 				+ hasFog;
 		if (parentCell != null) {
 			ret += ", parentCell: " + parentCell.getCoords()[0] + " "
