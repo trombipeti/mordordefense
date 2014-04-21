@@ -114,6 +114,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * A controller véletlenszerűen indítja-e az enemyket stb.
 	 */
 	private boolean random;
+	/**
+	 * A Controller automatikusan rakhat-e le enemy-t, vagy kézzel lesznek
+	 * lerakva (alap állapotban kézire van állítva)
+	 * 
+	 */
+	private boolean canSpawn = false;
 
 	/**
 	 * Konstruktor
@@ -356,8 +362,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void loop() {
 		Logging.log(3, ">> Controller.loop() hívás");
 		if (sentEnemies < maxEnemyNum) {
-			// addRandomEnemy(); //ezt egyelőre kiszedtem, hogy egyszerűbben
-			// lehessen tesztelni és kimenetet összehasonlítani
+			if (canSpawn) {
+				addRandomEnemy(); // ezt egyelőre kiszedtem, hogy egyszerűbben
+				// lehessen tesztelni és kimenetet összehasonlítani
+			}
 		}
 		stepAllEnemies();
 		for (Tower t : towers) {
@@ -565,9 +573,20 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * beállítja a randomitást
 	 * 
 	 * @param b
+	 *            randomitás értéke
 	 */
 	public void setRandom(boolean b) {
 		random = b;
+	}
+
+	/**
+	 * manuális vagy automatikus-e az ellenségek pályára helyezése
+	 * 
+	 * @param b
+	 *            auto-true, manual-false
+	 */
+	public void setCanSpawn(boolean b) {
+		canSpawn = b;
 	}
 
 	/**

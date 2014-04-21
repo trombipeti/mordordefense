@@ -1,6 +1,7 @@
 input <filenév>
 output <filenév>
 random <on/off>
+spawn <on/off>
 map <filenév>
 help
 quit
