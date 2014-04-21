@@ -127,6 +127,7 @@ public class Tower implements RouteCellListener
 	public void addStone(MagicStone s) {
 		Logging.log(2, ">> Tower.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		Logging.log(1, s.toString());
 		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
 		freq = (int) (freq * s.getFreqMultiplier());
 		radius = (int) (radius * s.getRadiusMultiplier());

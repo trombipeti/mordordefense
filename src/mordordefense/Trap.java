@@ -40,6 +40,7 @@ public class Trap implements RouteCellListener {
 	public void addStone(MagicStone s) {
 		Logging.log(3, ">> Trap.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		Logging.log(1, s.toString());
 		Logging.log(4, "<< Trap.addStone");
 	}
 
