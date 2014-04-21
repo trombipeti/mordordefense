@@ -117,7 +117,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * A controller véletlenszerűen indítja-e az enemyket stb.
 	 */
-	private boolean random;
+	private static boolean random;
 	/**
 	 * A Controller automatikusan rakhat-e le enemy-t, vagy kézzel lesznek
 	 * lerakva (alap állapotban kézire van állítva)
@@ -578,8 +578,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param b
 	 *            randomitás értéke
 	 */
-	public void setRandom(boolean b) {
+	public static void setRandom(boolean b) {
 		random = b;
+	}
+
+	public static boolean getRandom() {
+		return random;
 	}
 
 	/**

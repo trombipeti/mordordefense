@@ -263,8 +263,13 @@ public class Tower implements RouteCellListener
 			ho *= s.getHobbitMultiplier() * dmgmult;
 		}
 		boolean slice;
-		if (globalSlice) {
-			slice = (new Random().nextInt(10) % 10 == 0);
+
+		if (!globalSlice) {
+			if (Controller.getRandom()) {
+				slice = (new Random().nextInt(10) % 10 == 0);
+			} else {
+				slice = false;
+			}
 		} else {
 			slice = globalSlice;
 		}
