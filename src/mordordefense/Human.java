@@ -46,7 +46,8 @@ public class Human extends Enemy {
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Human.leptet(), nem tud meg lepni");
 			return;
 		}
@@ -57,10 +58,12 @@ public class Human extends Enemy {
 		// Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
-		for (Cell rc : routeCell.getSzomszedok().values()) {
-			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
-					&& rc.getID() > routeCell.getID()) {
-				possibleNext.add((RouteCell) rc);
+		if (routeCell != null) {
+			for (Cell rc : routeCell.getSzomszedok().values()) {
+				if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
+						&& rc.getID() > routeCell.getID()) {
+					possibleNext.add((RouteCell) rc);
+				}
 			}
 		}
 		// Ha van olyan cella, ahova tud lépni, random sorsolunk egyet

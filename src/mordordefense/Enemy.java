@@ -42,7 +42,7 @@ public abstract class Enemy {
 	/**
 	 * Az enemy által megtett lépések száma.
 	 */
-	protected int stepNumber;
+	protected int stepNumber = 0;
 
 	/**
 	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy tud-e

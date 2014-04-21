@@ -50,7 +50,8 @@ public class Hobbit extends Enemy
 		}
 		long _time = System.currentTimeMillis();
 		// s = v*t, vagyis ha eltelt idő*sebesség < 1, akkor nem lépünk.
-		if (((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Hobbit.leptet(), nem tud meg lepni.");
 			return;
 		}
@@ -61,10 +62,12 @@ public class Hobbit extends Enemy
 		// Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
-		for (Cell rc : routeCell.getSzomszedok().values()) {
-			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
-					&& rc.getID() > routeCell.getID()) {
-				possibleNext.add((RouteCell) rc);
+		if (routeCell != null) {
+			for (Cell rc : routeCell.getSzomszedok().values()) {
+				if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
+						&& rc.getID() > routeCell.getID()) {
+					possibleNext.add((RouteCell) rc);
+				}
 			}
 		}
 		// Ha van olyan cella, ahova tud lépni, random sorsolunk egyet
