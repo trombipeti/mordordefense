@@ -745,6 +745,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		diedEnemies++;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
 			winner = new StringBuffer("saruman");
+			setGameEnded(true);
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();
 		}
