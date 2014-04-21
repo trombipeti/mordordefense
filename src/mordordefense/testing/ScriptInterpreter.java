@@ -226,6 +226,14 @@ public class ScriptInterpreter {
 						Tower.globalSlice = true;
 					}
 				}
+			} else if (parts[0].equalsIgnoreCase("spawn")) {
+				if (parts.length == 2) {
+					if (parts[1].equalsIgnoreCase("on")) {
+						cont.setCanSpawn(true);
+					} else {
+						cont.setCanSpawn(false);
+					}
+				}
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
