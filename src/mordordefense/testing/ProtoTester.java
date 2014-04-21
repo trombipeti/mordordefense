@@ -119,7 +119,7 @@ public class ProtoTester {
 					continue endless;
 				} else if (in.toLowerCase().startsWith("loglevel")) {
 					String[] cmd = in.split(" ");
-					if(cmd.length >= 2) {
+					if (cmd.length >= 2) {
 						int l = Integer.parseInt(cmd[1]);
 						Logging.setLogLevel(l);
 						continue endless;
