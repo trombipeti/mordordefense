@@ -332,7 +332,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (scheduler == null) {
 			scheduler = new Timer();
 		}
-		scheduler.scheduleAtFixedRate(mainLoop, 0, 10);
+		scheduler.scheduleAtFixedRate(mainLoop, 0, 50);
 	}
 
 	/**
