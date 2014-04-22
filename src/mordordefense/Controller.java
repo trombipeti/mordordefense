@@ -366,14 +366,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3, ">> Controller.loop() hívás");
 		if (sentEnemies < maxEnemyNum) {
 			if (canSpawn) {
-				addRandomEnemy(); // ezt egyelőre kiszedtem, hogy egyszerűbben
-				// lehessen tesztelni és kimenetet összehasonlítani
+				addRandomEnemy();
 			}
 		}
 		for (Tower t : towers) {
 			if (t.hasFog && t.fogTimeRemaining > 0)
 				t.fogTimeRemaining -= 1;
-			if (t.fogTimeRemaining == 0)
+			if (t.hasFog && t.fogTimeRemaining == 0)
 				t.removeFog();
 			if (t.timeOfLastShoot > 0)
 				t.timeOfLastShoot -= 1;
@@ -386,7 +385,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
 		Logging.log(1, saruman.toString());
-
+		Logging.log(1, "--Kör vége-- \n");
 		Logging.log(4, "<< Controller.loop()");
 	}
 
@@ -742,6 +741,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
 		enemies.add(e);
+		Logging.log(1, e.toString());
 		Logging.log(4, "<< Controller.onSlice() hívás");
 	}
 

@@ -1,7 +1,7 @@
 output
 random off
 map 3_1_es.p
-start 0
 trap 1 0
 enemy e 3 100
-magicstone trap 0 40 0 0 0 0 0 0
+magicstone trap 0 99 0 0 0 0 0 0
+start 0
