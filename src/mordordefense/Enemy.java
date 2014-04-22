@@ -135,6 +135,7 @@ public abstract class Enemy {
 	 *            Mennyivel csökkenjen a sebessége.
 	 */
 	public void lassit(float mertek) {
+		//mertek=mertek/(Controller.timeStep/10.0f);
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
 		if (speed - mertek >= 1) {
 			speed -= mertek;
@@ -228,7 +229,7 @@ public abstract class Enemy {
 	public String toString() {
 		String ret = "Enemy, tipus: " + getType() + ", eletero: " + lifePoint
 				+ "/" + maxLifePoint + ", sebesseg: " + speed + ", lepesszam: "
-				+ stepNumber + ", utoljara ekkor lepett: " + timeOfLastStep;
+				+ stepNumber;
 		if (routeCell != null) {
 			ret += ", pozíciója: " + routeCell.getCoords()[0] + " "
 					+ routeCell.getCoords()[1];

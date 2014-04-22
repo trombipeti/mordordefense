@@ -1,4 +1,4 @@
-output
+output out_1.txt
 random off
 map 5_6_os.p
 enemy e 1 100

@@ -23,6 +23,8 @@ import mordordefense.testing.Logging;
  */
 public class Controller implements RouteCellListener, EnemyListener {
 
+	public static int timeStep=50;
+	
 	/**
 	 * Mordor koordinátái.
 	 * 
@@ -332,7 +334,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		if (scheduler == null) {
 			scheduler = new Timer();
 		}
-		scheduler.scheduleAtFixedRate(mainLoop, 0, 50);
+		scheduler.scheduleAtFixedRate(mainLoop, 0, timeStep);
 	}
 
 	/**
@@ -741,6 +743,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
 		enemies.add(e);
+		sentEnemies++;
 		Logging.log(1, e.toString());
 		Logging.log(4, "<< Controller.onSlice() hívás");
 	}

@@ -342,7 +342,7 @@ public class Tower implements RouteCellListener
 	@Override
 	public String toString() {
 		String ret = "Tower, radius: " + radius + ", baseDamage: " + baseDamage
-				+ ", freq: " + freq + ", utolso loves ota eltelt ido: "
+				+ ", freq: " + freq + ", kovetkezo lovesig hatralevo ido: "
 				+ (timeOfLastShoot) + ", hasfog: " + hasFog;
 		if (parentCell != null) {
 			ret += ", parentCell: " + parentCell.getCoords()[0] + " "

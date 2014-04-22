@@ -1,0 +1,19 @@
+Trap, strength: 1.0 parentCell: 1, 0, index: 0
+MagicStone, baseCost: 0, elfMultiplier: 88.0, dwarfMultiplier: 38.0, hobbitMultiplier: 0.0, humanMultiplier: 0.0, damageMultiplier: 0.0, freqMultiplier: 0.0, radiusMultiplier: 0.0
+Enemy, tipus: Elf, eletero: 3.0/3.0, sebesseg: 100.0, lepesszam: 0, pozíciója: 0 0
+Enemy, tipus: Dwarf, eletero: 3.0/3.0, sebesseg: 50.0, lepesszam: 0, pozíciója: 0 0
+Enemy, tipus: Dwarf, eletero: 3.0/3.0, sebesseg: 12.0, lepesszam: 1, pozíciója: 1 0
+Enemy, tipus: Elf, eletero: 3.0/3.0, sebesseg: 12.0, lepesszam: 1, pozíciója: 1 0
+Saruman, manna: 90.0
+--Kör vége-- 
+
+Enemy, tipus: Dwarf, eletero: 3.0/3.0, sebesseg: 12.0, lepesszam: 1, pozíciója: 1 0
+Enemy, tipus: Elf, eletero: 3.0/3.0, sebesseg: 12.0, lepesszam: 1, pozíciója: 1 0
+Saruman, manna: 90.0
+--Kör vége-- 
+
+!!! Enemy nyert: Enemy, tipus: Dwarf, eletero: 3.0/3.0, sebesseg: 50.0, lepesszam: 1, pozíciója: 2 0
+Enemy, tipus: Dwarf, eletero: 3.0/3.0, sebesseg: 50.0, lepesszam: 2, pozíciója: 2 0
+Saruman, manna: 90.0
+--Kör vége-- 
+

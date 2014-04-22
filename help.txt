@@ -1,4 +1,4 @@
-input <filenév>
+﻿input <filenév>
 output <filenév>
 random <on/off>
 spawn <on/off>
@@ -13,3 +13,4 @@ magicstone <tower/trap> <x> <elf>  <dwarf> <hobbit> <human> <damage> <freq> <rad
 enemy <d/e/h/h>
 fog <i> <timeout>
 slicing <1/0>
+sleep <time>
