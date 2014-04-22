@@ -1,4 +1,4 @@
-output
+output out_2.txt
 map 6_2_es.p
 start 0
 tower 3 1

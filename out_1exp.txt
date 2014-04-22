@@ -1,0 +1,38 @@
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 0, pozíciója: 0 0
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 1, pozíciója: 1 0
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 2, pozíciója: 1 1
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 3, pozíciója: 1 2
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 4, pozíciója: 1 3
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 5, pozíciója: 1 4
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 6, pozíciója: 2 4
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 7, pozíciója: 2 5
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 8, pozíciója: 3 5
+Saruman, manna: 100.0
+--Kör vége-- 
+
+!!! Enemy nyert: Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 8, pozíciója: 4 5
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 9, pozíciója: 4 5
+Saruman, manna: 100.0
+--Kör vége-- 
+
