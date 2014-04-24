@@ -1,4 +1,4 @@
-﻿package mordordefense.exceptions;
+package mordordefense.exceptions;
 
 /**
  * Kivétel osztály, amellyel jelezni tud a léptetendő ellenség, hogy meghalt.
