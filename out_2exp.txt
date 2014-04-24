@@ -1,0 +1,21 @@
+Saruman, manna: 100.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 0, pozíciója: 0 0
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 1, pozíciója: 1 0
+Tower, radius: 1, baseDamage: 1, freq: 1, kovetkezo lovesig hatralevo ido: 0, hasfog: false, parentCell: 3 1, index: 0
+Saruman, manna: 90.0
+--Kör vége-- 
+
+Enemy, tipus: Elf, eletero: 1.0/1.0, sebesseg: 100.0, lepesszam: 2, pozíciója: 2 0
+Tower, radius: 1, baseDamage: 1, freq: 1, kovetkezo lovesig hatralevo ido: 0, hasfog: false, parentCell: 3 1, index: 0
+Saruman, manna: 90.0
+--Kör vége-- 
+
+Bullet, dwarfDamage: 1, elfDamage: 1, hobbitDamage: 1, humanDamage: 1, slicing: false from: 3 1 to: 3 0
+!!! Szarumán nyert !!!
+Enemy, tipus: Elf, eletero: 0.0/1.0, sebesseg: 100.0, lepesszam: 3, pozíciója: 3 0
+Tower, radius: 1, baseDamage: 1, freq: 1, kovetkezo lovesig hatralevo ido: 1, hasfog: false, parentCell: 3 1, index: 0
+Saruman, manna: 100.0
+--Kör vége-- 
+

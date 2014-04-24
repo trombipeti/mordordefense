@@ -1,0 +1,9 @@
+output out_3.txt
+random off
+map 6_2_es_double.p
+start 0
+tower 3 1
+enemy d 3 10000
+sleep 1000
+fog 0 1000
+enemy e 3 10000
