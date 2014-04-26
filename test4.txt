@@ -1,9 +1,7 @@
-output out_4.txt
+output
 random off
-start 1 3_1_es.p
+map 3_1_es.p
+start 0
 trap 1 0
-enemy e 3 2
-magicstone trap 0 1 0 0 0 0 0 0 
-step
-step
-step
+enemy e 3 100
+magicstone trap 0 40 0 0 0 0 0 0

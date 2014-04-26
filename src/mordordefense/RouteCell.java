@@ -2,6 +2,7 @@ package mordordefense;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import mordordefense.testing.Logging;
 
@@ -42,9 +43,10 @@ public class RouteCell extends Cell {
 	 */
 	public RouteCell(int x, int y, Trap t) {
 		super(x, y);
-		Logging.log(">> RouteCell konstruktor hívás, paraméter: "
-				+ t.toString());
+		Logging.log(2,
+				">> RouteCell konstruktor hívás, paraméter: " + t.toString());
 		trap = t;
+		Logging.log(4, ">> RouteCell konstruktor");
 	}
 
 	/**
@@ -62,14 +64,16 @@ public class RouteCell extends Cell {
 	 *            Az elhelyezendő csapda.
 	 */
 	public boolean addTrap(Trap t) {
-		Logging.log(">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
+		Logging.log(2,
+				">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
 		if (trap == null) {
 			trap = t;
 
-			Logging.log("<<routeCell.addTrap() return: boolean - true");
+			listeners.add(t);
+			Logging.log(2, "<< routeCell.addTrap() return: boolean - true");
 			return true;
-		}else{
-			Logging.log("<<routeCell.addTrap() return: boolean - false");
+		} else {
+			Logging.log(2, "<< routeCell.addTrap() return: boolean - false");
 			return false;
 		}
 	}
@@ -81,12 +85,13 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Elf}
 	 */
 	public void enter(Elf e) {
-		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + e.toString());
+		Logging.log(2, ">> RouteCell.enter() hívás, paraméter: " + e.toString());
 		e.setRouteCell(this);
 		enemies.add(e);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, e);
 		}
+		Logging.log(4, "<< RouteCell.enter");
 	}
 
 	/**
@@ -96,12 +101,13 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Human}
 	 */
 	public void enter(Human h) {
-		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		Logging.log(2, ">> RouteCell.enter() hívás, paraméter: " + h.toString());
 		h.setRouteCell(this);
 		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
+		Logging.log(4, "<< RouteCell.enter");
 	}
 
 	/**
@@ -111,12 +117,13 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Hobbit}
 	 */
 	public void enter(Hobbit h) {
-		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + h.toString());
+		Logging.log(2, ">> RouteCell.enter() hívás, paraméter: " + h.toString());
 		h.setRouteCell(this);
 		enemies.add(h);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, h);
 		}
+		Logging.log(4, "<< RouteCell.enter");
 	}
 
 	/**
@@ -126,12 +133,13 @@ public class RouteCell extends Cell {
 	 *            A belépő {@link Dwarf}
 	 */
 	public void enter(Dwarf d) {
-		//Logging.log(">> RouteCell.enter() hívás, paraméter: " + d.toString());
+		Logging.log(2, ">> RouteCell.enter() hívás, paraméter: " + d.toString());
 		d.setRouteCell(this);
 		enemies.add(d);
 		for (RouteCellListener l : listeners) {
 			l.onEnter(this, d);
 		}
+		Logging.log(4, "<< RouteCell.enter");
 	}
 
 	/**
@@ -141,15 +149,21 @@ public class RouteCell extends Cell {
 	 *            A lövedék.
 	 */
 	public void addBullet(Bullet b) {
-		Logging.log(">> RouteCell.addBullet() hívás, paraméter: "
-				+ b.toString());
+		Logging.log(2,
+				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
-		for (Enemy e : enemies) {
+		for (ListIterator<Enemy> iter = enemies.listIterator(); iter.hasNext();) {
+			// for (Enemy e : enemies){
 			for (Bullet b1 : bullets) {
+				Enemy e = iter.next();
 				e.sebez(b1);
+				if (e.getDead()) {
+					iter.remove();
+				}
 			}
 		}
-		Logging.log("<< RouteCell.addBullet()");
+		bullets.remove(b);
+		Logging.log(2, "<< RouteCell.addBullet()");
 	}
 
 	/**
@@ -159,10 +173,13 @@ public class RouteCell extends Cell {
 	 *            Egy {@link Elf}.
 	 */
 	public void leave(Elf e) {
-		Logging.log(">> RouteCell.leave() hívás, paraméter: " + e.toString());
+		Logging.log(2, ">> RouteCell.leave() hívás, paraméter: " + e.toString());
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, e);
 		}
+		if (!e.getDead())
+			enemies.remove(e);
+		Logging.log(4, "<< RouteCell.leave");
 	}
 
 	/**
@@ -172,10 +189,13 @@ public class RouteCell extends Cell {
 	 *            Egy {@link Human}.
 	 */
 	public void leave(Human h) {
-		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
+		Logging.log(2, ">> RouteCell.leave() hívás, paraméter: " + h.toString());
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
+		if (!h.getDead())
+			enemies.remove(h);
+		Logging.log(4, "<< RouteCell.leave");
 	}
 
 	/**
@@ -185,10 +205,13 @@ public class RouteCell extends Cell {
 	 *            Egy {@link Hobbit}.
 	 */
 	public void leave(Hobbit h) {
-		Logging.log(">> RouteCell.leave() hívás, paraméter: " + h.toString());
+		Logging.log(2, ">> RouteCell.leave() hívás, paraméter: " + h.toString());
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
+		if (!h.getDead())
+			enemies.remove(h);
+		Logging.log(4, "<< RouteCell.leave");
 	}
 
 	/**
@@ -198,18 +221,21 @@ public class RouteCell extends Cell {
 	 *            Egy {@link Dwarf}.
 	 */
 	public void leave(Dwarf d) {
-		Logging.log(">> RouteCell.leave() hívás, paraméter: " + d.toString());
+		Logging.log(2, ">> RouteCell.leave() hívás, paraméter: " + d.toString());
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
+		if (!d.getDead())
+			enemies.remove(d);
+		Logging.log(4, "<< RouteCell.leave");
 	}
 
 	/**
 	 * @return A cellán tarózkodó ellenségek száma.
 	 */
 	public int getNumEnemies() {
-		Logging.log(">> RouteCell.getNumEnemis() hívás");
-		Logging.log("<< " + enemies.size());
+		Logging.log(3, ">> RouteCell.getNumEnemies() hívás");
+		Logging.log(3, "<< " + enemies.size());
 		return enemies.size();
 	}
 
@@ -220,9 +246,10 @@ public class RouteCell extends Cell {
 	 *            A hozzáadandó {@link RouteCellListener}
 	 */
 	public void addRouteCellListener(RouteCellListener l) {
-		Logging.log(">> RouteCell.addRouteCellListener() hívás, paraméter: "
+		Logging.log(3, ">> RouteCell.addRouteCellListener() hívás, paraméter: "
 				+ l.toString());
 		listeners.add(l);
+		Logging.log(4, "<< RouteCell.addRouteCellListener");
 	}
 
 	/**
@@ -232,9 +259,12 @@ public class RouteCell extends Cell {
 	 *            A leiratkozni vágyó {@link RouteCellListener}
 	 */
 	public void removeRouteCellListener(RouteCellListener l) {
-		Logging.log(">> RouteCell.removeRouteCellListener() hívás, paraméter: "
-				+ l.toString());
+		Logging.log(
+				3,
+				">> RouteCell.removeRouteCellListener() hívás, paraméter: "
+						+ l.toString());
 		listeners.remove(l);
+		Logging.log(4, "<< RouteCell.removeRouteCellListener");
 	}
 
 	@Override

@@ -1,0 +1,5 @@
+output
+random off
+map 5_6_os.p
+enemy e 1 100
+start 0

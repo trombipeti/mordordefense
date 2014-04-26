@@ -63,8 +63,8 @@ public class Bullet {
 	 */
 	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
 			int humanDamage, boolean slicing) {
-		Logging.log(">> Bullet konstruktor hivas, parameterek:");
-		Logging.log("\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
+		Logging.log(2, ">> Bullet konstruktor hivas, parameterek:");
+		Logging.log(2, "\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
 				+ elfDamage + ", hobbitDamage: " + hobbitDamage
 				+ ", humanDamage: " + humanDamage + ", slicing: " + slicing);
 
@@ -73,40 +73,45 @@ public class Bullet {
 		this.hobbitDamage = hobbitDamage;
 		this.humanDamage = humanDamage;
 		this.slicing = slicing;
+		Logging.log(4, "<< Bullet konstruktor");
 	}
-	
+
 	/**
-	 * @param h Egy {@link Hobbit}.
+	 * @param h
+	 *            Egy {@link Hobbit}.
 	 * @return A hobbitokra ható sebzés.
 	 */
 	public int getDamage(Hobbit h) {
 		return hobbitDamage;
 	}
-	
+
 	/**
-	 * @param h Egy {@link Human}.
+	 * @param h
+	 *            Egy {@link Human}.
 	 * @return A humanokra ható sebzés.
 	 */
 	public int getDamage(Human h) {
 		return humanDamage;
 	}
-	
+
 	/**
-	 * @param d Egy {@link Dwarf}.
+	 * @param d
+	 *            Egy {@link Dwarf}.
 	 * @return A törpökre ható sebzés.
 	 */
 	public int getDamage(Dwarf d) {
 		return dwarfDamage;
 	}
-	
+
 	/**
-	 * @param e Egy {@link Elf}.
+	 * @param e
+	 *            Egy {@link Elf}.
 	 * @return A tündékre ható sebzés.
 	 */
 	public int getDamage(Elf e) {
 		return elfDamage;
 	}
-	
+
 	@Override
 	public String toString() {
 		String ret;

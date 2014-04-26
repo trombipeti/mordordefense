@@ -10,8 +10,9 @@ public class SpawnPointCell extends RouteCell {
 
 	public SpawnPointCell(int x, int y, int ID) {
 		super(x, y, ID);
-		Logging.log(">> SpawnPointCell konstruktor hívása, x: " + x + " y: "
+		Logging.log(2, ">> SpawnPointCell konstruktor hívása, x: " + x + " y: "
 				+ y + ", ID: " + ID);
+		Logging.log(4, "<< SpawnPointCell konstruktor");
 	}
 
 	@Override

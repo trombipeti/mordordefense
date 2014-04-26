@@ -121,19 +121,12 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Itt kell beállítani majd, hogy hova logoljon.
-		/*Logging.setLogFileName(null);
-		setupTestCases();
-		boolean ex = false;
-		while (!ex) {
-			int run = askForTestCase();
-			if (run == -1) {
-				ex = true;
-				break;
-			}
-			testCases.get(run).run();
-			ranTestCases.put(run, true);
-		}
+		/*
+		 * Logging.setLogFileName(null); setupTestCases(); boolean ex = false;
+		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
+		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
 		 */
+		Logging.setLogLevel(1);
 		ProtoTester.mainTestingEnvironment();
 	}
 

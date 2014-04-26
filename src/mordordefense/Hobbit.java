@@ -18,18 +18,18 @@ public class Hobbit extends Enemy
 	 * Alap konstruktor
 	 */
 	public Hobbit() {
-		Logging.log(">> Hobbit default konstruktor hívás");
-		Logging.log("<< Hobbit default konstruktor");
+		Logging.log(2, ">> Hobbit default konstruktor hívás");
+		Logging.log(4, "<< Hobbit default konstruktor");
 	}
 
 	/**
-	 * @see Enemy#Enemy(int, int)
+	 * @see Enemy#Enemy(float, float)
 	 */
-	public Hobbit(int parMaxLifePoint, int parSpeed) {
-		super(parMaxLifePoint, parSpeed);
-		Logging.log(">> Hobbit konstruktor hívás, maxLP: " + parMaxLifePoint
-				+ " speed: " + parSpeed);
-		Logging.log("<< Hobbit konstruktor");
+	public Hobbit(float defMaxLP, float defSpeed) {
+		super(defMaxLP, defSpeed);
+		Logging.log(2, ">> Hobbit konstruktor hívás, maxLP: " + defMaxLP
+				+ " speed: " + defSpeed);
+		Logging.log(4, "<< Hobbit konstruktor");
 
 	}
 
@@ -43,13 +43,17 @@ public class Hobbit extends Enemy
 	 */
 	@Override
 	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
-		Logging.log(">> Hobbit.leptet() hívás");
+		Logging.log(2, ">> Hobbit.leptet() hívás");
 		if (lifePoint <= 0) {
+			Logging.log(2, "<< Hobbit.leptet() exception");
 			throw new EnemyDeadException();
 		}
 		long _time = System.currentTimeMillis();
-		if(_time - timeOfLastStep < speed) {
-			Logging.log("<< Hobbit.leptet(), nem tud meg lepni.");
+		// s = v*t, vagyis ha eltelt idő*sebesség < 1, akkor nem lépünk.
+		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+			Logging.log(2, "<< Hobbit.leptet(), nem tud meg lepni.");
+			return;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -58,10 +62,12 @@ public class Hobbit extends Enemy
 		// Szerencsére
 		// jelenleg ez a helyzet nem áll fenn.
 		ArrayList<RouteCell> possibleNext = new ArrayList<RouteCell>();
-		for (Cell rc : routeCell.getSzomszedok().values()) {
-			if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
-					&& rc.getID() > routeCell.getID()) {
-				possibleNext.add((RouteCell) rc);
+		if (routeCell != null) {
+			for (Cell rc : routeCell.getSzomszedok().values()) {
+				if (rc != null && !rc.getType().equalsIgnoreCase("FieldCell")
+						&& rc.getID() > routeCell.getID()) {
+					possibleNext.add((RouteCell) rc);
+				}
 			}
 		}
 		// Ha van olyan cella, ahova tud lépni, random sorsolunk egyet
@@ -70,38 +76,48 @@ public class Hobbit extends Enemy
 			Random randgen = new Random(System.currentTimeMillis());
 			int next = randgen.nextInt(possibleNext.size());
 			RouteCell nextCell = possibleNext.get(next);
-			Logging.log("\t Erre a cellára lépek: " + nextCell.toString());
+			Logging.log(3, "\t Erre a cellára lépek: " + nextCell.toString());
 			routeCell.leave(this);
-			nextCell.enter(this);
 			resetSpeed();
+			nextCell.enter(this);
 			stepNumber++;
 			routeCell = nextCell;
+			timeOfLastStep = System.currentTimeMillis();
 		} else {
+			Logging.log(2, "<< Hobbit.leptet() exception");
 			throw new EnemyCannotStepException();
 		}
-		Logging.log("<< Hobbit.leptet()");
+		Logging.log(2, "<< Hobbit.leptet()");
 	}
 
 	@Override
 	public void sebez(Bullet b) {
-		Logging.log(">> Hobbit.sebez() hívás, paraméter: " + b.toString());
-		if (b.isSlicing()) {
+		Logging.log(2, ">> Hobbit.sebez() hívás, paraméter: " + b.toString());
+		if (b.isSlicing() && lifePoint > 1) {
 			slice();
 		} else {
 			lifePoint -= b.getDamage(this);
-			Logging.log("\t új életerő: " + lifePoint);
+			Logging.log(3, "\t új életerő: " + lifePoint);
+			if (lifePoint <= 0) {
+				for (EnemyListener l : listeners) {
+					l.onDie(this);
+				}
+				dead = true;
+				routeCell.leave(this);
+			}
 		}
+		Logging.log(2, "<< Hobbit.sebez()");
 	}
 
 	@Override
 	protected void slice() {
-		Logging.log(">> Hobbit.slice() hívás");
-		Hobbit newEnemy = new Hobbit(lifePoint/2,speed);
-		lifePoint = (int) (Math.floor(lifePoint+0.5));
+		Logging.log(2, ">> Hobbit.slice() hívás");
+		Hobbit newEnemy = new Hobbit(lifePoint / 2, speed);
+		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}
-		Logging.log("<< Hobbit.slice()");
+		Logging.log(2, "<< Hobbit.slice()");
 	}
 }

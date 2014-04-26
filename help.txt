@@ -1,0 +1,15 @@
+input <filenév>
+output <filenév>
+random <on/off>
+spawn <on/off>
+map <filenév>
+help
+quit
+start  <léptet>
+step
+tower <x> <y>
+trap <x> <y>
+magicstone <tower/trap> <x> <elf>  <dwarf> <hobbit> <human> <damage> <freq> <radius>
+enemy <d/e/h/h>
+fog <i> <timeout>
+slicing <1/0>

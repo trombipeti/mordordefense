@@ -12,12 +12,13 @@ public interface EnemyListener {
 	 *            A kettévágás során létrejött új {@link Enemy}
 	 */
 	public void onSlice(Enemy e);
-	
+
 	/**
 	 * Egy enemy meghalásakor meghívódó függvény.
 	 * 
-	 * @param e Az elhunyt hős ellenség.
+	 * @param e
+	 *            Az elhunyt hős ellenség.
 	 */
 	public void onDie(Enemy e);
-	
+
 }

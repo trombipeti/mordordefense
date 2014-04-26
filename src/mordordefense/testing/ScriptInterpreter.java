@@ -35,17 +35,27 @@ public class ScriptInterpreter {
 					interpret(line);
 
 			} catch (Exception e) {
-				Logging.log(e.getMessage());
+				e.printStackTrace();
 			} finally {
 				br.close();
 			}
 
 		} catch (Exception e) {
-			Logging.log(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Értelmezi a paraméterként kapott parancsot. Ha a paraméter üres vagy
+	 * null, nem csinál semmit.
+	 * 
+	 * @param s
+	 *            Az értelmezendő parancs.
+	 */
 	public void interpret(String s) {
+		if (s == null || s.isEmpty()) {
+			return;
+		}
 		String[] parts = s.split(" ");
 
 		// Input értelmező else-if
@@ -89,14 +99,14 @@ public class ScriptInterpreter {
 					while ((line = reader.readLine()) != null)
 						System.out.println(line);
 				} catch (Exception e) {
-					Logging.log(e.getMessage());
+					e.printStackTrace();
 				} finally {
 					reader.close();
 				}
 				/*
 				 * } catch (Exception e) {
 				 * 
-				 * Logging.log(e.getMessage()); }
+				 * e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("quit")) {
@@ -105,20 +115,18 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("start")) {
 				// ---------------- Program indító ----------------
 				// try {
-				if (parts.length == 3) {
+				if (parts.length == 2) {
 					simulationStarted = true;
-					cont.setMapFileName(parts[2]);
-					cont.init();
 					if (parts[1].equalsIgnoreCase("1")) {
 						stepSimulation = true;
 					} else {
 						stepSimulation = false;
-						cont.run();
+						cont.startMainLoop();
 					}
 				} else
 					throw new Exception("!!Az argumentumok szama nem megfelelo");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("step")) {
@@ -139,13 +147,11 @@ public class ScriptInterpreter {
 				if (parts.length == 3) {
 					int x = Integer.parseInt(parts[1]);
 					int y = Integer.parseInt(parts[2]);
-					System.out.print(x);
-					System.out.println(y);
 					cont.placeTower(new Tower(), x, y);
 				} else
 					throw new Exception("Nem valid a bemenet");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("trap")) {
@@ -158,7 +164,7 @@ public class ScriptInterpreter {
 				} else
 					throw new Exception("Nem valid a bemenet");
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("magicstone")) {
@@ -187,7 +193,7 @@ public class ScriptInterpreter {
 				}
 
 				/*
-				 * } catch (Exception e) { Logging.log(e.getMessage()); }
+				 * } catch (Exception e) { e.printStackTrace(); }
 				 */
 
 			} else if (parts[0].equalsIgnoreCase("enemy")) {
@@ -209,12 +215,31 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("fog")) {
 				cont.getTower(Integer.parseInt(parts[1])).addFog(
 						Integer.parseInt(parts[2]));
+			} else if (parts[0].equalsIgnoreCase("map")) {
+				if (parts.length == 2) {
+					cont.setMapFileName(parts[1]);
+					cont.init();
+				}
+			} else if (parts[0].equalsIgnoreCase("slicing")) {
+				if (parts.length == 2) {
+					if (Integer.parseInt(parts[1]) == 1) {
+						Tower.globalSlice = true;
+					}
+				}
+			} else if (parts[0].equalsIgnoreCase("spawn")) {
+				if (parts.length == 2) {
+					if (parts[1].equalsIgnoreCase("on")) {
+						cont.setCanSpawn(true);
+					} else {
+						cont.setCanSpawn(false);
+					}
+				}
 			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
-			Logging.log(e.getMessage());
-			interpret("quit");
+			e.printStackTrace();
+			// interpret("quit");
 
 		}
 	}

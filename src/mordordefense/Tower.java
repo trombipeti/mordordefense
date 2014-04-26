@@ -23,6 +23,7 @@ public class Tower implements RouteCellListener
 
 	public static int globalRadius;
 
+	public static boolean globalSlice = false;
 	/**
 	 * A torony tüzelési frekvenciája.
 	 */
@@ -34,6 +35,13 @@ public class Tower implements RouteCellListener
 	 * listenerként.
 	 */
 	protected int radius;
+
+	/**
+	 * A torony hatósugara, akkor használjuk csak, amikor köd ereszkedik a
+	 * toronyra, ebben tároljuk az eredeti hatósugarat.
+	 */
+
+	protected int foglessRadius;
 
 	/**
 	 * A torony alapsebzése.
@@ -59,6 +67,11 @@ public class Tower implements RouteCellListener
 	 * Mennyi ideig lepi el a köd a tornyot.
 	 */
 	protected long fogTimeOut;
+
+	/**
+	 * A ködből hátralévő idő.
+	 */
+	protected long fogTimeRemaining;
 
 	/**
 	 * A tornyot tartalmazó {@link FieldCell}.
@@ -87,13 +100,13 @@ public class Tower implements RouteCellListener
 	protected List<MagicStone> stones = new ArrayList<MagicStone>();
 
 	public Tower() {
-		Logging.log(">> Tower default konstruktor hívás");
-		// TODO default értékek valahonnan
+		Logging.log(2, ">> Tower default konstruktor hívás");
 		this.freq = globalFreq;
 		this.radius = globalRadius;
 		this.baseDamage = globalDamage;
 		this.hasFog = false;
-		Logging.log("<< Tower default konstruktor");
+		timeOfLastShoot = 0;
+		Logging.log(4, "<< Tower default konstruktor");
 	}
 
 	/**
@@ -107,13 +120,14 @@ public class Tower implements RouteCellListener
 	 *            alap sebzési érték
 	 */
 	public Tower(int freq, int radius, int damage) {
-		Logging.log(">> Tower konstruktor hívás, paraméterek: freq: " + freq
+		Logging.log(2, ">> Tower konstruktor hívás, paraméterek: freq: " + freq
 				+ ", radius: " + radius + ", damage: " + damage);
 		this.freq = freq;
 		this.radius = radius;
 		this.baseDamage = damage;
 		this.hasFog = false;
-		Logging.log("<< Tower konstruktor");
+		timeOfLastShoot = 0;
+		Logging.log(4, "<< Tower konstruktor");
 	}
 
 	/**
@@ -124,12 +138,18 @@ public class Tower implements RouteCellListener
 	 *            A hozzáadandó {@link MagicStone}
 	 */
 	public void addStone(MagicStone s) {
-		Logging.log(">> Tower.addStone() hívás, paraméter: " + s.toString());
+		Logging.log(2, ">> Tower.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
+		Logging.log(1, s.toString());
 		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
 		freq = (int) (freq * s.getFreqMultiplier());
 		radius = (int) (radius * s.getRadiusMultiplier());
-		Logging.log("<< Tower.addStone()");
+		if (s.getRadiusMultiplier() != 1) {
+			removeFromListeners();
+			cellsInRange.clear();
+			setUpNeighbors();
+		}
+		Logging.log(2, "<< Tower.addStone()");
 	}
 
 	/**
@@ -139,8 +159,8 @@ public class Tower implements RouteCellListener
 	 * @return Set<RouteCell>
 	 */
 	public Set<RouteCell> getClosestCellsWithEnemy() {
-		Logging.log(">> Tower.getClosestCellsWithEnemy() hívás");
-		Logging.log("<< Tower.getClosestCellsWithEnemy()");
+		Logging.log(4, ">> Tower.getClosestCellsWithEnemy() hívás");
+		Logging.log(4, "<< Tower.getClosestCellsWithEnemy()");
 		return closestCellsWithEnemy;
 	}
 
@@ -151,13 +171,13 @@ public class Tower implements RouteCellListener
 	 *            A tornyot tartalmazó {@link FieldCell}
 	 */
 	public void setParentCell(FieldCell f) {
-		Logging.log(">> Tower.setParentCell() hívás, paraméter: "
-				+ f.toString());
+		Logging.log(4,
+				">> Tower.setParentCell() hívás, paraméter: " + f.toString());
 		if (f != null) {
 			parentCell = f;
 			setUpNeighbors();
 		}
-		Logging.log("<< Tower.setParentCell()");
+		Logging.log(4, "<< Tower.setParentCell()");
 	}
 
 	/**
@@ -166,14 +186,27 @@ public class Tower implements RouteCellListener
 	 * 
 	 */
 	private void setUpNeighbors() {
-		Logging.log(">> Tower.setUpNeighbors() hívás");
+		Logging.log(4, ">> Tower.setUpNeighbors() hívás");
 		getNeighbors(parentCell);
 		for (Cell c : cellsInRange) {
 			if (!c.getType().equalsIgnoreCase("FieldCell")) {
 				((RouteCell) c).addRouteCellListener(this);
 			}
 		}
-		Logging.log("<< Tower.setUpNeighbors()");
+		Logging.log(4, "<< Tower.setUpNeighbors()");
+	}
+
+	/**
+	 * Leiratkoztatja a Tornyot a hatósugarában lévő RouteCell-ekről
+	 * 
+	 */
+
+	private void removeFromListeners() {
+		for (Cell c : cellsInRange) {
+			if (!c.getType().equalsIgnoreCase("FieldCell")) {
+				((RouteCell) c).removeRouteCellListener(this);
+			}
+		}
 	}
 
 	/**
@@ -199,8 +232,8 @@ public class Tower implements RouteCellListener
 	 * @return int Az építés alapára.
 	 */
 	public static int getBaseCost() {
-		Logging.log(">> Tower.getBaseCost() hívás");
-		Logging.log("<< Tower.getBaseCost() return: " + baseCost);
+		Logging.log(4, ">> Tower.getBaseCost() hívás");
+		Logging.log(4, "<< Tower.getBaseCost() return: " + baseCost);
 		return baseCost;
 	}
 
@@ -211,11 +244,11 @@ public class Tower implements RouteCellListener
 	 *            A megnézendő {@link Cell}
 	 */
 	private boolean isInRange(Cell c) {
-		Logging.log(">> Tower.isInRange() hívás, paraméter: " + c);
+		Logging.log(3, ">> Tower.isInRange() hívás, paraméter: " + c);
 		boolean ret = false;
 		double dst = Cell.Distance(parentCell, c);
 		ret = (dst <= radius);
-		Logging.log("<< Tower.isInRange() return: " + ret);
+		Logging.log(3, "<< Tower.isInRange() return: " + ret);
 		return ret;
 	}
 
@@ -227,17 +260,30 @@ public class Tower implements RouteCellListener
 	 *            Mennyi idő múlva oszoljon fel a köd (milliszekundumban).
 	 */
 	public void addFog(long timeOut) {
+		Logging.log(2, ">> Tower.addFog hívás, paraméter: " + timeOut);
 		hasFog = true;
+		foglessRadius = radius;
+		radius = (int) Math.floor(radius / 2);
 		fogTimeOut = timeOut;
 		fogAddTime = System.currentTimeMillis();
+		fogTimeRemaining = timeOut;
+		removeFromListeners();
+		cellsInRange.clear();
+		setUpNeighbors();
+		Logging.log(4, "<< Tower.addFog");
 	}
 
 	/**
 	 * Feloszlatja a tornyon lévő ködöt.
 	 */
 	public void removeFog() {
+		Logging.log(2, ">> Tower.removeFog hívás");
 		hasFog = false;
+		radius = foglessRadius;
 		fogAddTime = fogTimeOut = -1;
+		removeFromListeners();
+		setUpNeighbors();
+		Logging.log(4, "<< Tower.removeFog");
 	}
 
 	/**
@@ -247,22 +293,38 @@ public class Tower implements RouteCellListener
 	 *            A {@link RouteCell}, ahova a lövedéket ki kell lőni.
 	 */
 	private void fire(RouteCell rc) {
-		int dw, el, hu, ho;
-		dw = el = hu = ho = baseDamage;
-		for (MagicStone s : stones) {
-			float dmgmult = s.getDamageMultiplier();
-			dw *= s.getDwarfMultiplier() * dmgmult;
-			el *= s.getElfMultiplier() * dmgmult;
-			hu *= s.getHumanMultiplier() * dmgmult;
-			ho *= s.getHobbitMultiplier() * dmgmult;
+		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
+		if (timeOfLastShoot == 0) {
+			int dw, el, hu, ho;
+			dw = el = hu = ho = baseDamage;
+			for (MagicStone s : stones) {
+				float dmgmult = s.getDamageMultiplier();
+				dw *= s.getDwarfMultiplier() * dmgmult;
+				el *= s.getElfMultiplier() * dmgmult;
+				hu *= s.getHumanMultiplier() * dmgmult;
+				ho *= s.getHobbitMultiplier() * dmgmult;
+			}
+			boolean slice;
+
+			if (!globalSlice) {
+				if (Controller.getRandom()) {
+					slice = (new Random().nextInt(10) % 10 == 0);
+				} else {
+					slice = false;
+				}
+			} else {
+				slice = globalSlice;
+			}
+			Bullet b = new Bullet(dw, el, hu, ho, slice);
+			Logging.log(
+					1,
+					b.toString() + " from: " + parentCell.getCoords()[0] + " "
+							+ parentCell.getCoords()[1] + " to: "
+							+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
+			rc.addBullet(b);
+			timeOfLastShoot = freq;
 		}
-		boolean slice = (new Random().nextInt(10) % 10 == 0);
-		Bullet b = new Bullet(dw, el, hu, ho, slice);
-		rc.addBullet(b);
-		timeOfLastShoot = System.currentTimeMillis();
-		Logging.log(b.toString() + " from: " + parentCell.getCoords()[0] + " "
-				+ parentCell.getCoords()[1] + " to: " + rc.getCoords()[0] + " "
-				+ rc.getCoords()[1]);
+		Logging.log(4, "<< Tower.fire");
 	}
 
 	/**
@@ -272,84 +334,105 @@ public class Tower implements RouteCellListener
 	 *            Az építés alapára.
 	 */
 	public static void setBaseCost(int c) {
-		Logging.log(">> Tower.setBaseCost() hívás, paraméter: " + c);
+		Logging.log(4, ">> Tower.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
+		Logging.log(4, "<< Tower.setBaseCost");
 	}
 
 	@Override
 	public String toString() {
-		return "Tower, radius: " + radius + ", baseDamage: " + baseDamage
-				+ ", freq: " + freq + ", utolso loves ota ideje: "
-				+ timeOfLastShoot + ", hasfog: " + hasFog + ", parentCell: "
-				+ parentCell.getCoords()[0] + " " + parentCell.getCoords()[1];
+		String ret = "Tower, radius: " + radius + ", baseDamage: " + baseDamage
+				+ ", freq: " + freq + ", utolso loves ota eltelt ido: "
+				+ (timeOfLastShoot) + ", hasfog: " + hasFog;
+		if (parentCell != null) {
+			ret += ", parentCell: " + parentCell.getCoords()[0] + " "
+					+ parentCell.getCoords()[1];
+		}
+		return ret;
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Elf e) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
-				+ sender.toString() + ", " + e.toString());
+		Logging.log(2,
+				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
+						+ ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
 		fire(sender);
+		Logging.log(4, "<< Tower.onEnter");
 
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Dwarf d) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
-				+ sender.toString() + ", " + d.toString());
+		Logging.log(2,
+				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
+						+ ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
 		fire(sender);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Hobbit h) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
-				+ sender.toString() + ", " + h.toString());
+		Logging.log(2,
+				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
+						+ ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 		fire(sender);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onEnter(RouteCell sender, Human h) {
-		Logging.log(">> Tower.onEnter() hívás, paraméterek: "
-				+ sender.toString() + ", " + h.toString());
+		Logging.log(2,
+				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
+						+ ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
 		fire(sender);
+		Logging.log(4, "<< Tower.onEnter");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Elf e) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
-				+ sender.toString() + ", " + e.toString());
+		Logging.log(3,
+				">> Tower.onLeave() hívás, paraméterek: " + sender.toString()
+						+ ", " + e.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
+		Logging.log(4, "<< Tower.onLeave");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Dwarf d) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
-				+ sender.toString() + ", " + d.toString());
+		Logging.log(3,
+				">> Tower.onLeave() hívás, paraméterek: " + sender.toString()
+						+ ", " + d.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
+		Logging.log(4, "<< Tower.onLeave");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Hobbit h) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
-				+ sender.toString() + ", " + h.toString());
+		Logging.log(3,
+				">> Tower.onLeave() hívás, paraméterek: " + sender.toString()
+						+ ", " + h.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
+		Logging.log(4, "<< Tower.onLeave");
 	}
 
 	@Override
 	public void onLeave(RouteCell sender, Human h) {
-		Logging.log(">> Tower.onLeave() hívás, paraméterek: "
-				+ sender.toString() + ", " + h.toString());
+		Logging.log(3,
+				">> Tower.onLeave() hívás, paraméterek: " + sender.toString()
+						+ ", " + h.toString());
 		if (sender.getNumEnemies() == 0) {
 			closestCellsWithEnemy.remove(sender);
 		}
+		Logging.log(4, "<< Tower.onLeave");
 	}
 }
