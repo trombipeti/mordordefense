@@ -234,7 +234,12 @@ public class ScriptInterpreter {
 						cont.setCanSpawn(false);
 					}
 				}
-			} else {
+			}else if (parts[0].equalsIgnoreCase("sleep")) {
+				if (parts.length == 2) {
+					Thread.sleep(Integer.parseInt(parts[1]));
+				}
+				
+			}else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {
