@@ -23,8 +23,8 @@ import mordordefense.testing.Logging;
  */
 public class Controller implements RouteCellListener, EnemyListener {
 
-	public static int timeStep=50;
-	
+	public static int timeStep = 50;
+
 	/**
 	 * Mordor koordinátái.
 	 * 
