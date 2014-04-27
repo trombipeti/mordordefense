@@ -19,10 +19,9 @@ public class MordorFrame extends JFrame {
 	// Hogy ne sirjon az eclipse
 	private static final long serialVersionUID = 6107185503023298334L;
 	/**
-	 * 
-	 */
+*
+*/
 	private JPanel contentPane;
-
 
 	/**
 	 * Create the frame.
