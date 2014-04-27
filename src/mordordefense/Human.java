@@ -39,7 +39,7 @@ public class Human extends Enemy {
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
-	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
+	public boolean leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Human.leptet() hívás");
 		if (lifePoint <= 0) {
 			Logging.log(2, "<< Human.leptet() exception");
@@ -49,7 +49,7 @@ public class Human extends Enemy {
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
 		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Human.leptet(), nem tud meg lepni");
-			return;
+			return false;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -84,6 +84,7 @@ public class Human extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Human.leptet()");
+		return true;
 	}
 
 	@Override
