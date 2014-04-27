@@ -19,7 +19,7 @@ public class DrawPanel extends JPanel
 	public void paintComponent(Graphics g)  // kirajzolo fuggveny
 	{
 		super.paintComponent(g);            //helyes kirajzolas erdekeben
-//		drawer.drawTower(g, 100, 100);
-//		drawer.drawTrap(g, 0, 0);
+		drawer.drawTower(g, 100, 100);
+		drawer.drawTrap(g, 0, 0);
 	}
 }
