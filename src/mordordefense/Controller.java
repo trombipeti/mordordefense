@@ -23,8 +23,8 @@ import mordordefense.testing.Logging;
  */
 public class Controller implements RouteCellListener, EnemyListener {
 
-	public static int timeStep=50;
-	
+	public static int timeStep = 50;
+
 	/**
 	 * Mordor koordinátái.
 	 * 
@@ -561,6 +561,23 @@ public class Controller implements RouteCellListener, EnemyListener {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
 		}
 
+	}
+
+	public void placeMagicStone(MagicStone ms, int x, int y) {
+		Cell c = cells.get(x).get(y);
+		if (c.getType().equalsIgnoreCase("FieldCell")
+				&& ((FieldCell) c).hasTower()) {
+			if (saruman.getManna() >= MagicStone.calcCost()) {
+				((FieldCell) c).getTower().addStone(ms);
+			}
+		}
+		if (c.getType().equalsIgnoreCase("RouteCell")
+				&& ((RouteCell) c).hasTrap()) {
+			if (saruman.getManna() >= MagicStone.calcCost()) {
+				((RouteCell) c).getTrap().addStone(ms);
+			}
+
+		}
 	}
 
 	/**

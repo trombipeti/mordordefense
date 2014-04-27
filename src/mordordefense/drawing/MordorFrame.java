@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import mordordefense.Controller;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -22,6 +24,7 @@ public class MordorFrame extends JFrame {
 	 * 
 	 */
 	private JPanel contentPane;
+	private Controller control;
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
 
@@ -89,11 +92,17 @@ public class MordorFrame extends JFrame {
 		setContentPane(contentPane);
 
 		Board = new DrawPanel(drawer);
+
 		contentPane.add(Board, BorderLayout.CENTER);
 
 		JPanel Stats = new JPanel();
 		contentPane.add(Stats, BorderLayout.NORTH);
+
 		Board.repaint();
+	}
+
+	public void setController(Controller c) {
+		control = c;
 	}
 
 }
