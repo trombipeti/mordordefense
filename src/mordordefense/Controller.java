@@ -523,7 +523,6 @@ public class Controller implements RouteCellListener, EnemyListener {
 				if (en.leptet()) {
 					enemyChanged = true;
 				}
-				;
 				Logging.log(1, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
@@ -609,6 +608,57 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 
 		}
+	}
+	
+	/**
+	 * Visszaadja a Trap-ek listáját.
+	 *
+	 * @return
+	 */
+	public List<Trap> getTrap() {
+		return traps;
+	}
+	
+	/**
+	 * Visszaadja a Tower-ek listáját.
+	 *
+	 * @return
+	 */
+	public List<Tower> getTowers() {
+		return towers;
+	}
+	
+	/**
+	 * Visszaadja az Enemy-k HashSet-jét.
+	 *
+	 * @return
+	 */
+	public HashSet<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	/**
+	 * Visszaadja az x,y helyen álló Cellát
+	 * 
+	 * @param x
+	 *            x koordináta
+	 * @param y
+	 *            y koordináta
+	 * @return
+	 */
+
+	public Cell getCell(int x, int y) {
+		return cells.get(x).get(y);
+	}
+
+	/**
+	 * Visszaadja az x,y helyen álló Cellát
+	 * 
+	 * @return
+	 */
+	public int[] getMapSize() {
+		int[] temp = { mapWidth, mapHeight };
+		return temp;
 	}
 
 	/**
