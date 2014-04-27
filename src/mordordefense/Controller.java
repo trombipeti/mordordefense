@@ -563,6 +563,23 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	}
 
+	public void placeMagicStone(MagicStone ms, int x, int y) {
+		Cell c = cells.get(x).get(y);
+		if (c.getType().equalsIgnoreCase("FieldCell")
+				&& ((FieldCell) c).hasTower()) {
+			if (saruman.getManna() >= MagicStone.calcCost()) {
+				((FieldCell) c).getTower().addStone(ms);
+			}
+		}
+		if (c.getType().equalsIgnoreCase("RouteCell")
+				&& ((RouteCell) c).hasTrap()) {
+			if (saruman.getManna() >= MagicStone.calcCost()) {
+				((RouteCell) c).getTrap().addStone(ms);
+			}
+
+		}
+	}
+
 	/**
 	 * visszaadja az i. tornyot
 	 * 

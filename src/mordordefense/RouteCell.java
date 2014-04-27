@@ -78,6 +78,17 @@ public class RouteCell extends Cell {
 		}
 	}
 
+	public boolean hasTrap() {
+		if (trap != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public Trap getTrap() {
+		return trap;
+	}
+
 	/**
 	 * Elf beléptetése a cellára.
 	 * 
