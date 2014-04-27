@@ -2,12 +2,12 @@ package mordordefense.drawing;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -22,8 +22,8 @@ public class MordorFrame extends JFrame {
 	 * 
 	 */
 	private JPanel contentPane;
-
-
+	private DrawPanel Board;
+	private Drawer drawer=new Drawer();
 	/**
 	 * Create the frame.
 	 */
@@ -87,12 +87,14 @@ public class MordorFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JPanel Board = new JPanel();
+		Board = new DrawPanel(drawer);
 		contentPane.add(Board, BorderLayout.CENTER);
 
 		JPanel Stats = new JPanel();
 		contentPane.add(Stats, BorderLayout.NORTH);
-
+		Board.repaint();
 	}
+	
+
 
 }

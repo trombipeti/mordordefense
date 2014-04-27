@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
+import mordordefense.drawing.MordorFrame;
 import mordordefense.testing.Logging;
 import mordordefense.testing.ProtoTester;
 import mordordefense.testing.SkeletonTester;
@@ -126,8 +127,10 @@ public class Main {
 		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
 		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
 		 */
-		Logging.setLogLevel(1);
-		ProtoTester.mainTestingEnvironment();
+		MordorFrame mf=new MordorFrame();
+		mf.setVisible(true);
+		//Logging.setLogLevel(1);
+		//ProtoTester.mainTestingEnvironment();
 	}
 
 }
