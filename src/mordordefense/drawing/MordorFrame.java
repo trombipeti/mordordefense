@@ -15,6 +15,8 @@ import mordordefense.Controller;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MordorFrame extends JFrame {
 
@@ -92,6 +94,12 @@ public class MordorFrame extends JFrame {
 		setContentPane(contentPane);
 
 		Board = new DrawPanel(drawer);
+		Board.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			
+			}
+		});
 
 		contentPane.add(Board, BorderLayout.CENTER);
 
