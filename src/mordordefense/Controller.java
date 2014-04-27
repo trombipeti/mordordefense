@@ -813,7 +813,4 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.onDie() hívás");
 	}
 
-	public String getWinner() {
-		return winner;
-	}
 }
