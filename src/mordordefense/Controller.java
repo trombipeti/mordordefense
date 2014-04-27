@@ -119,7 +119,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * A controller véletlenszerűen indítja-e az enemyket stb.
 	 */
-	private static boolean random=true;
+	private static boolean random = true;
 	/**
 	 * A Controller automatikusan rakhat-e le enemy-t, vagy kézzel lesznek
 	 * lerakva (alap állapotban automatára van állítva)
@@ -130,17 +130,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * a kirajzoláshoz fontos flag, amely jelzi, hogy az ellenségek
 	 * változtattak-e a helyzetükön
 	 */
-	public static boolean enemyChanged = false;
+	public volatile static boolean enemyChanged = false;
 	/**
-	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a tornyok
-	 * állapota változott-e
+	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a tornyok állapota
+	 * változott-e
 	 */
-	public static boolean towerChanged = false;
+	public volatile static boolean towerChanged = false;
 	/**
-	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a csapdák
-	 * állapota változott-e
-	 */	
-	public static boolean trapChanged = false;
+	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a csapdák állapota
+	 * változott-e
+	 */
+	public volatile static boolean trapChanged = false;
 
 	/**
 	 * Konstruktor
@@ -420,19 +420,19 @@ public class Controller implements RouteCellListener, EnemyListener {
 		switch (n) {
 		case 0:
 			addHuman(new Human(Human.defMaxLP, Human.defSpeed));
-			enemyChanged=true;
+			enemyChanged = true;
 			break;
 		case 1:
 			addElf(new Elf(Elf.defMaxLP, Elf.defSpeed));
-			enemyChanged=true;
+			enemyChanged = true;
 			break;
 		case 2:
 			addHobbit(new Hobbit(Hobbit.defMaxLP, Hobbit.defSpeed));
-			enemyChanged=true;
+			enemyChanged = true;
 			break;
 		case 3:
 			addDwarf(new Dwarf(Dwarf.defMaxLP, Dwarf.defSpeed));
-			enemyChanged=true;
+			enemyChanged = true;
 			break;
 		default:
 			break;
@@ -443,9 +443,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * ködöt random toronyhoz adó függvény
 	 */
-	private void addRandomFog(){
-		towerChanged=true;
+	private void addRandomFog() {
+		towerChanged = true;
 	}
+
 	/**
 	 * Embert a páláyhoz adó függvény
 	 * 
@@ -519,9 +520,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 		while (iter.hasNext() && !gameEnded) {
 			Enemy en = iter.next();
 			try {
-				if(en.leptet()){
-					enemyChanged=true;
-				};
+				if (en.leptet()) {
+					enemyChanged = true;
+				}
+				;
 				Logging.log(1, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
@@ -552,7 +554,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				if (fc.addTower(t)) {
 					towers.add(t);
 					saruman.rmManna(Tower.getBaseCost());
-					towerChanged=true;
+					towerChanged = true;
 				}
 			} else {
 				Logging.log(0, "Nincs elég manna");
@@ -790,7 +792,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		e.addEnemyListener(this);
 		enemies.add(e);
 		sentEnemies++;
-		enemyChanged=true;
+		enemyChanged = true;
 		Logging.log(1, e.toString());
 		Logging.log(4, "<< Controller.onSlice() hívás");
 	}
@@ -801,7 +803,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
 		saruman.addManna(10);
 		diedEnemies++;
-		enemyChanged=true;
+		enemyChanged = true;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
 			winner = new StringBuffer("saruman");
 			setGameEnded(true);
@@ -811,4 +813,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.onDie() hívás");
 	}
 
+	public String getWinner() {
+		return winner;
+	}
 }
