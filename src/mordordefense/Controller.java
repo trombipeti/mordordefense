@@ -130,17 +130,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * a kirajzoláshoz fontos flag, amely jelzi, hogy az ellenségek
 	 * változtattak-e a helyzetükön
 	 */
-	public volatile static boolean enemyChanged = false;
+	public volatile boolean enemyChanged = false;
 	/**
 	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a tornyok állapota
 	 * változott-e
 	 */
-	public volatile static boolean towerChanged = false;
+	public volatile boolean towerChanged = false;
 	/**
 	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a csapdák állapota
 	 * változott-e
 	 */
-	public volatile static boolean trapChanged = false;
+	public volatile boolean trapChanged = false;
 
 	/**
 	 * Konstruktor
