@@ -23,7 +23,8 @@ public class MordorFrame extends JFrame {
 	 */
 	private JPanel contentPane;
 	private DrawPanel Board;
-	private Drawer drawer=new Drawer();
+	private Drawer drawer = new Drawer();
+
 	/**
 	 * Create the frame.
 	 */
@@ -94,7 +95,5 @@ public class MordorFrame extends JFrame {
 		contentPane.add(Stats, BorderLayout.NORTH);
 		Board.repaint();
 	}
-	
-
 
 }
