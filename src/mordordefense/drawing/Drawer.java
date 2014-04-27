@@ -5,9 +5,10 @@ import java.awt.Graphics;
 
 import mordordefense.Cell;
 import mordordefense.Enemy;
+import mordordefense.Tower;
 
 public class Drawer {
-	public void drawTower(Graphics g, int x, int y) {
+	public void drawTower(Graphics g, int x, int y, Tower t) {
 		g.setColor(Color.YELLOW);
 		g.fillOval(x, y, 40, 40);
 	}
