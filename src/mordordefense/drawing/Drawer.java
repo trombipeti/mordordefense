@@ -13,7 +13,7 @@ public class Drawer {
 
 	public void drawTower(Graphics g, int x, int y, Tower t) {
 		g.setColor(Color.YELLOW);
-		g.fillOval(x, y, 40, 40);
+		g.fillOval(x, y, cellSize, cellSize);
 	}
 
 	public void drawTrap(Graphics g, int x, int y) {

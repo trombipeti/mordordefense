@@ -41,7 +41,7 @@ public class DrawPanel extends JPanel {
 		drawer = d;
 		// TODO ezeket konstruktorból
 		mapWidth = 800;
-		mapHeight = 600;
+		mapHeight = 500;
 		enemyLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		towerLayer = new BufferedImage(mapWidth, mapHeight,
@@ -72,11 +72,9 @@ public class DrawPanel extends JPanel {
 		if (w == 0 || h == 0) {
 			return;
 		}
-		if (h > w) {
-			cellSize = mapHeight / h;
-		} else {
-			cellSize = mapWidth / w;
-		}
+		cellSize = Math.min(mapHeight / h, mapWidth / w);
+		System.out.println("map w,h : " + mapWidth + "," + mapHeight
+				+ ", cellsize: " + cellSize);
 		drawer.setCellSize(cellSize);
 		for (int i = 0; i < w; ++i) {
 			for (int j = 0; j < h; ++j) {
