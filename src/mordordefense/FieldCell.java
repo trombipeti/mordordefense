@@ -49,6 +49,17 @@ public class FieldCell extends Cell {
 		}
 	}
 
+	public boolean hasTower() {
+		if (tower != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public Tower getTower() {
+		return tower;
+	}
+
 	@Override
 	public String getType() {
 		return "FieldCell";

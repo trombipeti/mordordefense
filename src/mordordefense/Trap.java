@@ -12,6 +12,11 @@ public class Trap implements RouteCellListener {
 	 */
 	public static int globalStrength;
 	protected float strength;
+	
+	/**
+	 * A csapda tartózkodási helye.
+	 */
+	protected RouteCell parentCell;
 
 	protected static int baseCost;
 
@@ -65,6 +70,18 @@ public class Trap implements RouteCellListener {
 		Logging.log(4, ">> Trap.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
 		Logging.log(4, "<< Trap.setBaseCost");
+	}
+	
+	/**
+	 * A Trap-et tároló RouteCell-t beállító függvény
+	 * 
+	 * @param c
+	 * 			A tároló RouteCell
+	 */
+	
+	public void setParentCell(RouteCell c){
+		if(c!=null)
+			parentCell=c; //nincs szükség logolásra, pusztán kozmetikai
 	}
 
 	@Override

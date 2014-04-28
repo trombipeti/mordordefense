@@ -1,4 +1,4 @@
-﻿package mordordefense.exceptions;
+package mordordefense.exceptions;
 
 /**
  * Kivétel, ami jelzi, hogy az enemy nem talált olyan cellát ahova tudna lépni.

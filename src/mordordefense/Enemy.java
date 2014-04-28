@@ -135,7 +135,7 @@ public abstract class Enemy {
 	 *            Mennyivel csökkenjen a sebessége.
 	 */
 	public void lassit(float mertek) {
-		//mertek=mertek/(Controller.timeStep/10.0f);
+		// mertek=mertek/(Controller.timeStep/10.0f);
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
 		if (speed - mertek >= 1) {
 			speed -= mertek;
@@ -182,9 +182,9 @@ public abstract class Enemy {
 	 *             Ha nem talált cellát, ahova lépni tud (jól felépített pálya
 	 *             és normálisan megírt Controller esetén ilyen kivételt nem
 	 *             kéne, hogy dobjon.)
-	 * 
+	 * @return sikeres volt-e a lépés, haladt-e az ellenség
 	 */
-	abstract public void leptet() throws EnemyDeadException,
+	abstract public boolean leptet() throws EnemyDeadException,
 			EnemyCannotStepException;
 
 	/**

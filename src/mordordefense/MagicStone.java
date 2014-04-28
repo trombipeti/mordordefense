@@ -233,9 +233,8 @@ public class MagicStone {
 	 * @param numStones
 	 * @return Az építés ára.
 	 */
-	static public int calcCost(int numStones) {
-		Logging.log(3, ">> MagicStone.calcCost() hívás, paraméter: "
-				+ numStones);
+	static public int calcCost() {
+		Logging.log(3, ">> MagicStone.calcCost() hívás");
 		int cost = baseCost;
 		Logging.log(3, "<< " + cost);
 

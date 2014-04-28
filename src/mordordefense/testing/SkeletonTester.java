@@ -1,4 +1,4 @@
-﻿package mordordefense.testing;
+package mordordefense.testing;
 
 import mordordefense.Cell.Dir;
 import mordordefense.Controller;

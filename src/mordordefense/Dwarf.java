@@ -38,10 +38,11 @@ public class Dwarf extends Enemy {
 	}
 
 	/**
+	 * @return
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
-	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
+	public boolean leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Dwarf.leptet() hívás");
 		if (lifePoint <= 0) {
 			Logging.log(2, "<< Dwarf.leptet() exception");
@@ -51,7 +52,7 @@ public class Dwarf extends Enemy {
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
 		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Dwarf.leptet(), nem tud meg lepni");
-			return;
+			return false;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van,
@@ -85,6 +86,7 @@ public class Dwarf extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Dwarf.leptet()");
+		return true;
 	}
 
 	@Override
