@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import mordordefense.Cell;
 import mordordefense.Enemy;
+import mordordefense.RouteCell;
 import mordordefense.Tower;
 
 public class Drawer {
@@ -17,8 +18,8 @@ public class Drawer {
 	}
 
 	public void drawTrap(Graphics g, int x, int y) {
-		g.setColor(Color.gray);
-		g.fillRect(x, y, 40, 40);
+		g.setColor(Color.GRAY);
+		g.fillRect(x, y, cellSize, cellSize);
 	}
 
 	public void drawEnemy(Graphics g, int x, int y, Enemy e) {
@@ -29,14 +30,21 @@ public class Drawer {
 		String type = c.getType();
 		if (type.equalsIgnoreCase("FieldCell")) {
 			g.setColor(new Color(0, 120, 0));
-		} else if (type.equalsIgnoreCase("RouteCell")) {
-			g.setColor(new Color(110, 82, 54));
-		} else if (type.equalsIgnoreCase("MordorCell")) {
-			g.setColor(new Color(0, 0, 0));
-		} else if (type.equalsIgnoreCase("SpawnPointCell")) {
-			g.setColor(new Color(112, 0, 255));
+		} else {
+			if (((RouteCell) c).getTrap() != null) {
+				drawTrap(g, x, y);
+			} else {
+				if (type.equalsIgnoreCase("RouteCell")) {
+					g.setColor(new Color(110, 82, 54));
+				} else if (type.equalsIgnoreCase("MordorCell")) {
+					g.setColor(new Color(0, 0, 0));
+				} else if (type.equalsIgnoreCase("SpawnPointCell")) {
+					g.setColor(new Color(112, 0, 255));
+				}
+			}
 		}
 		g.fillRect(x, y, cellSize, cellSize);
+		// if(c)
 		g.setColor(Color.BLACK);
 		g.drawRect(x, y, cellSize, cellSize);
 	}

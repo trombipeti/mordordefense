@@ -90,7 +90,7 @@ public class MordorFrame extends JFrame {
 						"Pályabeállító fájlok", "p", "txt");
 				chooser.setFileFilter(f);
 				int retval = chooser.showOpenDialog(null);
-				if(retval == JFileChooser.APPROVE_OPTION) {
+				if (retval == JFileChooser.APPROVE_OPTION) {
 					String n = "";
 					try {
 						n = chooser.getSelectedFile().getCanonicalPath();
@@ -125,8 +125,15 @@ public class MordorFrame extends JFrame {
 		Board.setController(control);
 		Board.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-
+			public void mouseClicked(MouseEvent e) {
+				// Ha cellára kattintottunk
+				int cellx = e.getX() / Board.getCellSize();
+				int cellnumx = control.getMapSize()[0];
+				int celly = e.getY() / Board.getCellSize();
+				int cellnumy = control.getMapSize()[1];
+				if (cellx < cellnumx && celly < cellnumy) {
+					System.out.println(cellx + "," + celly);
+				}
 			}
 		});
 

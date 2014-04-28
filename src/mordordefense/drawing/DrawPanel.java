@@ -58,6 +58,30 @@ public class DrawPanel extends JPanel {
 		control = c; // Map méretének beállítása
 	}
 
+	public int getCellSize() {
+		return cellSize;
+	}
+
+	public void setCellSize(int cellSize) {
+		this.cellSize = cellSize;
+	}
+
+	public int getMapWidth() {
+		return mapWidth;
+	}
+
+	public void setMapWidth(int mapWidth) {
+		this.mapWidth = mapWidth;
+	}
+
+	public int getMapHeight() {
+		return mapHeight;
+	}
+
+	public void setMapHeight(int mapHeight) {
+		this.mapHeight = mapHeight;
+	}
+
 	public void paintEnemies() {
 		// TODO Implementálni
 	}
@@ -65,7 +89,7 @@ public class DrawPanel extends JPanel {
 	public void paintTowers() {
 		Graphics g = towerLayer.getGraphics();
 		ArrayList<Tower> towers = (ArrayList<Tower>) control.getTowers();
-		for(Tower t : towers) {
+		for (Tower t : towers) {
 			int coords[] = t.getParentCell().getCoords();
 			drawer.drawTower(g, coords[0], coords[1], t);
 		}
@@ -76,12 +100,12 @@ public class DrawPanel extends JPanel {
 		int size[] = control.getMapSize();
 		int w = size[0];
 		int h = size[1];
-		if (w == 0 || h == 0) {
-			return;
-		}
+		// if (w == 0 || h == 0) {
+		// return;
+		// }
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, mapWidth, mapHeight);
 		cellSize = Math.min(mapHeight / h, mapWidth / w);
-		System.out.println("map w,h : " + mapWidth + "," + mapHeight
-				+ ", cellsize: " + cellSize);
 		drawer.setCellSize(cellSize);
 		for (int i = 0; i < w; ++i) {
 			for (int j = 0; j < h; ++j) {
@@ -93,31 +117,26 @@ public class DrawPanel extends JPanel {
 	}
 
 	/**
-	 * Ez a függvény végzi el a tényleges megjelenítést.
-	 * Kirajzolja a pályát, rá az enemyket a tornyokat.
+	 * Ez a függvény végzi el a tényleges megjelenítést. Kirajzolja a pályát, rá
+	 * az enemyket és a tornyokat.
+	 * 
 	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g) // kirajzolo fuggveny
 	{
 		super.paint(g); // helyes kirajzolas erdekeben
-		Graphics gmap = mapLayer.getGraphics();
-		gmap.setColor(Color.WHITE);
-		gmap.fillRect(0, 0, mapWidth, mapHeight);
-		Graphics gtow = towerLayer.getGraphics();
-		Graphics gen = towerLayer.getGraphics();
-		// if (control.enemyChanged)
-		// paintEnemies();
-		// if (control.towerChanged)
-		// paintTowers();
-		// mapLayer.setColor(Color.BLUE);
-		// mapLayer.getGraphics().fillRect(0, 0, 100, 100);
+
+		paintMap();
+		g.drawImage(mapLayer, 0, 0, null);
+		if (control.enemyChanged) {
+			paintEnemies();
+		}
+		if (control.towerChanged) {
+			paintTowers();
+		}
 		// g2.drawImage(mapLayer, 0, 0, null);
 		// gmap.setColor(Color.BLUE);
 		// gmap.fillRect(0, 0, 800, 600);
-		paintMap();
-		g.drawImage(mapLayer, 0, 0, null);
-		paintTowers();
-		g.drawImage(towerLayer, 0, 0, null);
 		// g2.drawImage(enemyLayer, 0, 0, null);
 		// g.drawImage(screenImage, 0, 0, null);
 	}
