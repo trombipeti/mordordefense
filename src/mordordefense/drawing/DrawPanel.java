@@ -3,11 +3,13 @@ package mordordefense.drawing;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import mordordefense.Cell;
 import mordordefense.Controller;
+import mordordefense.Tower;
 
 public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -61,7 +63,12 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintTowers() {
-		// TODO Implementálni
+		Graphics g = towerLayer.getGraphics();
+		ArrayList<Tower> towers = (ArrayList<Tower>) control.getTowers();
+		for(Tower t : towers) {
+			int coords[] = t.getParentCell().getCoords();
+			drawer.drawTower(g, coords[0], coords[1], t);
+		}
 	}
 
 	public void paintMap() {
@@ -85,6 +92,11 @@ public class DrawPanel extends JPanel {
 
 	}
 
+	/**
+	 * Ez a függvény végzi el a tényleges megjelenítést.
+	 * Kirajzolja a pályát, rá az enemyket a tornyokat.
+	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
+	 */
 	public void paint(Graphics g) // kirajzolo fuggveny
 	{
 		super.paint(g); // helyes kirajzolas erdekeben
@@ -104,7 +116,8 @@ public class DrawPanel extends JPanel {
 		// gmap.fillRect(0, 0, 800, 600);
 		paintMap();
 		g.drawImage(mapLayer, 0, 0, null);
-		// g2.drawImage(towerLayer, 0, 0, null);
+		paintTowers();
+		g.drawImage(towerLayer, 0, 0, null);
 		// g2.drawImage(enemyLayer, 0, 0, null);
 		// g.drawImage(screenImage, 0, 0, null);
 	}

@@ -181,6 +181,13 @@ public class Tower implements RouteCellListener
 	}
 
 	/**
+	 * @return A tornyot tartalmazó {@link Cell}
+	 */
+	public Cell getParentCell() {
+		return parentCell;
+	}
+
+	/**
 	 * A torony szomszédait beállító függvény. Beregisztrálja a tornyot a
 	 * hatósugarában lévő utak eseményeire.
 	 * 
