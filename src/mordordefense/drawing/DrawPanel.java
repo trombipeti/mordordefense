@@ -91,7 +91,7 @@ public class DrawPanel extends JPanel {
 		ArrayList<Tower> towers = (ArrayList<Tower>) control.getTowers();
 		for (Tower t : towers) {
 			int coords[] = t.getParentCell().getCoords();
-			drawer.drawTower(g, coords[0], coords[1], t);
+			drawer.drawTower(g, coords[0] * cellSize, coords[1] * cellSize, t);
 		}
 	}
 
@@ -130,9 +130,11 @@ public class DrawPanel extends JPanel {
 		g.drawImage(mapLayer, 0, 0, null);
 		if (control.enemyChanged) {
 			paintEnemies();
+			g.drawImage(enemyLayer,0,0,null);
 		}
 		if (control.towerChanged) {
 			paintTowers();
+			g.drawImage(towerLayer,0,0,null);
 		}
 		// g2.drawImage(mapLayer, 0, 0, null);
 		// gmap.setColor(Color.BLUE);

@@ -3,6 +3,7 @@ package mordordefense.drawing;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -13,12 +14,19 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mordordefense.Controller;
+import mordordefense.FieldCell;
+import mordordefense.Tower;
 
 public class MordorFrame extends JFrame {
+
+	public static enum State {
+		NORMAL, TOWER, TRAP, MAGICSTONE
+	}
 
 	// Hogy ne sirjon az eclipse
 	private static final long serialVersionUID = 6107185503023298334L;
@@ -30,6 +38,8 @@ public class MordorFrame extends JFrame {
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
 
+	private State state;
+
 	/**
 	 * Create the frame.
 	 */
@@ -39,6 +49,8 @@ public class MordorFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setResizable(true);
+
+		state = State.NORMAL;
 
 		control = c;
 
@@ -64,27 +76,37 @@ public class MordorFrame extends JFrame {
 		menuBar.add(mnAdd);
 
 		JMenuItem mntmTower = new JMenuItem("Tower");
+		mntmTower.setAccelerator(KeyStroke.getKeyStroke('T',
+				KeyEvent.CTRL_DOWN_MASK));
 		mntmTower.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				state = State.TOWER;
 				System.out.println("Tower");
 			}
 		});
 		mnAdd.add(mntmTower);
 
 		JMenuItem mntmTrap = new JMenuItem("Trap");
+		mntmTrap.setAccelerator(KeyStroke.getKeyStroke('R',
+				KeyEvent.CTRL_DOWN_MASK));
 		mnAdd.add(mntmTrap);
 
 		JMenuItem mntmMagicstone = new JMenuItem("MagicStone");
+		mntmMagicstone.setAccelerator(KeyStroke.getKeyStroke('M',
+				KeyEvent.CTRL_DOWN_MASK));
 		mnAdd.add(mntmMagicstone);
 
 		JMenu mnMap = new JMenu("Map");
 		menuBar.add(mnMap);
 
 		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.setAccelerator(KeyStroke.getKeyStroke('O',
+				KeyEvent.CTRL_DOWN_MASK));
 		mntmOpen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				state = State.NORMAL;
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter f = new FileNameExtensionFilter(
 						"Pályabeállító fájlok", "p", "txt");
@@ -110,6 +132,7 @@ public class MordorFrame extends JFrame {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmHelp = new JMenuItem("Help");
+		mntmHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnHelp.add(mntmHelp);
 
 		JMenuItem mntmAbout = new JMenuItem("About");
@@ -133,6 +156,21 @@ public class MordorFrame extends JFrame {
 				int cellnumy = control.getMapSize()[1];
 				if (cellx < cellnumx && celly < cellnumy) {
 					System.out.println(cellx + "," + celly);
+					switch (state) {
+					case TOWER:
+						// TODO!!!
+						if (control.getCell(cellx, celly).getType()
+								.equalsIgnoreCase("FieldCell")) {
+							control.placeTower(new Tower(), cellx, celly);
+							Board.setController(control);
+							validate();
+							repaint();
+						}
+						break;
+
+					default:
+						break;
+					}
 				}
 			}
 		});
