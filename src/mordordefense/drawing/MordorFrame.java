@@ -1,22 +1,22 @@
 package mordordefense.drawing;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import mordordefense.Controller;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import mordordefense.Controller;
 
 public class MordorFrame extends JFrame {
 
@@ -33,11 +33,14 @@ public class MordorFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MordorFrame() {
+	public MordorFrame(Controller c) {
 		setTitle("soamazing Mordordefense");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		setResizable(true);
+
+		control = c;
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -78,6 +81,29 @@ public class MordorFrame extends JFrame {
 		menuBar.add(mnMap);
 
 		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter f = new FileNameExtensionFilter(
+						"Pályabeállító fájlok", "p", "txt");
+				chooser.setFileFilter(f);
+				int retval = chooser.showOpenDialog(null);
+				if(retval == JFileChooser.APPROVE_OPTION) {
+					String n = "";
+					try {
+						n = chooser.getSelectedFile().getCanonicalPath();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					control.setMapFileName(n);
+					Board.setController(control);
+					validate();
+					repaint();
+				}
+			}
+		});
 		mnMap.add(mntmOpen);
 
 		JMenu mnHelp = new JMenu("Help");
@@ -93,11 +119,14 @@ public class MordorFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
+		control.init();
+
 		Board = new DrawPanel(drawer);
+		Board.setController(control);
 		Board.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-			
+
 			}
 		});
 

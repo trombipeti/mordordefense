@@ -189,6 +189,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
+		cells.clear();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(mapFileName));
 			try {
@@ -714,6 +715,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
+		init();
 	}
 
 	/**

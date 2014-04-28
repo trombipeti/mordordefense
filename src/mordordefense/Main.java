@@ -136,8 +136,8 @@ public class Main {
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		MordorFrame mf = new MordorFrame();
-		mf.setController(new Controller(""));
+		MordorFrame mf = new MordorFrame(new Controller("3_1_es.p"));
+		// mf.setController(new Controller(""));
 		mf.setVisible(true);
 		// Logging.setLogLevel(1);
 		// ProtoTester.mainTestingEnvironment();
