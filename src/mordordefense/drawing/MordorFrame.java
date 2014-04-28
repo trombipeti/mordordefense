@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import mordordefense.Controller;
 import mordordefense.FieldCell;
 import mordordefense.Tower;
+import mordordefense.Trap;
 
 public class MordorFrame extends JFrame {
 
@@ -34,7 +35,7 @@ public class MordorFrame extends JFrame {
 	 * 
 	 */
 	private JPanel contentPane;
-	private Controller control;
+	// private Controller control;
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
 
@@ -52,7 +53,7 @@ public class MordorFrame extends JFrame {
 
 		state = State.NORMAL;
 
-		control = c;
+		// control = c;
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -61,6 +62,17 @@ public class MordorFrame extends JFrame {
 		menuBar.add(mnGame);
 
 		JMenuItem mntmStart = new JMenuItem("Start");
+		mntmStart.setAccelerator(KeyStroke.getKeyStroke('G',
+				KeyEvent.CTRL_DOWN_MASK));
+		mntmStart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Board.getController().startMainLoop();
+				validate();
+				repaint();
+			}
+		});
 		mnGame.add(mntmStart);
 
 		JMenuItem mntmStop = new JMenuItem("Stop");
@@ -81,7 +93,6 @@ public class MordorFrame extends JFrame {
 		mntmTower.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				state = State.TOWER;
-				System.out.println("Tower");
 			}
 		});
 		mnAdd.add(mntmTower);
@@ -89,6 +100,11 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmTrap = new JMenuItem("Trap");
 		mntmTrap.setAccelerator(KeyStroke.getKeyStroke('R',
 				KeyEvent.CTRL_DOWN_MASK));
+		mntmTrap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				state = State.TRAP;
+			}
+		});
 		mnAdd.add(mntmTrap);
 
 		JMenuItem mntmMagicstone = new JMenuItem("MagicStone");
@@ -119,8 +135,8 @@ public class MordorFrame extends JFrame {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					control.setMapFileName(n);
-					Board.setController(control);
+					Board.getController().setMapFileName(n);
+					// Board.setController(control);
 					validate();
 					repaint();
 				}
@@ -142,13 +158,12 @@ public class MordorFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		control.init();
-
 		Board = new DrawPanel(drawer);
-		Board.setController(control);
+		Board.setController(c);
 		Board.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Controller control = Board.getController();
 				// Ha cellára kattintottunk
 				int cellx = e.getX() / Board.getCellSize();
 				int cellnumx = control.getMapSize()[0];
@@ -158,7 +173,6 @@ public class MordorFrame extends JFrame {
 					System.out.println(cellx + "," + celly);
 					switch (state) {
 					case TOWER:
-						// TODO!!!
 						if (control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
 							control.placeTower(new Tower(), cellx, celly);
@@ -167,7 +181,17 @@ public class MordorFrame extends JFrame {
 							repaint();
 						}
 						break;
-
+					case TRAP:
+						System.out.println("IT'S A TRAP");
+						if (!control.getCell(cellx, celly).getType()
+								.equalsIgnoreCase("FieldCell")) {
+							Board.getController().placeTrap(new Trap(), cellx,
+									celly);
+							// Board.setController(control);
+							validate();
+							repaint();
+						}
+						break;
 					default:
 						break;
 					}
@@ -176,6 +200,7 @@ public class MordorFrame extends JFrame {
 		});
 
 		contentPane.add(Board, BorderLayout.CENTER);
+		Board.getController().init();
 
 		JPanel Stats = new JPanel();
 		contentPane.add(Stats, BorderLayout.NORTH);
@@ -184,7 +209,7 @@ public class MordorFrame extends JFrame {
 	}
 
 	public void setController(Controller c) {
-		control = c;
+		Board.setController(c);
 	}
 
 }

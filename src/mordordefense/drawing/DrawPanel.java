@@ -81,6 +81,11 @@ public class DrawPanel extends JPanel {
 	public void setMapHeight(int mapHeight) {
 		this.mapHeight = mapHeight;
 	}
+	
+	public Controller getController() {
+		return control;
+	}
+	
 
 	public void paintEnemies() {
 		// TODO Implementálni

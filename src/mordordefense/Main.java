@@ -130,6 +130,8 @@ public class Main {
 		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
 		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
 		 */
+		Logging.setLogFileName(null);
+		Logging.setLogLevel(2);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
