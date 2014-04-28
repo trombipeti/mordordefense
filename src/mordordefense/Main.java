@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import mordordefense.drawing.MordorFrame;
 import mordordefense.testing.Logging;
 import mordordefense.testing.ProtoTester;
@@ -127,6 +130,12 @@ public class Main {
 		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
 		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
 		 */
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		MordorFrame mf = new MordorFrame();
 		mf.setController(new Controller(""));
 		mf.setVisible(true);

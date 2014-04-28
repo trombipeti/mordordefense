@@ -39,13 +39,13 @@ public class DrawPanel extends JPanel {
 		super();
 		setBackground(Color.GREEN);
 		drawer = d;
-		enemyLayer = new BufferedImage(this.getWidth(), this.getHeight(),
+		enemyLayer = new BufferedImage(10,10,/*this.getWidth(), this.getHeight(),*/
 				BufferedImage.TYPE_INT_ARGB);
-		towerLayer = new BufferedImage(this.getWidth(), this.getHeight(),
+		towerLayer = new BufferedImage(10,10,/*this.getWidth(), this.getHeight(),*/
 				BufferedImage.TYPE_INT_ARGB);
-		mapLayer = new BufferedImage(this.getWidth(), this.getHeight(),
+		mapLayer = new BufferedImage(10,10,/*this.getWidth(), this.getHeight(),*/
 				BufferedImage.TYPE_INT_RGB);
-		screenImage = new BufferedImage(this.getWidth(), this.getHeight(),
+		screenImage = new BufferedImage(10,10,/*this.getWidth(), this.getHeight(),*/
 				BufferedImage.TYPE_INT_RGB);
 	}
 
