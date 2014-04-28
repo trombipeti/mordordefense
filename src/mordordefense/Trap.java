@@ -12,7 +12,7 @@ public class Trap implements RouteCellListener {
 	 */
 	public static int globalStrength;
 	protected float strength;
-	
+
 	/**
 	 * A csapda tartózkodási helye.
 	 */
@@ -38,15 +38,22 @@ public class Trap implements RouteCellListener {
 	}
 
 	/**
-	 * Operation
+	 * Varázskövet helyez el a csapdára.
 	 * 
-	 * @param s
+	 * @param s Az elhelyezendő {@link MagicStone}.
 	 */
 	public void addStone(MagicStone s) {
 		Logging.log(3, ">> Trap.addStone() hívás, paraméter: " + s.toString());
 		stones.add(s);
 		Logging.log(1, s.toString());
 		Logging.log(4, "<< Trap.addStone");
+	}
+
+	/**
+	 * @return A csapdán lévő varázskövek.
+	 */
+	public List<MagicStone> getStones() {
+		return stones;
 	}
 
 	/**
@@ -71,17 +78,17 @@ public class Trap implements RouteCellListener {
 		baseCost = c;
 		Logging.log(4, "<< Trap.setBaseCost");
 	}
-	
+
 	/**
 	 * A Trap-et tároló RouteCell-t beállító függvény
 	 * 
 	 * @param c
-	 * 			A tároló RouteCell
+	 *            A tároló RouteCell
 	 */
-	
-	public void setParentCell(RouteCell c){
-		if(c!=null)
-			parentCell=c; //nincs szükség logolásra, pusztán kozmetikai
+
+	public void setParentCell(RouteCell c) {
+		if (c != null)
+			parentCell = c; // nincs szükség logolásra, pusztán kozmetikai
 	}
 
 	@Override

@@ -106,7 +106,6 @@ public class ProtoTester {
 				in = br.readLine();
 				value = Integer.parseInt(in);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
 				if (in == null || in.equalsIgnoreCase("q")) {

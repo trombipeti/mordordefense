@@ -190,6 +190,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
 		cells.clear();
+		towers.clear();
+		enemies.clear();
+		traps.clear();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(mapFileName));
 			try {

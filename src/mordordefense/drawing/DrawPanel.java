@@ -2,6 +2,7 @@ package mordordefense.drawing;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -37,21 +38,18 @@ public class DrawPanel extends JPanel {
 	private Drawer drawer;
 	private Controller control;
 
-	public DrawPanel(Drawer d) {
+	public DrawPanel(Drawer d, int w, int h) {
 		super();
 		setBackground(Color.WHITE);
 		drawer = d;
-		// TODO ezeket konstruktorból
-		mapWidth = 800;
-		mapHeight = 500;
+		mapWidth = w;
+		mapHeight = h;
 		enemyLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		towerLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		mapLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
-		screenImage = new BufferedImage(mapWidth, mapHeight,
-				BufferedImage.TYPE_INT_RGB);
 	}
 
 	public void setController(Controller c) {
@@ -81,18 +79,17 @@ public class DrawPanel extends JPanel {
 	public void setMapHeight(int mapHeight) {
 		this.mapHeight = mapHeight;
 	}
-	
+
 	public Controller getController() {
 		return control;
 	}
-	
 
 	public void paintEnemies() {
 		// TODO Implementálni
 	}
 
 	public void paintTowers() {
-		Graphics g = towerLayer.getGraphics();
+		Graphics2D g = (Graphics2D) towerLayer.getGraphics();
 		ArrayList<Tower> towers = (ArrayList<Tower>) control.getTowers();
 		for (Tower t : towers) {
 			int coords[] = t.getParentCell().getCoords();
@@ -131,20 +128,33 @@ public class DrawPanel extends JPanel {
 	{
 		super.paint(g); // helyes kirajzolas erdekeben
 
+		g.clearRect(0, 0, mapWidth, mapHeight);
+
 		paintMap();
 		g.drawImage(mapLayer, 0, 0, null);
-		if (control.enemyChanged) {
-			paintEnemies();
-			g.drawImage(enemyLayer,0,0,null);
-		}
-		if (control.towerChanged) {
-			paintTowers();
-			g.drawImage(towerLayer,0,0,null);
-		}
+		// if (control.enemyChanged) {
+		paintEnemies();
+		g.drawImage(enemyLayer, 0, 0, null);
+		// control.enemyChanged = false;
+		// }
+		// if (control.towerChanged) {
+		paintTowers();
+		g.drawImage(towerLayer, 0, 0, null);
+		// control.towerChanged = false;
+		// }
 		// g2.drawImage(mapLayer, 0, 0, null);
 		// gmap.setColor(Color.BLUE);
 		// gmap.fillRect(0, 0, 800, 600);
 		// g2.drawImage(enemyLayer, 0, 0, null);
 		// g.drawImage(screenImage, 0, 0, null);
+	}
+
+	/**
+	 * Letörli az összes kirajzolt réteget.
+	 */
+	public void clear() {
+		// towerLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
+		// mapLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
+		// enemyLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
 	}
 }

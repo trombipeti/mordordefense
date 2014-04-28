@@ -151,6 +151,13 @@ public class Tower implements RouteCellListener
 		}
 		Logging.log(2, "<< Tower.addStone()");
 	}
+	
+	/**
+	 * @return A tornyon lévő varázskövek.
+	 */
+	public List<MagicStone> getStones() {
+		return stones;
+	}
 
 	/**
 	 * A hatósugarában lévő, ellenséget tartalmazó cellák rendezett halmazát

@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mordordefense.Controller;
 import mordordefense.FieldCell;
+import mordordefense.MagicStone;
 import mordordefense.Tower;
 import mordordefense.Trap;
 
@@ -110,6 +111,11 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmMagicstone = new JMenuItem("MagicStone");
 		mntmMagicstone.setAccelerator(KeyStroke.getKeyStroke('M',
 				KeyEvent.CTRL_DOWN_MASK));
+		mntmMagicstone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				state = State.MAGICSTONE;
+			}
+		});
 		mnAdd.add(mntmMagicstone);
 
 		JMenu mnMap = new JMenu("Map");
@@ -137,6 +143,7 @@ public class MordorFrame extends JFrame {
 					}
 					Board.getController().setMapFileName(n);
 					// Board.setController(control);
+					Board.clear();
 					validate();
 					repaint();
 				}
@@ -158,7 +165,7 @@ public class MordorFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		Board = new DrawPanel(drawer);
+		Board = new DrawPanel(drawer, 800, 500);
 		Board.setController(c);
 		Board.addMouseListener(new MouseAdapter() {
 			@Override
@@ -175,22 +182,31 @@ public class MordorFrame extends JFrame {
 					case TOWER:
 						if (control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
-							control.placeTower(new Tower(), cellx, celly);
+							control.placeTower(askUserForTower(), cellx, celly);
 							Board.setController(control);
 							validate();
 							repaint();
+							state = State.NORMAL;
 						}
 						break;
 					case TRAP:
 						System.out.println("IT'S A TRAP");
 						if (!control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
-							Board.getController().placeTrap(new Trap(), cellx,
-									celly);
+							Board.getController().placeTrap(askUserForTrap(),
+									cellx, celly);
 							// Board.setController(control);
 							validate();
 							repaint();
+							state = State.NORMAL;
 						}
+						break;
+					case MAGICSTONE:
+						Board.getController().placeMagicStone(
+								askUserForMagicStone(), cellx, celly);
+						validate();
+						repaint();
+						state = State.NORMAL;
 						break;
 					default:
 						break;
@@ -206,6 +222,23 @@ public class MordorFrame extends JFrame {
 		contentPane.add(Stats, BorderLayout.NORTH);
 
 		Board.repaint();
+	}
+
+	protected Tower askUserForTower() {
+		// TODO Itt valahogy meg kell kérdezni a usertől a torony értékeit
+		// (dialog?)
+		return new Tower();
+	}
+
+	protected Trap askUserForTrap() {
+		// TODO Itt valahogy meg kell kérdezni a usertől a csapda értékeit
+		// (dialog?)
+		return new Trap();
+	}
+
+	protected MagicStone askUserForMagicStone() {
+		// TODO Itt valahogy meg kell kérdezni a usertől a kő értékeit (dialog?)
+		return new MagicStone(1, 1, 1, 1, 1, 1, 1);
 	}
 
 	public void setController(Controller c) {

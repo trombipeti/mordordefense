@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -138,8 +139,8 @@ public class Main {
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		MordorFrame mf = new MordorFrame(new Controller("3_1_es.p"));
-		// mf.setController(new Controller(""));
+		MordorFrame mf = new MordorFrame(new Controller("5_6_os.p"));
+		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mf.setVisible(true);
 		// Logging.setLogLevel(1);
 		// ProtoTester.mainTestingEnvironment();

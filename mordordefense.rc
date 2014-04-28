@@ -1,3 +1,15 @@
 [ Human ]
 MaxLP=10
 MaxSpeed=1
+
+[ Hobbit ]
+MaxLP=10
+MaxSpeed=1
+
+[ Elf ]
+MaxLP=10
+MaxSpeed=1
+
+[ Dwarf ]
+MaxLP=10
+MaxSpeed=1
