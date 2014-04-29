@@ -5,11 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 
 import mordordefense.Cell;
 import mordordefense.Controller;
+import mordordefense.Enemy;
 import mordordefense.Tower;
 
 public class DrawPanel extends JPanel {
@@ -85,7 +88,13 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintEnemies() {
-		// TODO Implementálni
+		if (control.isGameEnded()) {
+
+		} else {
+			Graphics2D g2 = (Graphics2D) enemyLayer.getGraphics();
+			HashSet<Enemy> enemies = (HashSet<Enemy>) control.getEnemies();
+		}
+
 	}
 
 	public void paintTowers() {
@@ -133,13 +142,13 @@ public class DrawPanel extends JPanel {
 		paintMap();
 		g.drawImage(mapLayer, 0, 0, null);
 		// if (control.enemyChanged) {
-		paintEnemies();
-		g.drawImage(enemyLayer, 0, 0, null);
 		// control.enemyChanged = false;
 		// }
 		// if (control.towerChanged) {
 		paintTowers();
 		g.drawImage(towerLayer, 0, 0, null);
+		paintEnemies();
+		g.drawImage(enemyLayer, 0, 0, null);
 		// control.towerChanged = false;
 		// }
 		// g2.drawImage(mapLayer, 0, 0, null);
@@ -153,8 +162,10 @@ public class DrawPanel extends JPanel {
 	 * Letörli az összes kirajzolt réteget.
 	 */
 	public void clear() {
-		// towerLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
-		// mapLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
-		// enemyLayer.getGraphics().clearRect(0, 0, mapWidth, mapHeight);
+		int transparency[] = new int[mapWidth * mapHeight];
+		Arrays.fill(transparency, 0);
+		towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 	}
 }

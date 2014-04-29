@@ -142,6 +142,8 @@ public class Main {
 		MordorFrame mf = new MordorFrame(new Controller("5_6_os.p"));
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mf.setVisible(true);
+		// TODO Ezt nem itt kéne beállítani!!!
+		Controller.timeStep = 100;
 		// Logging.setLogLevel(1);
 		// ProtoTester.mainTestingEnvironment();
 	}

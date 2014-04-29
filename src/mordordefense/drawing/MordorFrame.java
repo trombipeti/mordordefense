@@ -77,6 +77,17 @@ public class MordorFrame extends JFrame {
 		mnGame.add(mntmStart);
 
 		JMenuItem mntmStop = new JMenuItem("Stop");
+		mntmStop.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
+				// menü?
+				Board.getController().pauseMainLoop();
+				validate();
+				repaint();
+			}
+		});
 		mnGame.add(mntmStop);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
@@ -142,7 +153,6 @@ public class MordorFrame extends JFrame {
 						e.printStackTrace();
 					}
 					Board.getController().setMapFileName(n);
-					// Board.setController(control);
 					Board.clear();
 					validate();
 					repaint();
@@ -167,6 +177,10 @@ public class MordorFrame extends JFrame {
 
 		Board = new DrawPanel(drawer, 800, 500);
 		Board.setController(c);
+
+		// Egy kattintás: state-től függően tower/trap/magicstone
+		// Dupla kattintás: simán trap/tower mezőtől függően, ctrl-duplaklikk
+		// meg magicstone.
 		Board.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -177,7 +191,22 @@ public class MordorFrame extends JFrame {
 				int celly = e.getY() / Board.getCellSize();
 				int cellnumy = control.getMapSize()[1];
 				if (cellx < cellnumx && celly < cellnumy) {
-					System.out.println(cellx + "," + celly);
+
+					// Duplaklikk
+					if (e.getClickCount() == 2) {
+						// CTRL+duplaklikk az magicstone
+						if (e.isControlDown()) {
+							state = State.MAGICSTONE;
+						} else {
+							// Sima duplaklikk az torony/csapda
+							if (control.getCell(cellx, celly).getType()
+									.equalsIgnoreCase("FieldCell")) {
+								state = State.TOWER;
+							} else {
+								state = State.TRAP;
+							}
+						}
+					}
 					switch (state) {
 					case TOWER:
 						if (control.getCell(cellx, celly).getType()
@@ -190,7 +219,6 @@ public class MordorFrame extends JFrame {
 						}
 						break;
 					case TRAP:
-						System.out.println("IT'S A TRAP");
 						if (!control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
 							Board.getController().placeTrap(askUserForTrap(),
