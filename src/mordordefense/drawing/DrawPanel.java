@@ -29,10 +29,6 @@ public class DrawPanel extends JPanel {
 	 * Egy layer a Map kirajzolására kirajzolására
 	 */
 	protected BufferedImage mapLayer;
-	/**
-	 * Egy layer, amit egyből a screenre rajzolunk ki.
-	 */
-	protected BufferedImage screenImage;
 
 	protected int mapHeight;
 	protected int mapWidth;
@@ -89,15 +85,29 @@ public class DrawPanel extends JPanel {
 
 	public void paintEnemies() {
 		if (control.isGameEnded()) {
-
+			// TODO Itt valami funky cucc kéne
 		} else {
+			int transparency[] = new int[mapWidth * mapHeight];
+			Arrays.fill(transparency, 0);
+			enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 			Graphics2D g2 = (Graphics2D) enemyLayer.getGraphics();
 			HashSet<Enemy> enemies = (HashSet<Enemy>) control.getEnemies();
+			int i = 0;
+			for (Enemy e : enemies) {
+				i++;
+				int c[] = e.getRouteCell().getCoords();
+				drawer.drawEnemy(g2, c[0] * cellSize, c[1] * cellSize, e);
+				g2.drawString(Integer.toString(i), c[0] * cellSize + 10, c[1] * cellSize + 10);
+			}
+
 		}
 
 	}
 
 	public void paintTowers() {
+		int transparency[] = new int[mapWidth * mapHeight];
+		Arrays.fill(transparency, 0);
+		towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 		Graphics2D g = (Graphics2D) towerLayer.getGraphics();
 		ArrayList<Tower> towers = (ArrayList<Tower>) control.getTowers();
 		for (Tower t : towers) {
@@ -107,6 +117,9 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintMap() {
+		int transparency[] = new int[mapWidth * mapHeight];
+		Arrays.fill(transparency, 0);
+		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 		Graphics g = mapLayer.getGraphics();
 		int size[] = control.getMapSize();
 		int w = size[0];
@@ -162,10 +175,10 @@ public class DrawPanel extends JPanel {
 	 * Letörli az összes kirajzolt réteget.
 	 */
 	public void clear() {
-		int transparency[] = new int[mapWidth * mapHeight];
-		Arrays.fill(transparency, 0);
-		towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		// int transparency[] = new int[mapWidth * mapHeight];
+		// Arrays.fill(transparency, 0);
+		// towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		// mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		// enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 	}
 }

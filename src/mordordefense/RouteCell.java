@@ -168,7 +168,7 @@ public class RouteCell extends Cell {
 			for (Bullet b1 : bullets) {
 				Enemy e = iter.next();
 				e.sebez(b1);
-				if (e.getDead()) {
+				if (e.isDead()) {
 					iter.remove();
 				}
 			}
@@ -188,7 +188,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, e);
 		}
-		if (!e.getDead())
+		if (!e.isDead())
 			enemies.remove(e);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -204,7 +204,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		if (!h.getDead())
+		if (!h.isDead())
 			enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -220,7 +220,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		if (!h.getDead())
+		if (!h.isDead())
 			enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -236,7 +236,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
-		if (!d.getDead())
+		if (!d.isDead())
 			enemies.remove(d);
 		Logging.log(4, "<< RouteCell.leave");
 	}

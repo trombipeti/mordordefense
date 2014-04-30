@@ -6,7 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -39,6 +43,9 @@ public class MordorFrame extends JFrame {
 	// private Controller control;
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
+
+	private Timer paintTimer;
+	private TimerTask updateBoard;
 
 	private State state;
 
@@ -249,13 +256,63 @@ public class MordorFrame extends JFrame {
 		JPanel Stats = new JPanel();
 		contentPane.add(Stats, BorderLayout.NORTH);
 
+		Board.validate();
 		Board.repaint();
+
+		paintTimer = new Timer();
+		updateBoard = new TimerTask() {
+
+			@Override
+			public void run() {
+				if (Board.getController().enemyChanged
+						|| Board.getController().towerChanged
+						|| Board.getController().trapChanged) {
+					Board.validate();
+					Board.repaint();
+				}
+			}
+		};
+
+		paintTimer.scheduleAtFixedRate(updateBoard, 0, 50);
+
+		addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				// updateBoard.cancel();
+				// paintTimer.cancel();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+			}
+		});
 	}
 
 	protected Tower askUserForTower() {
 		// TODO Itt valahogy meg kell kérdezni a usertől a torony értékeit
 		// (dialog?)
-		return new Tower();
+		return new Tower(1, 1, 1);
 	}
 
 	protected Trap askUserForTrap() {

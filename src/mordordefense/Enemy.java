@@ -80,7 +80,7 @@ public abstract class Enemy {
 	 * 
 	 * @return
 	 */
-	public boolean getDead() {
+	public boolean isDead() {
 		return dead;
 	}
 
@@ -125,6 +125,13 @@ public abstract class Enemy {
 	 */
 	public void setRouteCell(RouteCell rc) {
 		routeCell = rc;
+	}
+
+	/**
+	 * @return A {@link RouteCell}, amin az enemy áll.
+	 */
+	public RouteCell getRouteCell() {
+		return routeCell;
 	}
 
 	/**
