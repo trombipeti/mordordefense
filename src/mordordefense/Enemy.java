@@ -42,7 +42,7 @@ public abstract class Enemy {
 	/**
 	 * Az enemy által megtett lépések száma.
 	 */
-	protected int stepNumber = 0;
+	protected int stepNumber = -1;
 
 	/**
 	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy tud-e
@@ -132,6 +132,14 @@ public abstract class Enemy {
 	 */
 	public RouteCell getRouteCell() {
 		return routeCell;
+	}
+
+	public long getTimeOfLastStep() {
+		return timeOfLastStep;
+	}
+
+	public void setTimeOfLastStep(long timeOfLastStep) {
+		this.timeOfLastStep = timeOfLastStep;
 	}
 
 	/**

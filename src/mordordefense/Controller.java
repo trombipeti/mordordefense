@@ -464,6 +464,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		h.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(h);
+		h.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, h.toString());
 	}
 
@@ -480,6 +481,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		e.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(e);
+		e.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, e.toString());
 	}
 
@@ -496,6 +498,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		h.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(h);
+		h.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, h.toString());
 	}
 
@@ -512,6 +515,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		d.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(d);
+		d.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, d.toString());
 	}
 

@@ -160,6 +160,7 @@ public class MordorFrame extends JFrame {
 						e.printStackTrace();
 					}
 					Board.getController().setMapFileName(n);
+					Board.getController().pauseMainLoop();
 					Board.clear();
 					validate();
 					repaint();
@@ -183,6 +184,8 @@ public class MordorFrame extends JFrame {
 		setContentPane(contentPane);
 
 		Board = new DrawPanel(drawer, 800, 500);
+		// TODO Itt ez majd nem kell
+		Controller.setRandom(false);
 		Board.setController(c);
 
 		// Egy kattintás: state-től függően tower/trap/magicstone

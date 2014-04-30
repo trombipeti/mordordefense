@@ -38,7 +38,7 @@ public class Elf extends Enemy {
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
@@ -53,6 +53,12 @@ public class Elf extends Enemy {
 		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
 			Logging.log(2, "<< Elf.leptet(), nem tud meg lepni.");
 			return false;
+		}
+		if (stepNumber < 0) {
+			stepNumber = 0;
+			timeOfLastStep = System.currentTimeMillis();
+			Logging.log(2, "<< Elf.leptet(), belepett a spawnpointra");
+			return true;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud

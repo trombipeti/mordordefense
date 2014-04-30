@@ -33,6 +33,8 @@ public class DrawPanel extends JPanel {
 	protected int mapHeight;
 	protected int mapWidth;
 	protected int cellSize;
+	
+	protected boolean gameEndDrawn;
 
 	private Drawer drawer;
 	private Controller control;
@@ -49,6 +51,7 @@ public class DrawPanel extends JPanel {
 				BufferedImage.TYPE_INT_ARGB);
 		mapLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
+		gameEndDrawn = false;
 	}
 
 	public void setController(Controller c) {
@@ -84,7 +87,7 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintEnemies() {
-		if (control.isGameEnded()) {
+		if (control.isGameEnded() && gameEndDrawn) {
 			// TODO Itt valami funky cucc kéne
 		} else {
 			int transparency[] = new int[mapWidth * mapHeight];
@@ -98,6 +101,9 @@ public class DrawPanel extends JPanel {
 				int c[] = e.getRouteCell().getCoords();
 				drawer.drawEnemy(g2, c[0] * cellSize, c[1] * cellSize, e);
 				g2.drawString(Integer.toString(i), c[0] * cellSize + 10, c[1] * cellSize + 10);
+			}
+			if(control.isGameEnded()) {
+				gameEndDrawn = true;
 			}
 
 		}
