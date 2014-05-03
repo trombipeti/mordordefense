@@ -12,12 +12,16 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -221,10 +225,12 @@ public class MordorFrame extends JFrame {
 					}
 					switch (state) {
 					case TOWER:
-						if (control.getCell(cellx, celly).getType()
-								.equalsIgnoreCase("FieldCell")) {
-							control.placeTower(askUserForTower(), cellx, celly);
-							Board.setController(control);
+						if (Board.getController().getCell(cellx, celly)
+								.getType().equalsIgnoreCase("FieldCell")) {
+							Board.getController().pauseMainLoop();
+							Tower t = askUserForTower();
+							Board.getController().placeTower(t, cellx, celly);
+							Board.getController().startMainLoop();
 							validate();
 							repaint();
 							state = State.NORMAL;
@@ -314,13 +320,30 @@ public class MordorFrame extends JFrame {
 		});
 	}
 
+	/**
+	 * Egy dialógust jelenít meg, amely bekéri a felhasználótól egy torony
+	 * adatait.
+	 * 
+	 * @return Egy inicializált {@link Tower}, amely utána elhelyezhető a
+	 *         pályán.
+	 */
 	protected Tower askUserForTower() {
-		// TODO Itt valahogy meg kell kérdezni a usertől a torony értékeit
-		// (dialog?)
-		TowerAskDialog asker = new TowerAskDialog();
-		asker.setVisible(true);
-		return null;
-//		return asker.getTower();
+		int f = 1;
+		int r = 1;
+		int d = 1;
+		JTextField freqField = new JTextField(10);
+		JTextField radField = new JTextField(10);
+		JTextField dmgField = new JTextField(10);
+		final JComponent[] inputs = new JComponent[] {
+				new JLabel("Tüzelési gyakoriság: "), freqField,
+				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
+				dmgField };
+		JOptionPane.showMessageDialog(this, inputs, "Torony tulajdonságai",
+				JOptionPane.PLAIN_MESSAGE);
+		f = Integer.parseInt(freqField.getText());
+		r = Integer.parseInt(radField.getText());
+		d = Integer.parseInt(dmgField.getText());
+		return new Tower(f, r, d);
 	}
 
 	protected Trap askUserForTrap() {

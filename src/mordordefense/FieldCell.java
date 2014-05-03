@@ -36,7 +36,7 @@ public class FieldCell extends Cell {
 	public boolean addTower(Tower t) {
 		Logging.log(2, ">> FieldCell.addTower függvényhívás, paraméter: "
 				+ (t == null ? "null" : t.toString()));
-		if (tower == null) {
+		if (tower == null && t != null) {
 			tower = t;
 			t.setParentCell(this);
 			Logging.log(2, "<< FieldCell.addTower return: boolean - true");
