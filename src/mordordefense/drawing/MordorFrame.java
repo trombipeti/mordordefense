@@ -52,6 +52,7 @@ public class MordorFrame extends JFrame {
 	private TimerTask updateBoard;
 
 	private State state;
+	protected boolean gameStarted;
 
 	/**
 	 * Create the frame.
@@ -64,6 +65,7 @@ public class MordorFrame extends JFrame {
 		setResizable(true);
 
 		state = State.NORMAL;
+		gameStarted = false;
 
 		// control = c;
 
@@ -80,6 +82,7 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				gameStarted = true;
 				Board.getController().startMainLoop();
 				Board.validate();
 				Board.repaint();
@@ -227,10 +230,14 @@ public class MordorFrame extends JFrame {
 					case TOWER:
 						if (Board.getController().getCell(cellx, celly)
 								.getType().equalsIgnoreCase("FieldCell")) {
-							Board.getController().pauseMainLoop();
+							if (gameStarted) {
+								Board.getController().pauseMainLoop();
+							}
 							Tower t = askUserForTower();
 							Board.getController().placeTower(t, cellx, celly);
-							Board.getController().startMainLoop();
+							if (gameStarted) {
+								Board.getController().startMainLoop();
+							}
 							validate();
 							repaint();
 							state = State.NORMAL;
@@ -239,9 +246,14 @@ public class MordorFrame extends JFrame {
 					case TRAP:
 						if (!control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
-							Board.getController().placeTrap(askUserForTrap(),
-									cellx, celly);
-							// Board.setController(control);
+							if (gameStarted) {
+								Board.getController().pauseMainLoop();
+							}
+							Trap t = askUserForTrap();
+							Board.getController().placeTrap(t, cellx, celly);
+							if (gameStarted) {
+								Board.getController().startMainLoop();
+							}
 							validate();
 							repaint();
 							state = State.NORMAL;
@@ -338,18 +350,48 @@ public class MordorFrame extends JFrame {
 				new JLabel("Tüzelési gyakoriság: "), freqField,
 				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
 				dmgField };
-		JOptionPane.showMessageDialog(this, inputs, "Torony tulajdonságai",
-				JOptionPane.PLAIN_MESSAGE);
-		f = Integer.parseInt(freqField.getText());
-		r = Integer.parseInt(radField.getText());
-		d = Integer.parseInt(dmgField.getText());
+		boolean ans = false;
+		while (!ans) {
+			int re = JOptionPane.showConfirmDialog(this, inputs,
+					"Torony tulajdonságai", JOptionPane.OK_CANCEL_OPTION);
+			if (re == JOptionPane.CANCEL_OPTION) {
+				return null;
+			}
+			try {
+				f = Integer.parseInt(freqField.getText());
+				r = Integer.parseInt(radField.getText());
+				d = Integer.parseInt(dmgField.getText());
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				continue;
+			}
+			ans = true;
+		}
 		return new Tower(f, r, d);
 	}
 
 	protected Trap askUserForTrap() {
-		// TODO Itt valahogy meg kell kérdezni a usertől a csapda értékeit
-		// (dialog?)
-		return new Trap();
+		int s = 1;
+		JTextField sField = new JTextField(10);
+		final JComponent[] inputs = new JComponent[] { new JLabel("Erősség:"),
+				sField };
+		boolean ans = false;
+		while (!ans) {
+			int r = JOptionPane.showConfirmDialog(this, inputs,
+					"Csapda tulajdonságai", JOptionPane.OK_CANCEL_OPTION);
+			if (r == JOptionPane.CANCEL_OPTION) {
+				return null;
+			}
+			try {
+				s = Integer.parseInt(sField.getText());
+			} catch (NumberFormatException e) {
+				inputs[0] = new JLabel(
+						"<html>Egy számot adj meg!<br />Erősség:</html>");
+				continue;
+			}
+			ans = true;
+		}
+		return new Trap(s);
 	}
 
 	protected MagicStone askUserForMagicStone() {
