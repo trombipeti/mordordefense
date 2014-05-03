@@ -89,6 +89,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private HashSet<Enemy> enemies = new HashSet<Enemy>();
 
 	/**
+	 * Az egy körben keletkezett ellenségek (pl slice hatására), akiket a
+	 * léptetés után be kell majd rakni az enemies-be. Ez a szeretett
+	 * {@link ConcurrentModificationException} elkerüléséhez kell.
+	 */
+	private HashSet<Enemy> enemiesToAdd = new HashSet<Enemy>();
+
+	/**
 	 * A pályán lévő cellák. A map kulcsaihoz újabb map-ek vannak rendelve (a
 	 * sorok), és ezeken belül vannak a cellák. Inicializáláskor N*M-esre lesz
 	 * inicializálva, null-okkal feltöltve.
@@ -169,16 +176,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sentEnemies = diedEnemies = 0;
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
 		Human.defMaxLP = 5;
-		Human.defSpeed = 1;
+		Human.defSpeed = 0.8f;
 
 		Hobbit.defMaxLP = 5;
-		Hobbit.defSpeed = 1;
+		Hobbit.defSpeed = 0.8f;
 
 		Elf.defMaxLP = 5;
-		Elf.defSpeed = 1;
+		Elf.defSpeed = 0.8f;
 
 		Dwarf.defMaxLP = 5;
-		Dwarf.defSpeed = 1;
+		Dwarf.defSpeed = 0.8f;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
@@ -549,6 +556,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 				// e1.printStackTrace();
 			}
 		}
+		enemies.addAll(enemiesToAdd);
+		enemiesToAdd.clear();
 		Logging.log(4, "<< Controller.stepAllEnemies() hívás");
 	}
 
@@ -857,7 +866,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3,
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
-		enemies.add(e);
+		enemiesToAdd.add(e);
 		sentEnemies++;
 		enemyChanged = true;
 		Logging.log(1, e.toString());
