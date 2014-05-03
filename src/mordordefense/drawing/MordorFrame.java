@@ -306,14 +306,14 @@ public class MordorFrame extends JFrame {
 	 *         pályán.
 	 */
 	protected Tower askUserForTower() {
-		int f = 1;
-		int r = 1;
-		int d = 1;
+		float f = 1;
+		float r = 1;
+		float d = 1;
 		JTextField freqField = new JTextField("1", 10);
 		JTextField radField = new JTextField("1", 10);
 		JTextField dmgField = new JTextField("1", 10);
 		final JComponent[] inputs = new JComponent[] {
-				new JLabel("Tüzelési gyakoriság: "), freqField,
+				new JLabel("Tüzelési gyakoriság:"), freqField,
 				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
 				dmgField };
 		boolean ans = false;
@@ -324,11 +324,16 @@ public class MordorFrame extends JFrame {
 				return null;
 			}
 			try {
-				f = Integer.parseInt(freqField.getText());
-				r = Integer.parseInt(radField.getText());
-				d = Integer.parseInt(dmgField.getText());
+				f = Float.parseFloat(freqField.getText());
+				r = Float.parseFloat(radField.getText());
+				d = Float.parseFloat(dmgField.getText());
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				JLabel l = (JLabel) (inputs[0]);
+				l.setText("<html>Helytelen adatok, csak számokat adj meg!<br />"
+						+ l.getText() + "</html>");
+				freqField.setText("1");
+				radField.setText("1");
+				dmgField.setText("1");
 				continue;
 			}
 			ans = true;
@@ -337,7 +342,7 @@ public class MordorFrame extends JFrame {
 	}
 
 	protected Trap askUserForTrap() {
-		int s = 1;
+		float s = 1;
 		JTextField sField = new JTextField("1", 10);
 		final JComponent[] inputs = new JComponent[] { new JLabel("Erősség:"),
 				sField };
@@ -349,10 +354,12 @@ public class MordorFrame extends JFrame {
 				return null;
 			}
 			try {
-				s = Integer.parseInt(sField.getText());
+				s = Float.parseFloat(sField.getText());
 			} catch (NumberFormatException e) {
-				inputs[0] = new JLabel(
-						"<html>Egy számot adj meg!<br />Erősség:</html>");
+				JLabel l = (JLabel) (inputs[0]);
+				l.setText("<html>Helytelen adatok, csak számokat adj meg!<br />"
+						+ l.getText() + "</html>");
+				sField.setText("1");
 				continue;
 			}
 			ans = true;

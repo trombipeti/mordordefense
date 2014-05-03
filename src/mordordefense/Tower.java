@@ -27,26 +27,26 @@ public class Tower implements RouteCellListener
 	/**
 	 * A torony tüzelési frekvenciája.
 	 */
-	protected int freq;
+	protected float freq;
 
 	/**
 	 * A torony hatósugara. Az őt tartalmaző cellától maximum ekkora távolságra
 	 * lévő utakra tud lőni. Ezekre a RouteCell-ekre fel is iratkozik
 	 * listenerként.
 	 */
-	protected int radius;
+	protected float radius;
 
 	/**
 	 * A torony hatósugara, akkor használjuk csak, amikor köd ereszkedik a
 	 * toronyra, ebben tároljuk az eredeti hatósugarat.
 	 */
 
-	protected int foglessRadius;
+	protected float foglessRadius;
 
 	/**
 	 * A torony alapsebzése.
 	 */
-	protected int baseDamage;
+	protected float baseDamage;
 
 	/**
 	 * A legutolsó lövés ideje. Ebből számítja ki, hogy lőhet-e.
@@ -81,7 +81,7 @@ public class Tower implements RouteCellListener
 	/**
 	 * A tornyok éptésének alapára.
 	 */
-	static protected int baseCost;
+	static protected float baseCost;
 
 	/**
 	 * A torony hatósugarában lévő, ellenséget tartalmazó {@link RouteCell}-ek,
@@ -119,7 +119,7 @@ public class Tower implements RouteCellListener
 	 * @param damage
 	 *            alap sebzési érték
 	 */
-	public Tower(int freq, int radius, int damage) {
+	public Tower(float freq, float radius, float damage) {
 		Logging.log(2, ">> Tower konstruktor hívás, paraméterek: freq: " + freq
 				+ ", radius: " + radius + ", damage: " + damage);
 		this.freq = freq;
@@ -245,7 +245,7 @@ public class Tower implements RouteCellListener
 	 * 
 	 * @return int Az építés alapára.
 	 */
-	public static int getBaseCost() {
+	public static float getBaseCost() {
 		Logging.log(4, ">> Tower.getBaseCost() hívás");
 		Logging.log(4, "<< Tower.getBaseCost() return: " + baseCost);
 		return baseCost;
@@ -309,7 +309,7 @@ public class Tower implements RouteCellListener
 	private void fire(RouteCell rc) {
 		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
 		if (timeOfLastShoot == 0) {
-			int dw, el, hu, ho;
+			float dw, el, hu, ho;
 			dw = el = hu = ho = baseDamage;
 			for (MagicStone s : stones) {
 				float dmgmult = s.getDamageMultiplier();
@@ -336,7 +336,7 @@ public class Tower implements RouteCellListener
 							+ parentCell.getCoords()[1] + " to: "
 							+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
 			rc.addBullet(b);
-			timeOfLastShoot = freq;
+			timeOfLastShoot = System.currentTimeMillis();
 		}
 		Logging.log(4, "<< Tower.fire");
 	}

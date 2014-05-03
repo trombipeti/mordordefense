@@ -61,14 +61,18 @@ public class Drawer {
 		String t = e.getType();
 		Graphics2D g2 = (Graphics2D) g;
 		if (t.equalsIgnoreCase("Human")) {
-			g2.setColor(Color.CYAN);
+			g2.setColor(new Color(255, 92, 208));
 			g2.fillOval(x, y, cellSize / 2, cellSize / 2);
 		} else if (t.equalsIgnoreCase("Hobbit")) {
-
+			g2.setColor(new Color(0, 255, 52));
+			g2.fillOval(x + cellSize / 2, y, cellSize / 2, cellSize / 2);
 		} else if (t.equalsIgnoreCase("Dwarf")) {
-
+			g2.setColor(new Color(182, 0, 0));
+			g2.fillOval(x + cellSize / 2, y + cellSize / 2, cellSize / 2,
+					cellSize / 2);
 		} else if (t.equalsIgnoreCase("Elf")) {
-
+			g2.setColor(new Color(233, 255, 40));
+			g2.fillOval(x, y + cellSize / 2, cellSize / 2, cellSize / 2);
 		}
 	}
 

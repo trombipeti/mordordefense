@@ -31,7 +31,7 @@ public class Trap implements RouteCellListener {
 		Logging.log(4, "<< Trap default konstruktor");
 	}
 
-	public Trap(int strength) {
+	public Trap(float strength) {
 		Logging.log(2, ">> Trap konstruktor hívás, parameter: " + strength);
 		this.strength = strength;
 		Logging.log(4, "<< Trap konstruktor");

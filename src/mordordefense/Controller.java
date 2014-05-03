@@ -168,16 +168,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sentEnemies = diedEnemies = 0;
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
 		Human.defMaxLP = 5;
-		Human.defSpeed = 5;
+		Human.defSpeed = 1;
 
 		Hobbit.defMaxLP = 5;
-		Hobbit.defSpeed = 5;
+		Hobbit.defSpeed = 1;
 
 		Elf.defMaxLP = 5;
-		Elf.defSpeed = 5;
+		Elf.defSpeed = 1;
 
 		Dwarf.defMaxLP = 5;
-		Dwarf.defSpeed = 5;
+		Dwarf.defSpeed = 1;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 

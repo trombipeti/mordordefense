@@ -156,6 +156,7 @@ public abstract class Enemy {
 			speed -= mertek;
 			Logging.log(3, "\t A sebessége ennyire csökkent: " + speed);
 		} else {
+			speed = 1;
 			Logging.log(3,
 					"\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
 							+ speed);
