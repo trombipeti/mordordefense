@@ -119,7 +119,7 @@ public class Elf extends Enemy {
 	protected void slice() {
 		Logging.log(2, ">> Elf.slice() hívás");
 		Elf newEnemy = new Elf(lifePoint / 2, speed);
-		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
+		lifePoint = lifePoint / 2;
 		newEnemy.setRouteCell(routeCell);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
