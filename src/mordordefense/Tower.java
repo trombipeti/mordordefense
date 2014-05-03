@@ -308,7 +308,8 @@ public class Tower implements RouteCellListener
 	 */
 	private void fire(RouteCell rc) {
 		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
-		double dt = (System.currentTimeMillis() - timeOfLastShoot);
+		long dt = (System.currentTimeMillis() - timeOfLastShoot);
+		Logging.log(1, "Tower lőne, eltelt idő: " + dt + ", freq: " + freq);
 		if (dt > 1000.0 / freq) {
 			float dw, el, hu, ho;
 			dw = el = hu = ho = baseDamage;

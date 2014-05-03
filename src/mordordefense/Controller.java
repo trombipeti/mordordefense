@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -408,7 +409,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
 		Logging.log(1, saruman.toString());
-		Logging.log(1, "--Kör vége-- \n");
+		Logging.log(1, "--Kör vége-- \n\t" + new Date().toString());
 		Logging.log(4, "<< Controller.loop()");
 	}
 
