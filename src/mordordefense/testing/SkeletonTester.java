@@ -87,7 +87,7 @@ public class SkeletonTester {
 		rc.setID(0);
 		MordorCell mc = new MordorCell(0, 1, 1);
 		mc.setID(1);
-		Controller c = new Controller(1, "");
+		Controller c = new Controller("");
 
 		rc.setSzomszed(Dir.UP, mc);
 		mc.setSzomszed(Dir.DOWN, rc);
@@ -108,7 +108,7 @@ public class SkeletonTester {
 
 	public static void runControllerTestCase() {
 		Logging.log(0, "=== SkeletonTester: controllerTestCase futtatása ===");
-		Controller c = new Controller(1, "palya1.p");
+		Controller c = new Controller("palya1.p");
 		c.init();
 		c.addDwarf(new Dwarf(10, 2));
 		c.stepAllEnemies();

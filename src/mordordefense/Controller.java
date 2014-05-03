@@ -142,19 +142,19 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public volatile boolean trapChanged = false;
 
-	/**
-	 * Konstruktor
-	 * 
-	 * @param n
-	 *            hány ellenséget tehet le
-	 */
-	public Controller(int n, String fileName) {
-		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + n);
-		maxEnemyNum = n;
-		sentEnemies = diedEnemies = 0;
-		mapFileName = fileName;
-		Logging.log(4, "<< Controller konstruktor");
-	}
+	// /**
+	// * Konstruktor
+	// *
+	// * @param n
+	// * hány ellenséget tehet le
+	// */
+	// public Controller(int n, String fileName) {
+	// Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + n);
+	// maxEnemyNum = n;
+	// sentEnemies = diedEnemies = 0;
+	// mapFileName = fileName;
+	// Logging.log(4, "<< Controller konstruktor");
+	// }
 
 	/**
 	 * Konstruktor
@@ -165,18 +165,19 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public Controller(String fileName) {
 		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + fileName);
 		mapFileName = fileName;
+		sentEnemies = diedEnemies = 0;
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
-		Human.defMaxLP = 1;
-		Human.defSpeed = 1;
+		Human.defMaxLP = 5;
+		Human.defSpeed = 5;
 
-		Hobbit.defMaxLP = 1;
-		Hobbit.defSpeed = 1;
+		Hobbit.defMaxLP = 5;
+		Hobbit.defSpeed = 5;
 
-		Elf.defMaxLP = 1;
-		Elf.defSpeed = 1;
+		Elf.defMaxLP = 5;
+		Elf.defSpeed = 5;
 
-		Dwarf.defMaxLP = 1;
-		Dwarf.defSpeed = 1;
+		Dwarf.defMaxLP = 5;
+		Dwarf.defSpeed = 5;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
@@ -373,6 +374,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void stopMainLoop() {
 		if (scheduler != null) {
 			scheduler.cancel();
+			scheduler = null;
 		} else {
 			Logging.log(0,
 					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
@@ -412,11 +414,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	/**
 	 * Random ellenséget a pályához adó függvény, ha a randomitás ki van
-	 * kapcsolva, akkor alapértelmezetten embert rak le
+	 * kapcsolva, akkor alapértelmezetten embert rak le.
 	 */
 	private void addRandomEnemy() {
 		Logging.log(3, ">> Controller.addRandomEnemy() hívás");
 		Random randgen = new Random();
+		int a = randgen.nextInt(maxEnemyNum * 1000);
+		if (a % maxEnemyNum > sentEnemies) {
+			Logging.log(1, "<< Controller.addRandomEnemy(), nem adok hozzá.");
+			return;
+		}
 		int n = randgen.nextInt(4);
 		if (!random) {
 			n = 0;
@@ -617,28 +624,28 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 		}
 	}
-	
+
 	/**
 	 * Visszaadja a Trap-ek listáját.
-	 *
+	 * 
 	 * @return
 	 */
 	public List<Trap> getTrap() {
 		return traps;
 	}
-	
+
 	/**
 	 * Visszaadja a Tower-ek listáját.
-	 *
+	 * 
 	 * @return
 	 */
 	public List<Tower> getTowers() {
 		return towers;
 	}
-	
+
 	/**
 	 * Visszaadja az Enemy-k HashSet-jét.
-	 *
+	 * 
 	 * @return
 	 */
 	public HashSet<Enemy> getEnemies() {

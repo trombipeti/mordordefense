@@ -66,7 +66,7 @@ public class RouteCell extends Cell {
 	public boolean addTrap(Trap t) {
 		Logging.log(2, ">> RouteCell.addTrap() hívás, paraméter: "
 				+ (t == null ? "null" : t.toString()));
-		if (trap == null && trap != null) {
+		if (trap == null && t != null) {
 			trap = t;
 			trap.setParentCell(this);
 			listeners.add(t);

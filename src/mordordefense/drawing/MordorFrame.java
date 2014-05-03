@@ -99,7 +99,7 @@ public class MordorFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
 				// menü?
-				Board.getController().pauseMainLoop();
+				Board.getController().stopMainLoop();
 				validate();
 				repaint();
 			}
@@ -193,8 +193,6 @@ public class MordorFrame extends JFrame {
 		setContentPane(contentPane);
 
 		Board = new DrawPanel(drawer, 800, 500);
-		// TODO Itt ez majd nem kell
-		Controller.setRandom(false);
 		Board.setController(c);
 
 		// Egy kattintás: state-től függően tower/trap/magicstone
@@ -298,38 +296,6 @@ public class MordorFrame extends JFrame {
 
 		paintTimer.scheduleAtFixedRate(updateBoard, 0, 50);
 
-		addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent arg0) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent arg0) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent arg0) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				// updateBoard.cancel();
-				// paintTimer.cancel();
-			}
-
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-			}
-
-			@Override
-			public void windowActivated(WindowEvent arg0) {
-			}
-		});
 	}
 
 	/**
@@ -343,9 +309,9 @@ public class MordorFrame extends JFrame {
 		int f = 1;
 		int r = 1;
 		int d = 1;
-		JTextField freqField = new JTextField(10);
-		JTextField radField = new JTextField(10);
-		JTextField dmgField = new JTextField(10);
+		JTextField freqField = new JTextField("1", 10);
+		JTextField radField = new JTextField("1", 10);
+		JTextField dmgField = new JTextField("1", 10);
 		final JComponent[] inputs = new JComponent[] {
 				new JLabel("Tüzelési gyakoriság: "), freqField,
 				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
@@ -372,7 +338,7 @@ public class MordorFrame extends JFrame {
 
 	protected Trap askUserForTrap() {
 		int s = 1;
-		JTextField sField = new JTextField(10);
+		JTextField sField = new JTextField("1", 10);
 		final JComponent[] inputs = new JComponent[] { new JLabel("Erősség:"),
 				sField };
 		boolean ans = false;

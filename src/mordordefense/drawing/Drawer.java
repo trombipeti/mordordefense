@@ -57,8 +57,19 @@ public class Drawer {
 		}
 	}
 
-	public void drawEnemy(Graphics g, int x, int y, Enemy e) {
-		// TODO Implementálni
+	public void drawEnemy(Graphics g, int x, int y, int cellSize, Enemy e) {
+		String t = e.getType();
+		Graphics2D g2 = (Graphics2D) g;
+		if (t.equalsIgnoreCase("Human")) {
+			g2.setColor(Color.CYAN);
+			g2.fillOval(x, y, cellSize / 2, cellSize / 2);
+		} else if (t.equalsIgnoreCase("Hobbit")) {
+
+		} else if (t.equalsIgnoreCase("Dwarf")) {
+
+		} else if (t.equalsIgnoreCase("Elf")) {
+
+		}
 	}
 
 	public void drawCell(Graphics g, int x, int y, Cell c) {

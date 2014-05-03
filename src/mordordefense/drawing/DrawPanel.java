@@ -33,7 +33,7 @@ public class DrawPanel extends JPanel {
 	protected int mapHeight;
 	protected int mapWidth;
 	protected int cellSize;
-	
+
 	protected boolean gameEndDrawn;
 
 	private Drawer drawer;
@@ -99,10 +99,12 @@ public class DrawPanel extends JPanel {
 			for (Enemy e : enemies) {
 				i++;
 				int c[] = e.getRouteCell().getCoords();
-				drawer.drawEnemy(g2, c[0] * cellSize, c[1] * cellSize, e);
-				g2.drawString(Integer.toString(i), c[0] * cellSize + 10, c[1] * cellSize + 10);
+				drawer.drawEnemy(g2, c[0] * cellSize, c[1] * cellSize,
+						cellSize, e);
+				// g2.drawString(Integer.toString(i), c[0] * cellSize + i * 5,
+				// c[1] * cellSize + i * 5);
 			}
-			if(control.isGameEnded()) {
+			if (control.isGameEnded()) {
 				gameEndDrawn = true;
 			}
 
