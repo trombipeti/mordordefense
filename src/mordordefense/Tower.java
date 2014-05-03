@@ -151,7 +151,7 @@ public class Tower implements RouteCellListener
 		}
 		Logging.log(2, "<< Tower.addStone()");
 	}
-	
+
 	/**
 	 * @return A tornyon lévő varázskövek.
 	 */
@@ -308,7 +308,8 @@ public class Tower implements RouteCellListener
 	 */
 	private void fire(RouteCell rc) {
 		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
-		if (timeOfLastShoot == 0) {
+		double dt = (System.currentTimeMillis() - timeOfLastShoot);
+		if (dt > 1000.0 / freq) {
 			float dw, el, hu, ho;
 			dw = el = hu = ho = baseDamage;
 			for (MagicStone s : stones) {
@@ -321,7 +322,7 @@ public class Tower implements RouteCellListener
 			boolean slice;
 
 			if (!globalSlice) {
-				if (Controller.getRandom()) {
+				if (Controller.isRandom()) {
 					slice = (new Random().nextInt(10) % 10 == 0);
 				} else {
 					slice = false;

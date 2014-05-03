@@ -183,10 +183,10 @@ public class DrawPanel extends JPanel {
 	 * Letörli az összes kirajzolt réteget.
 	 */
 	public void clear() {
-		// int transparency[] = new int[mapWidth * mapHeight];
-		// Arrays.fill(transparency, 0);
-		// towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		// mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		// enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		 int transparency[] = new int[mapWidth * mapHeight];
+		 Arrays.fill(transparency, 0);
+		 towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		 mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		 enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 	}
 }

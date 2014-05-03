@@ -708,7 +708,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		random = b;
 	}
 
-	public static boolean getRandom() {
+	public static boolean isRandom() {
 		return random;
 	}
 

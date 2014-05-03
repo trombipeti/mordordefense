@@ -150,6 +150,7 @@ public class Main {
 		mf.setVisible(true);
 		// TODO Ezt nem itt kéne beállítani!!!
 		Controller.timeStep = 100;
+		Controller.setRandom(true);
 		// Logging.setLogLevel(1);
 		// ProtoTester.mainTestingEnvironment();
 	}
