@@ -77,6 +77,8 @@ public class MordorFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Board.getController().startMainLoop();
+				Board.validate();
+				Board.repaint();
 				validate();
 				repaint();
 			}
@@ -315,7 +317,10 @@ public class MordorFrame extends JFrame {
 	protected Tower askUserForTower() {
 		// TODO Itt valahogy meg kell kérdezni a usertől a torony értékeit
 		// (dialog?)
-		return new Tower(1, 1, 1);
+		TowerAskDialog asker = new TowerAskDialog();
+		asker.setVisible(true);
+		return null;
+//		return asker.getTower();
 	}
 
 	protected Trap askUserForTrap() {
