@@ -118,7 +118,7 @@ public class Elf extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Elf.slice() hívás");
-		Elf newEnemy = new Elf(lifePoint / 2, speed);
+		Elf newEnemy = new Elf(lifePoint / 2, defSpeed);
 		lifePoint = lifePoint / 2;
 		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
