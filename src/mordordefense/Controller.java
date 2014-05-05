@@ -55,19 +55,35 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private int mapHeight;
 
 	/**
-	 * Maximum hány enemy indulhat el.
-	 */
-	private int maxEnemyNum;
-
-	/**
 	 * Az eddig harcba küldött ellenségek.
 	 */
 	private int sentEnemies;
 
 	/**
+	 * Maximum hány enemy indulhat el.
+	 */
+	private int maxEnemyNum;
+
+	/**
+	 * @return A maximálisan elindítható ellenségek száma
+	 */
+	public int getMaxEnemyNum() {
+		return maxEnemyNum;
+	}
+
+	/**
+	 * @param maxEnemyNum
+	 *            Ennyi ellenség fog tudni maximálisan elindulni.
+	 */
+	public void setMaxEnemyNum(int maxEnemyNum) {
+		this.maxEnemyNum = maxEnemyNum;
+	}
+
+	/**
 	 * az eddig meghalt ellenségek
 	 */
 	private int diedEnemies;
+
 	/**
 	 * A pályán lévő csapdák
 	 */
@@ -79,7 +95,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private List<Tower> towers = new ArrayList<Tower>();
 
 	/**
-	 * Szarumán
+	 * Szarumán, ő igazából a mannatároló
 	 */
 	private Saruman saruman;
 
@@ -117,13 +133,20 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * A győzteseket tároló StringBuffer. Azért ilyen típusú, hogy szálbiztos
 	 * legyen.
 	 */
-	private volatile StringBuffer winner = null;
+	private volatile String winner = null;
 
-	public StringBuffer getWinner() {
+	/**
+	 * @return A győztes neve - "Szarumán", ha minden ellenség meghalt,
+	 *         "Ellenségek", ha valamelyik ellenség bejutott mordorba.
+	 */
+	public String getWinner() {
 		return winner;
 	}
 
-	public void setWinner(StringBuffer winner) {
+	/**
+	 * @param winner A
+	 */
+	private void setWinner(String winner) {
 		this.winner = winner;
 	}
 
@@ -175,12 +198,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * Konstruktor
 	 * 
-	 * @param fileName
+	 * @param mapFile
 	 *            A pálya leírását tartalmazó fájl neve.
 	 */
-	public Controller(String fileName) {
-		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + fileName);
-		mapFileName = fileName;
+	public Controller(String mapFile) {
+		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + mapFile);
+		mapFileName = mapFile;
 		sentEnemies = diedEnemies = 0;
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
 		Human.defMaxLP = 5;
@@ -794,7 +817,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			setWinner(new StringBuffer("Ellenségek"));
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
@@ -809,7 +832,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			setWinner(new StringBuffer("Ellenségek"));
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
@@ -824,7 +847,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			setWinner(new StringBuffer("Ellenségek"));
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -839,7 +862,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			setWinner(new StringBuffer("Ellenségek"));
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -904,7 +927,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		diedEnemies++;
 		enemyChanged = true;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
-			setWinner(new StringBuffer("Szarumán"));
+			setWinner("Szarumán");
 			setGameEnded(true);
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();

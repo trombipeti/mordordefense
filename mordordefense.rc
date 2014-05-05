@@ -13,3 +13,6 @@ MaxSpeed=1
 [ Dwarf ]
 MaxLP=10
 MaxSpeed=1
+
+[ Saruman ]
+Manna=10
