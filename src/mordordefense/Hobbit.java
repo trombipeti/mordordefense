@@ -121,7 +121,7 @@ public class Hobbit extends Enemy
 		Logging.log(2, ">> Hobbit.slice() hívás");
 		Hobbit newEnemy = new Hobbit(lifePoint / 2, speed);
 		lifePoint = lifePoint / 2;
-		newEnemy.setRouteCell(routeCell);
+		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}

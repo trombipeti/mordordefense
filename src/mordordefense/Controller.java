@@ -401,12 +401,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 		}
 		for (Tower t : towers) {
-			if (t.hasFog && t.fogTimeRemaining > 0)
+			if (t.hasFog && t.fogTimeRemaining > 0) {
 				t.fogTimeRemaining -= 1;
-			if (t.hasFog && t.fogTimeRemaining == 0)
+			}
+			if (t.hasFog && t.fogTimeRemaining == 0) {
 				t.removeFog();
-			if (t.timeOfLastShoot > 0)
-				t.timeOfLastShoot -= 1;
+			}
+			// if (t.timeOfLastShoot > 0) {
+			// t.timeOfLastShoot -= 1;
+			// }
+			t.fireAll();
 		}
 		stepAllEnemies();
 		for (Tower t : towers) {
@@ -416,6 +420,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
 		Logging.log(1, saruman.toString());
+		Logging.log(1, "Enemyk száma: " + enemies.size());
 		Logging.log(1, "--Kör vége-- \n\t" + new Date().toString());
 		Logging.log(4, "<< Controller.loop()");
 	}

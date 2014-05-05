@@ -117,7 +117,7 @@ public class Human extends Enemy {
 		Logging.log(2, ">> Human.slice() hívás");
 		Human newEnemy = new Human(lifePoint / 2, speed);
 		lifePoint = lifePoint / 2;
-		newEnemy.setRouteCell(routeCell);
+		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}

@@ -3,6 +3,7 @@ package mordordefense;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import mordordefense.testing.Logging;
 
@@ -31,7 +32,9 @@ public class RouteCell extends Cell {
 	/**
 	 * A cellán tartózkodó ellenségek.
 	 */
-	protected List<Enemy> enemies = new ArrayList<Enemy>();
+	// protected List<Enemy> enemies = new ArrayList<Enemy>();
+
+	protected CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<Enemy>();
 
 	/**
 	 * A RouteCell-t csapdával létrehozó konstruktor.
@@ -163,16 +166,18 @@ public class RouteCell extends Cell {
 		Logging.log(2,
 				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
+		ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
 		for (ListIterator<Enemy> iter = enemies.listIterator(); iter.hasNext();) {
 			// for (Enemy e : enemies){
 			for (Bullet b1 : bullets) {
 				Enemy e = iter.next();
 				e.sebez(b1);
 				if (e.isDead()) {
-					iter.remove();
+					toRemove.add(e);
 				}
 			}
 		}
+		enemies.removeAll(toRemove);
 		bullets.remove(b);
 		Logging.log(2, "<< RouteCell.addBullet()");
 	}

@@ -119,7 +119,7 @@ public class Dwarf extends Enemy {
 		Logging.log(2, ">> Dwarf.slice() hívás");
 		Dwarf newEnemy = new Dwarf(lifePoint / 2, speed);
 		lifePoint = lifePoint / 2;
-		newEnemy.setRouteCell(routeCell);
+		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}

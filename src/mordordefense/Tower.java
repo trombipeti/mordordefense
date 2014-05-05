@@ -311,6 +311,7 @@ public class Tower implements RouteCellListener
 		long dt = (System.currentTimeMillis() - timeOfLastShoot);
 		Logging.log(1, "Tower lőne, eltelt idő: " + dt + ", freq: " + freq);
 		if (dt > 1000.0 / freq) {
+			Logging.log(1, "Tower lőni fog");
 			float dw, el, hu, ho;
 			dw = el = hu = ho = baseDamage;
 			for (MagicStone s : stones) {
@@ -332,15 +333,30 @@ public class Tower implements RouteCellListener
 				slice = globalSlice;
 			}
 			Bullet b = new Bullet(dw, el, hu, ho, slice);
-			Logging.log(
-					1,
-					b.toString() + " from: " + parentCell.getCoords()[0] + " "
-							+ parentCell.getCoords()[1] + " to: "
-							+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
-			rc.addBullet(b);
+			// Ha első fire hívás, akkor csak egyszer lövünk.
+			// Ha nem, akkor annyiszor, ahányszor kell.
+			int numShoot = (timeOfLastShoot == 0 ? 1
+					: (int) (dt / (1000.0f / freq)));
+			Logging.log(1, "A Tower ennyiszer lő: " + numShoot);
+			for (int i = 0; i < numShoot; ++i) {
+				rc.addBullet(b);
+				Logging.log(1,
+						b.toString() + " from: " + parentCell.getCoords()[0]
+								+ " " + parentCell.getCoords()[1] + " to: "
+								+ rc.getCoords()[0] + " " + rc.getCoords()[1]);
+			}
 			timeOfLastShoot = System.currentTimeMillis();
 		}
 		Logging.log(4, "<< Tower.fire");
+	}
+
+	/**
+	 * Megpróbál lövedéket kilőni az összes közelben lévő útra.
+	 */
+	public void fireAll() {
+		for (RouteCell rc : closestCellsWithEnemy) {
+			fire(rc);
+		}
 	}
 
 	/**
@@ -373,7 +389,7 @@ public class Tower implements RouteCellListener
 				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
 						+ ", " + e.toString());
 		closestCellsWithEnemy.add(sender);
-		fire(sender);
+		// fire(sender);
 		Logging.log(4, "<< Tower.onEnter");
 
 	}
@@ -384,7 +400,7 @@ public class Tower implements RouteCellListener
 				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
 						+ ", " + d.toString());
 		closestCellsWithEnemy.add(sender);
-		fire(sender);
+		// fire(sender);
 		Logging.log(4, "<< Tower.onEnter");
 	}
 
@@ -394,7 +410,7 @@ public class Tower implements RouteCellListener
 				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
 						+ ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
-		fire(sender);
+		// fire(sender);
 		Logging.log(4, "<< Tower.onEnter");
 	}
 
@@ -404,7 +420,7 @@ public class Tower implements RouteCellListener
 				">> Tower.onEnter() hívás, paraméterek: " + sender.toString()
 						+ ", " + h.toString());
 		closestCellsWithEnemy.add(sender);
-		fire(sender);
+		// fire(sender);
 		Logging.log(4, "<< Tower.onEnter");
 	}
 
