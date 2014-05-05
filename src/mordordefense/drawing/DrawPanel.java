@@ -86,7 +86,6 @@ public class DrawPanel extends JPanel {
 		return control;
 	}
 
-
 	public void paintTowers() {
 		int transparency[] = new int[mapWidth * mapHeight];
 		Arrays.fill(transparency, 0);

@@ -27,6 +27,13 @@ public class Drawer {
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(2.0f));
 		g2.drawOval(x, y, cellSize, cellSize);
+		if (t.isHasFog()) {
+			g2.setStroke(new BasicStroke(1.0f));
+			g2.setColor(Color.GRAY);
+			for (int i = 0; i < cellSize; i += cellSize / 4) {
+				g2.drawLine(x + i, y, x + i, y + cellSize);
+			}
+		}
 		ArrayList<MagicStone> stones = (ArrayList<MagicStone>) t.getStones();
 		int n = stones.size();
 		// Bal felső sarokba kiírjuk, hány kő van rajta.

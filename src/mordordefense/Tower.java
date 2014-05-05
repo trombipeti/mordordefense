@@ -126,6 +126,7 @@ public class Tower implements RouteCellListener
 		this.radius = radius;
 		this.baseDamage = damage;
 		this.hasFog = false;
+		foglessRadius = radius;
 		timeOfLastShoot = 0;
 		Logging.log(4, "<< Tower konstruktor");
 	}
@@ -169,6 +170,10 @@ public class Tower implements RouteCellListener
 		Logging.log(4, ">> Tower.getClosestCellsWithEnemy() hívás");
 		Logging.log(4, "<< Tower.getClosestCellsWithEnemy()");
 		return closestCellsWithEnemy;
+	}
+
+	public boolean isHasFog() {
+		return hasFog;
 	}
 
 	/**
@@ -243,12 +248,20 @@ public class Tower implements RouteCellListener
 	/**
 	 * A tornyok építésének alapárát lekérdező függvény.
 	 * 
-	 * @return int Az építés alapára.
+	 * @return float Az építés alapára.
 	 */
 	public static float getBaseCost() {
 		Logging.log(4, ">> Tower.getBaseCost() hívás");
 		Logging.log(4, "<< Tower.getBaseCost() return: " + baseCost);
 		return baseCost;
+	}
+
+	public float getCost() {
+		Logging.log(4, ">> Tower.getCost() hívás");
+		float ret = baseCost;
+		ret += foglessRadius + freq + baseDamage;
+		Logging.log(4, "<< Tower.getCost() return: " + ret);
+		return ret;
 	}
 
 	/**
@@ -275,9 +288,13 @@ public class Tower implements RouteCellListener
 	 */
 	public void addFog(long timeOut) {
 		Logging.log(2, ">> Tower.addFog hívás, paraméter: " + timeOut);
+		if (hasFog) {
+			Logging.log(4, "<< Tower.addFog, van már rajta köd");
+			return;
+		}
 		hasFog = true;
 		foglessRadius = radius;
-		radius = (int) Math.floor(radius / 2);
+		radius = radius / 2;
 		fogTimeOut = timeOut;
 		fogAddTime = System.currentTimeMillis();
 		fogTimeRemaining = timeOut;
@@ -325,7 +342,7 @@ public class Tower implements RouteCellListener
 
 			if (!globalSlice) {
 				if (Controller.isRandom()) {
-					slice = (new Random().nextInt(10) % 10 == 0);
+					slice = (new Random().nextInt(50) == 0);
 				} else {
 					slice = false;
 				}
@@ -354,9 +371,14 @@ public class Tower implements RouteCellListener
 	 * Megpróbál lövedéket kilőni az összes közelben lévő útra.
 	 */
 	public void fireAll() {
+		Logging.log(2, ">> Tower.fireAll");
+		if (hasFog && System.currentTimeMillis() - fogAddTime > fogTimeOut) {
+			removeFog();
+		}
 		for (RouteCell rc : closestCellsWithEnemy) {
 			fire(rc);
 		}
+		Logging.log(4, "<< Tower.fireAll");
 	}
 
 	/**

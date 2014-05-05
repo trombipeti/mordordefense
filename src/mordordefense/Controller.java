@@ -477,13 +477,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * ködöt random toronyhoz adó függvény
 	 */
 	private void addRandomFog() {
+		Logging.log(2, ">> Controller.addRandomFog");
 		Random randgen = new Random(System.currentTimeMillis());
-		if (towers.size() <= 0 || randgen.nextInt(10) % 10 > 1) {
+		if (towers.size() <= 0 || randgen.nextInt(1000) > 1) {
+			Logging.log(4, "<< Controller.addRandomFog, nem rakok ködöt");
 			return;
 		}
 		int n = randgen.nextInt(towers.size());
 		towers.get(n).addFog((randgen.nextInt(10) + 10) * 1000);
 		towerChanged = true;
+		Logging.log(4, "<< Controller.addRandomFog");
 	}
 
 	/**
@@ -593,15 +596,15 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void placeTower(Tower t, int x, int y) {
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			if (saruman.getManna() >= Tower.getBaseCost()) {
+			if (saruman.getManna() >= t.getCost()) {
 				FieldCell fc = (FieldCell) cells.get(x).get(y);
 				if (fc.addTower(t)) {
 					towers.add(t);
-					saruman.rmManna(Tower.getBaseCost());
+					saruman.rmManna(t.getCost());
 					towerChanged = true;
 				}
 			} else {
-				Logging.log(0, "Nincs elég manna");
+				Logging.log(1, "Nincs elég manna");
 			}
 		} else {
 			Logging.log(0, "!!! Towert nem FieldCell-re raktuk!");
@@ -897,7 +900,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void onDie(Enemy e) {
 		Logging.log(2,
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
-		saruman.addManna(10);
+		saruman.addManna(e.getMaxLifePoint());
 		diedEnemies++;
 		enemyChanged = true;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {

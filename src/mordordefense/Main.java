@@ -151,7 +151,7 @@ public class Main {
 		// TODO Ezt nem itt kéne beállítani!!!
 		Controller.timeStep = 100;
 		Controller.setRandom(true);
-		Tower.globalSlice = true;
+		Tower.globalSlice = false;
 		// Logging.setLogLevel(1);
 		// ProtoTester.mainTestingEnvironment();
 	}

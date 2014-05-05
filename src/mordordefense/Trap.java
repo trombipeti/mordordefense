@@ -40,7 +40,8 @@ public class Trap implements RouteCellListener {
 	/**
 	 * Varázskövet helyez el a csapdára.
 	 * 
-	 * @param s Az elhelyezendő {@link MagicStone}.
+	 * @param s
+	 *            Az elhelyezendő {@link MagicStone}.
 	 */
 	public void addStone(MagicStone s) {
 		Logging.log(3, ">> Trap.addStone() hívás, paraméter: " + s.toString());
