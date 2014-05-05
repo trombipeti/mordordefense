@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,7 +25,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mordordefense.Controller;
-import mordordefense.FieldCell;
 import mordordefense.MagicStone;
 import mordordefense.Tower;
 import mordordefense.Trap;

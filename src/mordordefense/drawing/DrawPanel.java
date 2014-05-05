@@ -1,19 +1,19 @@
 package mordordefense.drawing;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 
 import javax.swing.JPanel;
 
 import mordordefense.Cell;
 import mordordefense.Controller;
-import mordordefense.Enemy;
 import mordordefense.Tower;
+import mordordefense.testing.Logging;
 
 public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -86,31 +86,6 @@ public class DrawPanel extends JPanel {
 		return control;
 	}
 
-	public void paintEnemies() {
-		if (control.isGameEnded() && gameEndDrawn) {
-			// TODO Itt valami funky cucc kéne
-		} else {
-			int transparency[] = new int[mapWidth * mapHeight];
-			Arrays.fill(transparency, 0);
-			enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-			Graphics2D g2 = (Graphics2D) enemyLayer.getGraphics();
-			HashSet<Enemy> enemies = (HashSet<Enemy>) control.getEnemies();
-			int i = 0;
-			for (Enemy e : enemies) {
-				i++;
-				int c[] = e.getRouteCell().getCoords();
-				drawer.drawEnemy(g2, c[0] * cellSize, c[1] * cellSize,
-						cellSize, e);
-				// g2.drawString(Integer.toString(i), c[0] * cellSize + i * 5,
-				// c[1] * cellSize + i * 5);
-			}
-			if (control.isGameEnded()) {
-				gameEndDrawn = true;
-			}
-
-		}
-
-	}
 
 	public void paintTowers() {
 		int transparency[] = new int[mapWidth * mapHeight];
@@ -145,6 +120,9 @@ public class DrawPanel extends JPanel {
 				drawer.drawCell(g, i * cellSize, j * cellSize, c);
 			}
 		}
+		if (control.isGameEnded()) {
+			gameEndDrawn = true;
+		}
 
 	}
 
@@ -168,25 +146,39 @@ public class DrawPanel extends JPanel {
 		// if (control.towerChanged) {
 		paintTowers();
 		g.drawImage(towerLayer, 0, 0, null);
-		paintEnemies();
-		g.drawImage(enemyLayer, 0, 0, null);
-		// control.towerChanged = false;
-		// }
-		// g2.drawImage(mapLayer, 0, 0, null);
-		// gmap.setColor(Color.BLUE);
-		// gmap.fillRect(0, 0, 800, 600);
-		// g2.drawImage(enemyLayer, 0, 0, null);
-		// g.drawImage(screenImage, 0, 0, null);
+		// paintEnemies();
+		// g.drawImage(enemyLayer, 0, 0, null);
+
+		if (control.isGameEnded() && gameEndDrawn) {
+			BufferedImage end = new BufferedImage(mapWidth, mapHeight,
+					BufferedImage.TYPE_INT_ARGB);
+			Graphics g2 = end.getGraphics();
+			g2.setColor(new Color(20, 20, 20, 150));
+			g2.fillRect(0, 0, mapWidth, mapHeight);
+			String w = control.getWinner().toString();
+			if (w == null) {
+				Logging.log(0, "Nagy baj van!!! Játék vége, de winner = null..");
+			} else {
+				g2.setColor(Color.BLACK);
+				int fontH = mapHeight / 5;
+				g2.setFont(new Font(Font.MONOSPACED, Font.BOLD, fontH));
+				int stringW = g2.getFontMetrics().charsWidth(w.toCharArray(),
+						0, w.length());
+				g2.drawString(w, mapWidth / 2 - stringW / 2, mapHeight / 2
+						- fontH / 2);
+			}
+			g.drawImage(end, 0, 0, null);
+		}
 	}
 
 	/**
 	 * Letörli az összes kirajzolt réteget.
 	 */
 	public void clear() {
-		 int transparency[] = new int[mapWidth * mapHeight];
-		 Arrays.fill(transparency, 0);
-		 towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		 mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
-		 enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		int transparency[] = new int[mapWidth * mapHeight];
+		Arrays.fill(transparency, 0);
+		towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 	}
 }

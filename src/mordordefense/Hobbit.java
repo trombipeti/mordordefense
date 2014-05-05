@@ -119,7 +119,7 @@ public class Hobbit extends Enemy
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Hobbit.slice() hívás");
-		Hobbit newEnemy = new Hobbit(lifePoint / 2, speed);
+		Hobbit newEnemy = new Hobbit(lifePoint / 2, defSpeed);
 		lifePoint = lifePoint / 2;
 		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {

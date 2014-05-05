@@ -119,6 +119,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	private volatile StringBuffer winner = null;
 
+	public StringBuffer getWinner() {
+		return winner;
+	}
+
+	public void setWinner(StringBuffer winner) {
+		this.winner = winner;
+	}
+
 	/**
 	 * A pálya adatait tartalmazó fájl neve.
 	 */
@@ -413,6 +421,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			t.fireAll();
 		}
 		stepAllEnemies();
+		addRandomFog();
 		for (Tower t : towers) {
 			Logging.log(1, t.toString() + ", index: " + towers.indexOf(t));
 		}
@@ -468,6 +477,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * ködöt random toronyhoz adó függvény
 	 */
 	private void addRandomFog() {
+		Random randgen = new Random(System.currentTimeMillis());
+		if (towers.size() <= 0 || randgen.nextInt(10) % 10 > 1) {
+			return;
+		}
+		int n = randgen.nextInt(towers.size());
+		towers.get(n).addFog((randgen.nextInt(10) + 10) * 1000);
 		towerChanged = true;
 	}
 
@@ -776,7 +791,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner(new StringBuffer("Ellenségek"));
 			Logging.log(1, "!!! Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
@@ -791,7 +806,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner(new StringBuffer("Ellenségek"));
 			Logging.log(1, "!!! Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
@@ -806,7 +821,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner(new StringBuffer("Ellenségek"));
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -821,7 +836,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner(new StringBuffer("Ellenségek"));
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -886,7 +901,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		diedEnemies++;
 		enemyChanged = true;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
-			winner = new StringBuffer("saruman");
+			setWinner(new StringBuffer("Szarumán"));
 			setGameEnded(true);
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();

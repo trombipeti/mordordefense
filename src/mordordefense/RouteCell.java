@@ -36,6 +36,10 @@ public class RouteCell extends Cell {
 
 	protected CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<Enemy>();
 
+	public List<Enemy> getEnemies() {
+		return enemies;
+	}
+
 	/**
 	 * A RouteCell-t csapdával létrehozó konstruktor.
 	 * 

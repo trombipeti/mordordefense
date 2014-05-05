@@ -95,7 +95,7 @@ public abstract class Enemy {
 	public Enemy(float parMaxLifePoint, float parSpeed) {
 		maxLifePoint = parMaxLifePoint;
 		lifePoint = parMaxLifePoint;
-		baseSpeed = parSpeed;
+		baseSpeed = defSpeed;
 		speed = parSpeed;
 	}
 
@@ -152,11 +152,11 @@ public abstract class Enemy {
 	public void lassit(float mertek) {
 		// mertek=mertek/(Controller.timeStep/10.0f);
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
-		if (speed - mertek >= 1) {
+		if (speed - mertek >= 0.01f) {
 			speed -= mertek;
 			Logging.log(3, "\t A sebessége ennyire csökkent: " + speed);
 		} else {
-			speed = 1;
+			speed = 0.01f;
 			Logging.log(3,
 					"\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
 							+ speed);

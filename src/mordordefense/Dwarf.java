@@ -117,7 +117,7 @@ public class Dwarf extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Dwarf.slice() hívás");
-		Dwarf newEnemy = new Dwarf(lifePoint / 2, speed);
+		Dwarf newEnemy = new Dwarf(lifePoint / 2, defSpeed);
 		lifePoint = lifePoint / 2;
 		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {

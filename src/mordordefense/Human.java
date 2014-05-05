@@ -115,7 +115,7 @@ public class Human extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Human.slice() hívás");
-		Human newEnemy = new Human(lifePoint / 2, speed);
+		Human newEnemy = new Human(lifePoint / 2, defSpeed);
 		lifePoint = lifePoint / 2;
 		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
