@@ -79,9 +79,9 @@ public class ScriptInterpreter {
 				// ---------------- Random működés megválasztása----------------
 				if (parts.length == 2) {
 					if (parts[1] == "on")
-						cont.setRandom(true);
+						Controller.setRandom(true);
 					else
-						cont.setRandom(false);
+						Controller.setRandom(false);
 				} else {
 					throw new Exception(
 							"!!Nem megfelelo az argumentumok szama!");

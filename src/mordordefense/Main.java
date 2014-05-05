@@ -11,7 +11,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import mordordefense.drawing.MordorFrame;
 import mordordefense.testing.Logging;
-import mordordefense.testing.ProtoTester;
 import mordordefense.testing.SkeletonTester;
 
 public class Main {
@@ -20,6 +19,7 @@ public class Main {
 
 	private static TreeMap<Integer, Boolean> ranTestCases = new TreeMap<Integer, Boolean>();
 
+	@SuppressWarnings("unused")
 	private static void setupTestCases() {
 		testCases.put(1, new Runnable() {
 
@@ -86,6 +86,7 @@ public class Main {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static int askForTestCase() {
 		int ret = -1;
 		if (ranTestCases.size() == testCases.size()) {
