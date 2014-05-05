@@ -269,7 +269,6 @@ public class MordorFrame extends JFrame {
 		});
 
 		contentPane.add(Board, BorderLayout.CENTER);
-		Board.getController().init();
 
 		JPanel Stats = new JPanel();
 		contentPane.add(Stats, BorderLayout.NORTH);

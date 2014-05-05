@@ -48,7 +48,6 @@ public class ProtoTester {
 
 	public static void TestCaseMainLoop() {
 		Controller cont = new Controller("palya1.p");
-		cont.init();
 		cont.startMainLoop();
 	}
 

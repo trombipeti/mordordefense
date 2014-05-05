@@ -109,7 +109,6 @@ public class SkeletonTester {
 	public static void runControllerTestCase() {
 		Logging.log(0, "=== SkeletonTester: controllerTestCase futtatása ===");
 		Controller c = new Controller("palya1.p");
-		c.init();
 		c.addDwarf(new Dwarf(10, 2));
 		c.stepAllEnemies();
 		c.stepAllEnemies();

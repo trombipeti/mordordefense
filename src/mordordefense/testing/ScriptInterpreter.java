@@ -216,7 +216,6 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("map")) {
 				if (parts.length == 2) {
 					cont.setMapFileName(parts[1]);
-					cont.init();
 				}
 			} else if (parts[0].equalsIgnoreCase("slicing")) {
 				if (parts.length == 2) {

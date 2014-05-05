@@ -144,7 +144,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * @param winner A
+	 * @param winner
+	 *            A győztes neve
 	 */
 	private void setWinner(String winner) {
 		this.winner = winner;
@@ -205,6 +206,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + mapFile);
 		mapFileName = mapFile;
 		sentEnemies = diedEnemies = 0;
+		initMap();
+		parseConfFile();
 		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
 		Human.defMaxLP = 5;
 		Human.defSpeed = 0.8f;
@@ -220,11 +223,17 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
+	private void parseConfFile() {
+
+	}
+
 	/**
-	 * Inicializáló függvény. Beolvassa a pályafájlból a pályát és fölépíti azt.
+	 * Pályainicializáló függvény. Beolvassa a pályafájlból (ezt a
+	 * konstruktorban kellett megadni!!!) a pályát és fölépíti azt.
 	 */
-	public void init() {
+	private void initMap() {
 		Logging.log(2, ">> Controller.init() hívás");
+		// TODO Ha kész az .rc fájl parse, ezt a sort ki kell szedni!!!
 		saruman = new Saruman(100);
 		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
@@ -325,7 +334,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	/**
 	 * Beállítja a paraméterül kapott cella szomszédait. Aztán meg rekurzívan
-	 * mindenki másét is.
+	 * mindenki másét is. Ha már valamelyik cellának beállította, azt akkor nem
+	 * fogja mégegyszer megtenni. Így nem száll el a rekurzió.
 	 * 
 	 * @param c
 	 *            A cella.
@@ -371,16 +381,21 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.calcSzomszedok()");
 	}
 
+	/**
+	 * Egy {@link Timer}, amely segítségével ütemezhető lesz a mainLoop
+	 * {@link TimerTask}.
+	 */
 	private Timer scheduler = null;
 
 	/**
 	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}. Alapjáraton null az
-	 * értéke, és majd a startMainLoop fogja inicializálni.
+	 * értéke, és majd a {@link Controller#startMainLoop} fogja inicializálni.
 	 */
 	private TimerTask mainLoop = null;
 
 	/**
-	 * Ütemezi a scheduler-ben 10 ms-enkénti futásra a loop TimerTask-ot.
+	 * Ütemezi a scheduler-ben {@link Controller#timeStep} ms-enkénti futásra a
+	 * {@link Controller#mainLoop} {@link TimerTask}-ot.
 	 */
 	public void startMainLoop() {
 		mainLoop = new TimerTask() {
@@ -397,8 +412,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Leállítja az ütemezett mainLoop TimerTaskot, de ezután a startMainLoop()
-	 * hívással ez újra ütemezhető.
+	 * Leállítja az ütemezett mainLoop {@link TimerTask}, de ezután a
+	 * {@link Controller#startMainLoop} hívással ez újra ütemezhető.
 	 */
 	public void pauseMainLoop() {
 		if (mainLoop != null) {
@@ -407,8 +422,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Leállítja az összes ütemezett TimerTask-ot és a schedulert is. Ezután a
-	 * startMainLoop már nem hívható meg!!!
+	 * Leállítja az összes ütemezett @ TimerTask} -ot és a
+	 * {@link Controller#scheduler}t is. Ezután a
+	 * {@link Controller#startMainLoop} már nem hívható meg!!!
 	 */
 	public void stopMainLoop() {
 		if (scheduler != null) {
@@ -421,7 +437,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Az eseményeket vezérlő függvény
+	 * Az eseményeket vezérlő függvény. Ez gondoskodik újabb ellenségek
+	 * hozzáadásáról, az {@link Enemy}k léptetéséről, a {@link Tower}-ek
+	 * lövéséről, illetve véletlenszerűen ködöt ereszt egy-egy toronyra.
 	 * 
 	 */
 	public void loop() {
@@ -581,7 +599,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Minden pályán lévő ellenséget léptető függvény
+	 * Minden pályán lévő ellenséget léptető függvény.
 	 */
 	public void stepAllEnemies() {
 		Logging.log(2, ">> Controller.stepAllEnemies() hívás");
@@ -664,6 +682,18 @@ public class Controller implements RouteCellListener, EnemyListener {
 
 	}
 
+	/**
+	 * Varázskövet helyez el az adott cellára, ha van ott {@link Tower}, vagy az
+	 * egy {@link RouteCell} és van rajta {@link Trap}.
+	 * 
+	 * @param ms
+	 *            Egy varázskő, ennek az értékei módosítják a torony/csapda
+	 *            tulajdonságait
+	 * @param x
+	 *            A kiszemelt cella x koordinátája
+	 * @param y
+	 *            A kiszemelt cella y koordinátája
+	 */
 	public void placeMagicStone(MagicStone ms, int x, int y) {
 		Cell c = cells.get(x).get(y);
 		if (c.getType().equalsIgnoreCase("FieldCell")
@@ -684,7 +714,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * Visszaadja a Trap-ek listáját.
 	 * 
-	 * @return
+	 * @return A pályán lévő csapdák.
 	 */
 	public List<Trap> getTrap() {
 		return traps;
@@ -693,16 +723,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * Visszaadja a Tower-ek listáját.
 	 * 
-	 * @return
+	 * @return A pályán lévő tornyok.
 	 */
 	public List<Tower> getTowers() {
 		return towers;
 	}
 
 	/**
-	 * Visszaadja az Enemy-k HashSet-jét.
+	 * Visszaadja az ellenségek {@link HashSet}-jét.
 	 * 
-	 * @return
+	 * @return A pályán lévő {@link Enemy}k
 	 */
 	public HashSet<Enemy> getEnemies() {
 		return enemies;
@@ -723,9 +753,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Visszaadja az x,y helyen álló Cellát
+	 * A pálya méretét megadó függvény
 	 * 
-	 * @return
+	 * @return Egy 2 elemű int tömb, amely szélesség, magasság sorrendben
+	 *         tartalmazza a méreteket.
 	 */
 	public int[] getMapSize() {
 		int[] temp = { mapWidth, mapHeight };
@@ -733,37 +764,47 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * visszaadja az i. tornyot
+	 * visszaadja a kért sorszámú tornyot
 	 * 
 	 * @param i
-	 *            sorszám
-	 * @return
+	 *            A torony sorszáma. Nincs ellenőrzés!!!
+	 * @return A pályán lévő tornyok közül az i-edik.
 	 */
 	public Tower getTower(int i) {
 		return towers.get(i);
 	}
 
 	/**
-	 * visszaadja az i. csapdát
+	 * visszaadja a kért sorszámú csapdát
 	 * 
 	 * @param i
-	 *            sorszám
-	 * @return
+	 *            A csapda sorszáma. Nincs ellenőrzés!!!
+	 * @return A pályán lévő csapdák közül az i-edik.
 	 */
 	public Trap getTrap(int i) {
 		return traps.get(i);
 	}
 
 	/**
-	 * beállítja a randomitást
+	 * Beállítja a Controller véletlenszerű működését. Csak tesztelésnél érdemes
+	 * használni, mert a célja csakis ez. Ha a véletlenszerűség ki van
+	 * kapcsolva, minden egyes kör ugyanúgy fog lezajlani. Az ellenségek
+	 * elágazásnál a FENT,JOBBRA,LENT,BALRA közül a legelső lehetséges irányba
+	 * fognak továbbhaladni. A lövedékek kettévágós mivolta pedig a
+	 * {@link Tower#globalSlice} értékétől fog függni. Az ellenségek indítása
+	 * azonban véletlenszerű marad, ha {@link Controller#canSpawn} értéke igaz.
 	 * 
 	 * @param b
-	 *            randomitás értéke
+	 *            Igaz - véletlenszerűség be, hamis - ki
 	 */
 	public static void setRandom(boolean b) {
 		random = b;
 	}
 
+	/**
+	 * @return Be van-e kapcsolva a véletlenszerűség.
+	 * @see Controller#setRandom(boolean)
+	 */
 	public static boolean isRandom() {
 		return random;
 	}
@@ -785,7 +826,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
-		init();
+		initMap();
 	}
 
 	/**
