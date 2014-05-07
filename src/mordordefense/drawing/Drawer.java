@@ -110,20 +110,20 @@ public class Drawer {
 					g.setColor(new Color(112, 0, 255));
 				}
 				g.fillRect(x, y, cellSize, cellSize);
-				List<Enemy> enemies = ((RouteCell) c).getEnemies();
-				HashMap<String, Integer> enemyNum = new HashMap<String, Integer>();
-				for (Enemy e : enemies) {
-					int coords[] = c.getCoords();
-					int n = 1;
-					if (enemyNum.containsKey(e.getType())) {
-						n = enemyNum.get(e.getType());
-						enemyNum.put(e.getType(), ++n);
-					} else {
-						enemyNum.put(e.getType(), n);
-					}
-					drawEnemy(g, coords[0] * cellSize, coords[1] * cellSize,
-							cellSize, e, n);
+			}
+			List<Enemy> enemies = ((RouteCell) c).getEnemies();
+			HashMap<String, Integer> enemyNum = new HashMap<String, Integer>();
+			for (Enemy e : enemies) {
+				int coords[] = c.getCoords();
+				int n = 1;
+				if (enemyNum.containsKey(e.getType())) {
+					n = enemyNum.get(e.getType());
+					enemyNum.put(e.getType(), ++n);
+				} else {
+					enemyNum.put(e.getType(), n);
 				}
+				drawEnemy(g, coords[0] * cellSize, coords[1] * cellSize,
+						cellSize, e, n);
 			}
 		}
 		// if(c)
