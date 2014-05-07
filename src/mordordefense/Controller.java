@@ -351,6 +351,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		towers.clear();
 		enemies.clear();
 		traps.clear();
+		gameEnded = false;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(mapFileName));
 			try {
@@ -538,7 +539,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void stopMainLoop() {
 		if (scheduler != null) {
 			scheduler.cancel();
-			// scheduler = null;
+			scheduler = null;
 		} else {
 			Logging.log(0,
 					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");

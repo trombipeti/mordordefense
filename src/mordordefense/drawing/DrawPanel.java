@@ -186,4 +186,8 @@ public class DrawPanel extends JPanel {
 		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 		enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 	}
+
+	public void setGameEndDrawn(boolean b) {
+		gameEndDrawn = b;
+	}
 }

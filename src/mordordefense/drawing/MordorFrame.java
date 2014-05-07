@@ -172,11 +172,11 @@ public class MordorFrame extends JFrame {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+					Board.getController().pauseMainLoop();
 					Board.getController().setMapFileName(n);
 					Board.clear();
+					Board.setGameEndDrawn(false);
 					// Board.calcSize();
-					Board.getController().pauseMainLoop();
-					Board.clear();
 					validate();
 					repaint();
 				}
@@ -235,8 +235,9 @@ public class MordorFrame extends JFrame {
 								Board.getController().pauseMainLoop();
 							}
 							Tower t = askUserForTower();
-							if (t != null && Board.getController().placeTower(t, cellx,
-									celly) == false) {
+							if (t != null
+									&& Board.getController().placeTower(t,
+											cellx, celly) == false) {
 								// TODO Itt ne dialog legyen
 								JOptionPane.showMessageDialog(null,
 										"Nem sikerült tornyot építeni",
@@ -258,8 +259,9 @@ public class MordorFrame extends JFrame {
 								Board.getController().pauseMainLoop();
 							}
 							Trap t = askUserForTrap();
-							if (t != null && Board.getController()
-									.placeTrap(t, cellx, celly) == false) {
+							if (t != null
+									&& Board.getController().placeTrap(t,
+											cellx, celly) == false) {
 								// TODO Itt ne dialog legyen
 								JOptionPane.showMessageDialog(null,
 										"Nem sikerült csapdát építeni",
