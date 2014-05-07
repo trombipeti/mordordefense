@@ -111,7 +111,7 @@ public class DrawPanel extends JPanel {
 		// }
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, mapWidth, mapHeight);
-		cellSize = Math.min(mapHeight / h, mapWidth / w);
+		cellSize = (int) Math.min((mapHeight / h) * 0.95, (mapWidth / w) * 0.95);
 		drawer.setCellSize(cellSize);
 		for (int i = 0; i < w; ++i) {
 			for (int j = 0; j < h; ++j) {

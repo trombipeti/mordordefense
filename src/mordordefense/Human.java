@@ -47,7 +47,7 @@ public class Human extends Enemy {
 		}
 		long _time = System.currentTimeMillis();
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
-		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 10) {
 			Logging.log(2, "<< Human.leptet(), nem tud meg lepni");
 			return false;
 		}

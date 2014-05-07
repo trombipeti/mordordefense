@@ -208,18 +208,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		sentEnemies = diedEnemies = 0;
 		initMap();
 		parseConfFile();
-		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
-		Human.defMaxLP = 5;
-		Human.defSpeed = 0.8f;
 
-		Hobbit.defMaxLP = 5;
-		Hobbit.defSpeed = 0.8f;
-
-		Elf.defMaxLP = 5;
-		Elf.defSpeed = 0.8f;
-
-		Dwarf.defMaxLP = 5;
-		Dwarf.defSpeed = 0.8f;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
@@ -549,7 +538,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void stopMainLoop() {
 		if (scheduler != null) {
 			scheduler.cancel();
-			scheduler = null;
+//			scheduler = null;
 		} else {
 			Logging.log(0,
 					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
@@ -602,8 +591,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private void addRandomEnemy() {
 		Logging.log(3, ">> Controller.addRandomEnemy() hívás");
 		Random randgen = new Random();
-		int a = randgen.nextInt(maxEnemyNum * 1000);
-		if (a % maxEnemyNum > sentEnemies) {
+		int a = randgen.nextInt(maxEnemyNum * 10000);
+		if (a % maxEnemyNum > sentEnemies && sentEnemies > 0) {
 			Logging.log(1, "<< Controller.addRandomEnemy(), nem adok hozzá.");
 			return;
 		}

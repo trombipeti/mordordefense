@@ -51,7 +51,7 @@ public class Hobbit extends Enemy
 		long _time = System.currentTimeMillis();
 		// s = v*t, vagyis ha eltelt idő*sebesség < 1, akkor nem lépünk.
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
-		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 10) {
 			Logging.log(2, "<< Hobbit.leptet(), nem tud meg lepni.");
 			return false;
 		}

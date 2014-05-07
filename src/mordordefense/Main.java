@@ -146,7 +146,7 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		MordorFrame mf = new MordorFrame(new Controller("5_6_os.p"));
+		MordorFrame mf = new MordorFrame(new Controller("palya1.p"));
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mf.setVisible(true);
 		// TODO Ezt nem itt kéne beállítani!!!

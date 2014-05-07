@@ -1,6 +1,7 @@
 package mordordefense.drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -58,8 +59,12 @@ public class MordorFrame extends JFrame {
 		setTitle("soamazing Mordordefense");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setLocation(100, 100);
+		setPreferredSize(new Dimension(800, 600));
 		setResizable(true);
+
+		Board = new DrawPanel(drawer, 800, 500);
+		Board.setController(c);
 
 		state = State.NORMAL;
 		gameStarted = false;
@@ -89,19 +94,21 @@ public class MordorFrame extends JFrame {
 		});
 		mnGame.add(mntmStart);
 
-		JMenuItem mntmStop = new JMenuItem("Stop");
-		mntmStop.addActionListener(new ActionListener() {
+		JMenuItem mntmPause = new JMenuItem("Pause");
+		mntmPause.setAccelerator(KeyStroke.getKeyStroke('P',
+				KeyEvent.CTRL_DOWN_MASK));
+		mntmPause.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
 				// menü?
-				Board.getController().stopMainLoop();
+				Board.getController().pauseMainLoop();
 				validate();
 				repaint();
 			}
 		});
-		mnGame.add(mntmStop);
+		mnGame.add(mntmPause);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnGame.add(mntmSave);
@@ -166,6 +173,8 @@ public class MordorFrame extends JFrame {
 						e.printStackTrace();
 					}
 					Board.getController().setMapFileName(n);
+					Board.clear();
+//					Board.calcSize();
 					Board.getController().pauseMainLoop();
 					Board.clear();
 					validate();
@@ -188,9 +197,6 @@ public class MordorFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-
-		Board = new DrawPanel(drawer, 800, 500);
-		Board.setController(c);
 
 		// Egy kattintás: state-től függően tower/trap/magicstone
 		// Dupla kattintás: simán trap/tower mezőtől függően, ctrl-duplaklikk
@@ -305,6 +311,8 @@ public class MordorFrame extends JFrame {
 		};
 
 		paintTimer.scheduleAtFixedRate(updateBoard, 0, 50);
+
+		pack();
 
 	}
 
