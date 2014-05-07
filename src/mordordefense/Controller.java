@@ -538,7 +538,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void stopMainLoop() {
 		if (scheduler != null) {
 			scheduler.cancel();
-//			scheduler = null;
+			// scheduler = null;
 		} else {
 			Logging.log(0,
 					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
@@ -745,6 +745,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 *            a cél cella y koordinátája
 	 */
 	public boolean placeTower(Tower t, int x, int y) {
+		if (t == null) {
+			return false;
+		}
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			if (saruman.getManna() >= t.getCost()) {
 				FieldCell fc = (FieldCell) cells.get(x).get(y);
@@ -776,6 +779,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 *            a cél y koordinátája
 	 */
 	public boolean placeTrap(Trap t, int x, int y) {
+		if (t == null) {
+			return false;
+		}
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			if (saruman.getManna() >= t.getCost()) {
 				RouteCell rc = (RouteCell) cells.get(x).get(y);
@@ -811,25 +817,34 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param y
 	 *            A kiszemelt cella y koordinátája
 	 */
-	public void placeMagicStone(MagicStone ms, int x, int y) {
+	public boolean placeMagicStone(MagicStone ms, int x, int y) {
+		if (ms == null) {
+			return false;
+		}
 		Cell c = cells.get(x).get(y);
 		try {
 			if (c.getType().equalsIgnoreCase("FieldCell")
 					&& ((FieldCell) c).hasTower()) {
 				if (saruman.getManna() >= ms.getCost("tower")) {
 					((FieldCell) c).getTower().addStone(ms);
+					saruman.rmManna(ms.getCost("tower"));
+					return true;
 				}
-			}
-			if (c.getType().equalsIgnoreCase("RouteCell")
+				return false;
+			} else if (c.getType().equalsIgnoreCase("RouteCell")
 					&& ((RouteCell) c).hasTrap()) {
 				if (saruman.getManna() >= ms.getCost("trap")) {
 					((RouteCell) c).getTrap().addStone(ms);
+					saruman.rmManna(ms.getCost("trap"));
+					return true;
 				}
-
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
+		return false;
 	}
 
 	/**

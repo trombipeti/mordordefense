@@ -2,8 +2,6 @@ package mordordefense.drawing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -237,7 +235,7 @@ public class MordorFrame extends JFrame {
 								Board.getController().pauseMainLoop();
 							}
 							Tower t = askUserForTower();
-							if (Board.getController().placeTower(t, cellx,
+							if (t != null && Board.getController().placeTower(t, cellx,
 									celly) == false) {
 								// TODO Itt ne dialog legyen
 								JOptionPane.showMessageDialog(null,
@@ -260,7 +258,7 @@ public class MordorFrame extends JFrame {
 								Board.getController().pauseMainLoop();
 							}
 							Trap t = askUserForTrap();
-							if (Board.getController()
+							if (t != null && Board.getController()
 									.placeTrap(t, cellx, celly) == false) {
 								// TODO Itt ne dialog legyen
 								JOptionPane.showMessageDialog(null,
@@ -277,8 +275,8 @@ public class MordorFrame extends JFrame {
 						}
 						break;
 					case MAGICSTONE:
-						Board.getController().placeMagicStone(
-								askUserForMagicStone(), cellx, celly);
+						MagicStone m = askUserForMagicStone();
+						Board.getController().placeMagicStone(m, cellx, celly);
 						validate();
 						repaint();
 						state = State.NORMAL;
@@ -329,9 +327,9 @@ public class MordorFrame extends JFrame {
 		float f = 1;
 		float r = 1;
 		float d = 1;
-		JTextField freqField = new JTextField("1", 10);
-		JTextField radField = new JTextField("1", 10);
-		JTextField dmgField = new JTextField("1", 10);
+		JTextField freqField = new JTextField(10);
+		JTextField radField = new JTextField(10);
+		JTextField dmgField = new JTextField(10);
 		final JComponent[] inputs = new JComponent[] {
 				new JLabel("Tüzelési gyakoriság:"), freqField,
 				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
@@ -351,9 +349,6 @@ public class MordorFrame extends JFrame {
 				JLabel l = (JLabel) (inputs[0]);
 				l.setText("<html>Helytelen adatok, csak számokat adj meg!<br />"
 						+ l.getText() + "</html>");
-				freqField.setText("1");
-				radField.setText("1");
-				dmgField.setText("1");
 				continue;
 			}
 			ans = true;
@@ -363,7 +358,7 @@ public class MordorFrame extends JFrame {
 
 	protected Trap askUserForTrap() {
 		float s = 1;
-		JTextField sField = new JTextField("1", 10);
+		JTextField sField = new JTextField(10);
 		final JComponent[] inputs = new JComponent[] { new JLabel("Erősség:"),
 				sField };
 		boolean ans = false;
@@ -379,7 +374,6 @@ public class MordorFrame extends JFrame {
 				JLabel l = (JLabel) (inputs[0]);
 				l.setText("<html>Helytelen adatok, csak számokat adj meg!<br />"
 						+ l.getText() + "</html>");
-				sField.setText("1");
 				continue;
 			}
 			ans = true;
@@ -388,8 +382,47 @@ public class MordorFrame extends JFrame {
 	}
 
 	protected MagicStone askUserForMagicStone() {
-		// TODO Itt valahogy meg kell kérdezni a usertől a kő értékeit (dialog?)
-		return new MagicStone(1, 1, 1, 1, 1, 1, 1);
+		float elf = 1, dwarf = 1, hobbit = 1, human = 1;
+		float f = 0, r = 0, d = 0;
+		JTextField elfField = new JTextField(10);
+		JTextField dwarfField = new JTextField(10);
+		JTextField hobbitField = new JTextField(10);
+		JTextField humanField = new JTextField(10);
+		JTextField freqField = new JTextField(10);
+		JTextField radField = new JTextField(10);
+		JTextField dmgField = new JTextField(10);
+		final JComponent[] inputs = new JComponent[] {
+				new JLabel("Elf szorzó:"), elfField,
+				new JLabel("Dwarf szorzó:"), dwarfField,
+				new JLabel("Hobbit szorzó:"), hobbitField,
+				new JLabel("Human szorzó:"), humanField,
+				new JLabel("Tüzelési gyakoriság:"), freqField,
+				new JLabel("Hatótáv: "), radField, new JLabel("Sebzés: "),
+				dmgField };
+		boolean ans = false;
+		while (!ans) {
+			int re = JOptionPane.showConfirmDialog(this, inputs,
+					"Torony tulajdonságai", JOptionPane.OK_CANCEL_OPTION);
+			if (re == JOptionPane.CANCEL_OPTION) {
+				return null;
+			}
+			try {
+				f = Float.parseFloat(freqField.getText());
+				r = Float.parseFloat(radField.getText());
+				d = Float.parseFloat(dmgField.getText());
+				elf = Float.parseFloat(elfField.getText());
+				dwarf = Float.parseFloat(dwarfField.getText());
+				hobbit = Float.parseFloat(hobbitField.getText());
+				human = Float.parseFloat(humanField.getText());
+			} catch (NumberFormatException e) {
+				JLabel l = (JLabel) (inputs[0]);
+				l.setText("<html>Helytelen adatok, csak számokat adj meg!<br />"
+						+ l.getText() + "</html>");
+				continue;
+			}
+			ans = true;
+		}
+		return new MagicStone(elf, dwarf, hobbit, human, d, f, r);
 	}
 
 	public void setController(Controller c) {
