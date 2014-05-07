@@ -15,5 +15,14 @@ MaxLP=10
 MaxSpeed=1
 
 [ Saruman ]
-Manna=10
+Manna=30
+
+[ Tower ]
+Basecost=10
+
+[ Trap ]
+Basecost=5
+
+[ MagicStone ]
+Basecost=2
 

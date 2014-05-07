@@ -223,8 +223,130 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
+	/**
+	 * Beolvassa és értelmezi a mordordefense.rc konfigurációs fájlt.
+	 */
 	private void parseConfFile() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					"mordordefense.rc"));
+			try {
+				String part = null;
+				String line = null;
+				int lineNo = 0;
+				ReadIn: while (true) {
+					line = br.readLine();
 
+					// Ha EOF volt, akkor ugye vége a fájlnak :)
+					if (line == null) {
+						break ReadIn;
+					}
+					++lineNo;
+
+					// Leszedjük a fölös space-eket
+					line = line.trim();
+
+					// Üres sort átugorjuk
+					if (line.isEmpty()) {
+						continue ReadIn;
+					}
+
+					// Újabb rész jön
+
+					if (line.startsWith("[")) {
+
+						// Megkopasztjuk a []-től meg a fölös space-ektől. Tehát
+						// pl "[ Human ]"-ból lesz "Human"
+
+						part = line.substring(1, line.length() - 2)
+								.toLowerCase().trim();
+					} else if (line.startsWith("#")) {
+
+						// A teljes komment sorokat kihagyjuk
+
+						continue ReadIn;
+					} else {
+
+						// Ha van sorvégi komment, levágjuk.
+
+						if (line.contains("#")) {
+							line = line.substring(0, line.indexOf('#')).trim();
+							System.out.println("**" + line + "**");
+						}
+
+						String keyval[] = line.split("=");
+						if (keyval.length < 2) {
+							Logging.log(0, "A konfigurációs fájl " + lineNo
+									+ ". sora rossz. Békén hagyom...");
+							continue ReadIn;
+						}
+
+						// Kulcs-érték páros megvan, beállítjuk a megfelelő
+						// értékeket
+
+						String key = keyval[0];
+						String val = keyval[1];
+
+						try {
+							float floatval = Float.parseFloat(val);
+
+							if (part.equals("saruman")
+									&& key.equalsIgnoreCase("manna")) {
+
+								// Szarumán létrejön az adott mannával
+
+								saruman = new Saruman(floatval);
+
+							} else if (key.equalsIgnoreCase("basecost")) {
+
+								// A megfelelő dolognak beállítjuk az alapárát
+
+								if (part.equals("tower")) {
+									Tower.setBaseCost(floatval);
+								} else if (part.equals("trap")) {
+									Trap.setBaseCost(floatval);
+								} else if (part.equals("magicstone")) {
+									MagicStone.setBaseCost(floatval);
+								}
+							} else if (key.equalsIgnoreCase("maxlp")) {
+
+								// Az enemyk maximális lp-jét beállítjuk
+
+								if (part.equals("human")) {
+									Human.defMaxLP = floatval;
+								} else if (part.equals("hobbit")) {
+									Hobbit.defMaxLP = floatval;
+								} else if (part.equals("dwarf")) {
+									Dwarf.defMaxLP = floatval;
+								} else if (part.equals("elf")) {
+									Elf.defMaxLP = floatval;
+								}
+							} else if (key.equalsIgnoreCase("maxspeed")) {
+
+								// Az enemyk maximális sebességét állítjuk be
+
+								if (part.equals("human")) {
+									Human.defSpeed = floatval;
+								} else if (part.equals("hobbit")) {
+									Hobbit.defSpeed = floatval;
+								} else if (part.equals("dwarf")) {
+									Dwarf.defSpeed = floatval;
+								} else if (part.equals("elf")) {
+									Elf.defSpeed = floatval;
+								}
+							}
+						} catch (NumberFormatException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+			} finally {
+				br.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -233,8 +355,6 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	private void initMap() {
 		Logging.log(2, ">> Controller.init() hívás");
-		// TODO Ha kész az .rc fájl parse, ezt a sort ki kell szedni!!!
-		saruman = new Saruman(100);
 		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
@@ -635,7 +755,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param y
 	 *            a cél cella y koordinátája
 	 */
-	public void placeTower(Tower t, int x, int y) {
+	public boolean placeTower(Tower t, int x, int y) {
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
 			if (saruman.getManna() >= t.getCost()) {
 				FieldCell fc = (FieldCell) cells.get(x).get(y);
@@ -643,12 +763,16 @@ public class Controller implements RouteCellListener, EnemyListener {
 					towers.add(t);
 					saruman.rmManna(t.getCost());
 					towerChanged = true;
+					return true;
 				}
+				return false;
 			} else {
 				Logging.log(1, "Nincs elég manna");
+				return false;
 			}
 		} else {
 			Logging.log(0, "!!! Towert nem FieldCell-re raktuk!");
+			return false;
 		}
 	}
 
@@ -662,22 +786,26 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param y
 	 *            a cél y koordinátája
 	 */
-	public void placeTrap(Trap t, int x, int y) {
+	public boolean placeTrap(Trap t, int x, int y) {
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			if (saruman.getManna() >= Tower.getBaseCost()) {
+			if (saruman.getManna() >= t.getCost()) {
 				RouteCell rc = (RouteCell) cells.get(x).get(y);
 				if (rc.addTrap(t)) {
-					saruman.rmManna(Trap.getBaseCost());
+					saruman.rmManna(t.getCost());
 					traps.add(t);
 					trapChanged = true;
 					Logging.log(1, t.toString() + " parentCell: " + x + ", "
 							+ y + ", index: " + traps.indexOf(t));
+					return true;
 				}
+				return false;
 			} else {
 				Logging.log(0, "Nincs elég manna");
+				return false;
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
+			return false;
 		}
 
 	}
@@ -696,18 +824,22 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void placeMagicStone(MagicStone ms, int x, int y) {
 		Cell c = cells.get(x).get(y);
-		if (c.getType().equalsIgnoreCase("FieldCell")
-				&& ((FieldCell) c).hasTower()) {
-			if (saruman.getManna() >= MagicStone.calcCost()) {
-				((FieldCell) c).getTower().addStone(ms);
+		try {
+			if (c.getType().equalsIgnoreCase("FieldCell")
+					&& ((FieldCell) c).hasTower()) {
+				if (saruman.getManna() >= ms.getCost("tower")) {
+					((FieldCell) c).getTower().addStone(ms);
+				}
 			}
-		}
-		if (c.getType().equalsIgnoreCase("RouteCell")
-				&& ((RouteCell) c).hasTrap()) {
-			if (saruman.getManna() >= MagicStone.calcCost()) {
-				((RouteCell) c).getTrap().addStone(ms);
-			}
+			if (c.getType().equalsIgnoreCase("RouteCell")
+					&& ((RouteCell) c).hasTrap()) {
+				if (saruman.getManna() >= ms.getCost("trap")) {
+					((RouteCell) c).getTrap().addStone(ms);
+				}
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

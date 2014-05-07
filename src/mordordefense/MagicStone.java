@@ -11,7 +11,7 @@ public class MagicStone {
 	/**
 	 * A varázskövek alapára.
 	 */
-	static protected int baseCost;
+	static protected float baseCost;
 
 	/**
 	 * Tündékre ható szorzó.
@@ -208,36 +208,50 @@ public class MagicStone {
 	 * @param cost
 	 *            A kövek alapára.
 	 */
-	public static void setBaseCost(int cost) {
+	public static void setBaseCost(float cost) {
 		Logging.log(4, ">> MagicStone.setBaseCost() hívás, paraméter: " + cost);
-		Logging.log(4, "<< void");
-
 		baseCost = cost;
+		Logging.log(4, "<< MagicStone.setBaseCost");
 	}
 
 	/**
-	 * alap árat visszaadó függvény
+	 * A varázskövek alap építési árát visszaadó függvény
 	 * 
 	 * @return baseCost A kövek alapára
 	 */
-	public static int getBaseCost() {
+	public static float getBaseCost() {
 		Logging.log(3, ">> MagicStone.getBaseCost() hívás");
 		Logging.log(3, "<< " + baseCost);
 		return baseCost;
 	}
 
 	/**
-	 * TODO Ez mit kéne csináljon pontosan??? új kő árát számoló statikus
-	 * függvény
+	 * A varázskő elhelyezéséhez szükséges mannát kiszámoló függvény. Ennek
+	 * értéke towerOrTrap = trap esetén: {@link MagicStone#baseCost} + a négy
+	 * ellenségre ható szorzók átlaga. Értéke towerOrTrap = tower esetén:
+	 * {@link MagicStone#baseCost} + {@link MagicStone#damageMultiplier} +
+	 * {@link MagicStone#radiusMultiplier} + {@link MagicStone#freqMultiplier}
 	 * 
-	 * @param numStones
-	 * @return Az építés ára.
+	 * @param towerOrTrap
+	 *            Értéke "tower" vagy "trap". Ezzel lehet megmondani a
+	 *            függvénynek, hogy hova szeretnénk rakni a követ.
+	 * @throws Exception
+	 *             Ha towerOrTrap értéke rossz.
+	 * @return Az kő elhelyezésének ára.
 	 */
-	static public int calcCost() {
+	public float getCost(String towerOrTrap) throws Exception {
 		Logging.log(3, ">> MagicStone.calcCost() hívás");
-		int cost = baseCost;
+		float cost = baseCost;
+		if (towerOrTrap.equalsIgnoreCase("trap")) {
+			cost += (elfMultiplier + dwarfMultiplier + humanMultiplier + hobbitMultiplier) / 4.0f;
+		} else if (towerOrTrap.equalsIgnoreCase("tower")) {
+			cost += damageMultiplier + freqMultiplier + radiusMultiplier;
+		} else {
+			Logging.log(0, "<< MagicStone.calcCost exception");
+			throw new Exception("Háde a towerOrTrap értéke miért "
+					+ towerOrTrap + "????");
+		}
 		Logging.log(3, "<< " + cost);
-
 		return cost;
 	}
 

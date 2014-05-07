@@ -256,6 +256,13 @@ public class Tower implements RouteCellListener
 		return baseCost;
 	}
 
+	/**
+	 * Megmondja, mennyi manna szükséges a torony megépítéséhez. Ez az érték a
+	 * következő: {@link Tower#baseCost} + {@link Tower#foglessRadius} +
+	 * {@link Tower#freq} + {@link Tower#baseDamage}
+	 * 
+	 * @return A torony megépítésének ára
+	 */
 	public float getCost() {
 		Logging.log(4, ">> Tower.getCost() hívás");
 		float ret = baseCost;
@@ -387,7 +394,7 @@ public class Tower implements RouteCellListener
 	 * @param c
 	 *            Az építés alapára.
 	 */
-	public static void setBaseCost(int c) {
+	public static void setBaseCost(float c) {
 		Logging.log(4, ">> Tower.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
 		Logging.log(4, "<< Tower.setBaseCost");

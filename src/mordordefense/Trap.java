@@ -18,7 +18,7 @@ public class Trap implements RouteCellListener {
 	 */
 	protected RouteCell parentCell;
 
-	protected static int baseCost;
+	protected static float baseCost;
 
 	/**
 	 * A csapdán lévő varázskövek.
@@ -62,7 +62,7 @@ public class Trap implements RouteCellListener {
 	 * 
 	 * @return int Az építés alapköltsége.
 	 */
-	public static int getBaseCost() {
+	public static float getBaseCost() {
 		Logging.log(4, ">> Trap.getBaseCost() hívás.");
 		Logging.log(4, "<< " + baseCost);
 		return baseCost;
@@ -74,10 +74,23 @@ public class Trap implements RouteCellListener {
 	 * @param c
 	 *            Az alapár.
 	 */
-	public static void setBaseCost(int c) {
+	public static void setBaseCost(float c) {
 		Logging.log(4, ">> Trap.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
 		Logging.log(4, "<< Trap.setBaseCost");
+	}
+
+	/**
+	 * Megmondja, mennyi manna szükséges a csapda megépítéséhez. Ennek értéke:
+	 * {@link Trap#baseCost} + {@link Trap#strength}
+	 * 
+	 * @return A csapda építésének ára
+	 */
+	public float getCost() {
+		Logging.log(4, ">> Trap.getCost() hívás");
+		float ret = baseCost + strength;
+		Logging.log(4, "<< Trap.getCost() return: " + ret);
+		return ret;
 	}
 
 	/**
