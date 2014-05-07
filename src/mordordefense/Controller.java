@@ -343,7 +343,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * konstruktorban kellett megadni!!!) a pályát és fölépíti azt.
 	 */
 	private void initMap() {
-		Logging.log(2, ">> Controller.init() hívás");
+		Logging.log(2, ">> Controller.initMap() hívás");
 		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
@@ -438,7 +438,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 			e.printStackTrace();
 		}
 
-		Logging.log(2, "<< void Controller.init()");
+		Logging.log(2, "<< void Controller.initMap()");
 	}
 
 	/**

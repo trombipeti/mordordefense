@@ -61,16 +61,6 @@ public abstract class Enemy {
 	protected HashSet<EnemyListener> listeners = new HashSet<EnemyListener>();
 
 	/**
-	 * Az enemy típusonként esetlegesen változó maximális életpontja.
-	 */
-	public static float defMaxLP;
-
-	/**
-	 * Az enemy típusonként esetlegesen változó indulósebessége.
-	 */
-	public static float defSpeed;
-
-	/**
 	 * Enemy halálát jelző boolean
 	 */
 	protected boolean dead = false;
@@ -95,7 +85,7 @@ public abstract class Enemy {
 	public Enemy(float parMaxLifePoint, float parSpeed) {
 		maxLifePoint = parMaxLifePoint;
 		lifePoint = parMaxLifePoint;
-		baseSpeed = defSpeed;
+		baseSpeed = parSpeed;
 		speed = parSpeed;
 	}
 

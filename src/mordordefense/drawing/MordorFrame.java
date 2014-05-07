@@ -2,6 +2,8 @@ package mordordefense.drawing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -174,7 +176,7 @@ public class MordorFrame extends JFrame {
 					}
 					Board.getController().setMapFileName(n);
 					Board.clear();
-//					Board.calcSize();
+					// Board.calcSize();
 					Board.getController().pauseMainLoop();
 					Board.clear();
 					validate();

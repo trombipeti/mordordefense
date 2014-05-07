@@ -54,6 +54,11 @@ public class DrawPanel extends JPanel {
 		gameEndDrawn = false;
 	}
 
+	public void setSize(int width, int height) {
+		mapWidth = width;
+		mapHeight = height;
+	}
+
 	public void setController(Controller c) {
 		control = c; // Map méretének beállítása
 	}
@@ -111,7 +116,8 @@ public class DrawPanel extends JPanel {
 		// }
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, mapWidth, mapHeight);
-		cellSize = (int) Math.min((mapHeight / h) * 0.95, (mapWidth / w) * 0.95);
+		cellSize = (int) Math
+				.min((mapHeight / h) * 0.95, (mapWidth / w) * 0.95);
 		drawer.setCellSize(cellSize);
 		for (int i = 0; i < w; ++i) {
 			for (int j = 0; j < h; ++j) {
@@ -158,7 +164,7 @@ public class DrawPanel extends JPanel {
 			if (w == null) {
 				Logging.log(0, "Nagy baj van!!! Játék vége, de winner = null..");
 			} else {
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.WHITE);
 				int fontH = mapHeight / 5;
 				g2.setFont(new Font(Font.MONOSPACED, Font.BOLD, fontH));
 				int stringW = g2.getFontMetrics().charsWidth(w.toCharArray(),

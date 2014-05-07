@@ -12,6 +12,17 @@ import mordordefense.testing.Logging;
  * 
  */
 public class Human extends Enemy {
+
+	/**
+	 * Az enemy típusonként esetlegesen változó maximális életpontja.
+	 */
+	public static float defMaxLP;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó indulósebessége.
+	 */
+	public static float defSpeed;
+
 	/**
 	 * Alap konstruktor
 	 */
