@@ -142,11 +142,11 @@ public abstract class Enemy {
 	public void lassit(float mertek) {
 		// mertek=mertek/(Controller.timeStep/10.0f);
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
-		if (speed - mertek >= 0.01f) {
+		if (speed - mertek >= 0.1f) {
 			speed -= mertek;
 			Logging.log(3, "\t A sebessége ennyire csökkent: " + speed);
 		} else {
-			speed = 0.01f;
+			speed = 0.1f;
 			Logging.log(3,
 					"\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
 							+ speed);

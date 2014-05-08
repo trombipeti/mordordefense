@@ -277,6 +277,9 @@ public class MordorFrame extends JFrame {
 						}
 						break;
 					case MAGICSTONE:
+						if (gameStarted) {
+							Board.getController().pauseMainLoop();
+						}
 						MagicStone m = askUserForMagicStone();
 						Board.getController().placeMagicStone(m, cellx, celly);
 						validate();

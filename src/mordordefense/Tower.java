@@ -53,6 +53,14 @@ public class Tower implements RouteCellListener
 	 */
 	protected long timeOfLastShoot;
 
+	public long getTimeOfLastShoot() {
+		return timeOfLastShoot;
+	}
+
+	public void setTimeOfLastShoot(long time) {
+		timeOfLastShoot = time;
+	}
+
 	/**
 	 * A tornyot ellepi-e a köd.
 	 */
@@ -359,7 +367,7 @@ public class Tower implements RouteCellListener
 			Bullet b = new Bullet(dw, el, hu, ho, slice);
 			// Ha első fire hívás, akkor csak egyszer lövünk.
 			// Ha nem, akkor annyiszor, ahányszor kell.
-			int numShoot = (timeOfLastShoot == 0 ? 1
+			int numShoot = (timeOfLastShoot <= 0 ? 1
 					: (int) (dt / (1000.0f / freq)));
 			Logging.log(1, "A Tower ennyiszer lő: " + numShoot);
 			for (int i = 0; i < numShoot; ++i) {

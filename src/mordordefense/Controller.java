@@ -182,6 +182,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public volatile boolean trapChanged = false;
 
+	public volatile long timeOfPause = -1;
+
 	// /**
 	// * Konstruktor
 	// *
@@ -508,6 +510,20 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * {@link Controller#mainLoop} {@link TimerTask}-ot.
 	 */
 	public void startMainLoop() {
+		// TODO Enemyk, tornyok idejét beállítani
+		long now = System.currentTimeMillis();
+		if (timeOfPause != -1) {
+			for (Enemy e : enemies) {
+				e.setTimeOfLastStep(e.getTimeOfLastStep() + (now - timeOfPause));
+			}
+			for (Tower t : towers) {
+				if (t.getTimeOfLastShoot() > 0) {
+					t.setTimeOfLastShoot(t.getTimeOfLastShoot()
+							+ (now - timeOfPause));
+				}
+			}
+		}
+
 		mainLoop = new TimerTask() {
 
 			@Override
@@ -527,6 +543,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void pauseMainLoop() {
 		if (mainLoop != null) {
+			timeOfPause = System.currentTimeMillis();
 			mainLoop.cancel();
 		}
 	}
