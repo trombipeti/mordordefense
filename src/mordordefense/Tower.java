@@ -217,7 +217,11 @@ public class Tower implements RouteCellListener
 		getNeighbors(parentCell);
 		for (Cell c : cellsInRange) {
 			if (!c.getType().equalsIgnoreCase("FieldCell")) {
-				((RouteCell) c).addRouteCellListener(this);
+				RouteCell rc = ((RouteCell) c);
+				rc.addRouteCellListener(this);
+				if (rc.getNumEnemies() > 0) {
+					closestCellsWithEnemy.add(rc);
+				}
 			}
 		}
 		Logging.log(4, "<< Tower.setUpNeighbors()");
