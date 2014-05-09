@@ -43,6 +43,7 @@ public class MordorFrame extends JFrame {
 	private static final long serialVersionUID = 6107185503023298334L;
 
 	private JPanel contentPane;
+	
 	// private Controller control;
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
@@ -64,7 +65,7 @@ public class MordorFrame extends JFrame {
 		setPreferredSize(new Dimension(800, 600));
 		setResizable(true);
 
-		Board = new DrawPanel(drawer, 680, 500);
+		Board = new DrawPanel(drawer, 780, 500);
 		Board.setController(c);
 
 		state = State.NORMAL;
@@ -85,6 +86,9 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(Board.getController().isGameEnded()) {
+					Board.getController().reset();
+				}
 				gameStarted = true;
 				Board.getController().startMainLoop();
 				Board.validate();
@@ -330,7 +334,9 @@ public class MordorFrame extends JFrame {
 		};
 
 		paintTimer.scheduleAtFixedRate(updateBoard, 0, 50);
-
+		
+		add(Board);
+		
 		pack();
 
 	}

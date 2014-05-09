@@ -272,10 +272,10 @@ public class Tower implements RouteCellListener
 	 * @return A torony megépítésének ára
 	 */
 	public float getCost() {
-		Logging.log(4, ">> Tower.getCost() hívás");
+		Logging.log(2, ">> Tower.getCost() hívás");
 		float ret = baseCost;
 		ret += foglessRadius + freq + baseDamage;
-		Logging.log(4, "<< Tower.getCost() return: " + ret);
+		Logging.log(2, "<< Tower.getCost() return: " + ret);
 		return ret;
 	}
 

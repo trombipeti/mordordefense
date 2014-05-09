@@ -608,7 +608,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	private void addRandomEnemy() {
 		Logging.log(3, ">> Controller.addRandomEnemy() hívás");
-		Random randgen = new Random();
+		Random randgen = new Random(System.currentTimeMillis());
 		int a = randgen.nextInt(maxEnemyNum * 10000);
 		if (a % maxEnemyNum > sentEnemies && sentEnemies > 0) {
 			Logging.log(1, "<< Controller.addRandomEnemy(), nem adok hozzá.");
@@ -981,6 +981,14 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
 		initMap();
+	}
+
+	/**
+	 * Reseteli a controllert. Ez gyakorlatilag újra beolvassa a configfjálokat.
+	 */
+	public void reset() {
+		initMap();
+		parseConfFile();
 	}
 
 	/**

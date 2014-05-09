@@ -87,9 +87,9 @@ public class Trap implements RouteCellListener {
 	 * @return A csapda építésének ára
 	 */
 	public float getCost() {
-		Logging.log(4, ">> Trap.getCost() hívás");
+		Logging.log(2, ">> Trap.getCost() hívás");
 		float ret = baseCost + strength;
-		Logging.log(4, "<< Trap.getCost() return: " + ret);
+		Logging.log(2, "<< Trap.getCost() return: " + ret);
 		return ret;
 	}
 

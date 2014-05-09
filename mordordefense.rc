@@ -15,7 +15,7 @@ MaxLP=10
 MaxSpeed=5
 
 [ Saruman ]
-Manna=30
+Manna=20
 
 [ Tower ]
 Basecost=10
