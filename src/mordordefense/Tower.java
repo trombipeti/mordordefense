@@ -346,7 +346,7 @@ public class Tower implements RouteCellListener
 		Logging.log(2, ">> Tower.fire hívás, paraméter: " + rc.toString());
 		long dt = (System.currentTimeMillis() - timeOfLastShoot);
 		Logging.log(1, "Tower lőne, eltelt idő: " + dt + ", freq: " + freq);
-		if (dt > 1000.0 / freq) {
+		if (dt >= 1000.0 / freq) {
 			Logging.log(1, "Tower lőni fog");
 			float dw, el, hu, ho;
 			dw = el = hu = ho = baseDamage;
