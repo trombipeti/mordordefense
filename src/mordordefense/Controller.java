@@ -98,11 +98,25 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * Szarumán, ő igazából a mannatároló
 	 */
 	private Saruman saruman;
+	
+	/**
+	 * @return Szarumán varázsereje.
+	 */
+	public float getSarumanManna() {
+		return saruman.getManna();
+	}
 
 	/**
 	 * A pályán lévő ellenségek
 	 */
 	private HashSet<Enemy> enemies = new HashSet<Enemy>();
+
+	/**
+	 * @return A pályán lévő ellenségek száma.
+	 */
+	public int getEnemyNum() {
+		return enemies.size();
+	}
 
 	/**
 	 * Az egy körben keletkezett ellenségek (pl slice hatására), akiket a

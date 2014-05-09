@@ -30,6 +30,11 @@ public class DrawPanel extends JPanel {
 	 */
 	protected BufferedImage mapLayer;
 
+	/**
+	 * Egy layer a játék állásának kirajzolására
+	 */
+	protected BufferedImage infoLayer;
+
 	protected int mapHeight;
 	protected int mapWidth;
 	protected int cellSize;
@@ -43,13 +48,15 @@ public class DrawPanel extends JPanel {
 		super();
 		setBackground(Color.WHITE);
 		drawer = d;
-		mapWidth = w;
+		mapWidth = (int) (w * 0.8);
 		mapHeight = h;
 		enemyLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		towerLayer = new BufferedImage(mapWidth, mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		mapLayer = new BufferedImage(mapWidth, mapHeight,
+				BufferedImage.TYPE_INT_ARGB);
+		infoLayer = new BufferedImage((int) (w * 0.2), mapHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		gameEndDrawn = false;
 	}
@@ -131,6 +138,29 @@ public class DrawPanel extends JPanel {
 
 	}
 
+	private void paintInfo() {
+		int width = infoLayer.getWidth();
+		int height = infoLayer.getHeight();
+		int transparency[] = new int[width * height];
+		Arrays.fill(transparency, 0);
+		mapLayer.setRGB(0, 0, width, height, transparency, 0, 1);
+
+		Graphics g = infoLayer.getGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, width, height);
+
+		int fontH = mapHeight / 30;
+		g.setFont(new Font(Font.MONOSPACED, Font.BOLD, fontH));
+
+		g.setColor(Color.BLACK);
+
+		String enemies = "Enemies: " + control.getEnemyNum();
+		String manna = "Manna: " + control.getSarumanManna();
+		
+		g.drawString(manna, infoLayer.getWidth() / 10, 2 * fontH);
+		g.drawString(enemies, infoLayer.getWidth() / 10, 4 * fontH);
+	}
+
 	/**
 	 * Ez a függvény végzi el a tényleges megjelenítést. Kirajzolja a pályát, rá
 	 * az enemyket és a tornyokat.
@@ -145,14 +175,12 @@ public class DrawPanel extends JPanel {
 
 		paintMap();
 		g.drawImage(mapLayer, 0, 0, null);
-		// if (control.enemyChanged) {
-		// control.enemyChanged = false;
-		// }
-		// if (control.towerChanged) {
+
 		paintTowers();
 		g.drawImage(towerLayer, 0, 0, null);
-		// paintEnemies();
-		// g.drawImage(enemyLayer, 0, 0, null);
+
+		paintInfo();
+		g.drawImage(infoLayer, mapWidth, 0, null);
 
 		if (control.isGameEnded() && gameEndDrawn) {
 			BufferedImage end = new BufferedImage(mapWidth, mapHeight,
@@ -185,6 +213,8 @@ public class DrawPanel extends JPanel {
 		towerLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 		mapLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
 		enemyLayer.setRGB(0, 0, mapWidth, mapHeight, transparency, 0, 1);
+		infoLayer.setRGB(0, 0, infoLayer.getWidth(), infoLayer.getHeight(),
+				transparency, 0, 1);
 	}
 
 	public void setGameEndDrawn(boolean b) {
