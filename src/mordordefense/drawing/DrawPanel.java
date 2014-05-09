@@ -114,7 +114,7 @@ public class DrawPanel extends JPanel {
 		// if (w == 0 || h == 0) {
 		// return;
 		// }
-		g.setColor(Color.WHITE);
+		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, mapWidth, mapHeight);
 		cellSize = (int) Math
 				.min((mapHeight / h) * 0.95, (mapWidth / w) * 0.95);

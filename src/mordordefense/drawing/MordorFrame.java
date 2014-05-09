@@ -25,8 +25,11 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import mordordefense.Cell;
 import mordordefense.Controller;
+import mordordefense.FieldCell;
 import mordordefense.MagicStone;
+import mordordefense.RouteCell;
 import mordordefense.Tower;
 import mordordefense.Trap;
 
@@ -38,9 +41,7 @@ public class MordorFrame extends JFrame {
 
 	// Hogy ne sirjon az eclipse
 	private static final long serialVersionUID = 6107185503023298334L;
-	/**
-	 * 
-	 */
+
 	private JPanel contentPane;
 	// private Controller control;
 	private DrawPanel Board;
@@ -63,7 +64,7 @@ public class MordorFrame extends JFrame {
 		setPreferredSize(new Dimension(800, 600));
 		setResizable(true);
 
-		Board = new DrawPanel(drawer, 800, 500);
+		Board = new DrawPanel(drawer, 680, 500);
 		Board.setController(c);
 
 		state = State.NORMAL;
@@ -277,6 +278,19 @@ public class MordorFrame extends JFrame {
 						}
 						break;
 					case MAGICSTONE:
+						Cell cell =  Board.getController().getCell(cellx, celly);
+						String type = cell.getType();
+						if(type.equalsIgnoreCase("FieldCell")) {
+							if(((FieldCell)cell).hasTower() == false) {
+								state = State.NORMAL;
+								break;
+							}
+						} else {
+							if(((RouteCell)cell).hasTrap() == false) {
+								state = State.NORMAL;
+								break;
+							}
+						}
 						if (gameStarted) {
 							Board.getController().pauseMainLoop();
 						}
