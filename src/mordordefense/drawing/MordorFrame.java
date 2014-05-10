@@ -7,10 +7,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -53,6 +60,10 @@ public class MordorFrame extends JFrame {
 
 	private State state;
 	protected boolean gameStarted;
+	
+	// LOL kis zenélés
+	private AudioInputStream isengard = null;
+	private Clip isengardClip = null;
 
 	/**
 	 * Create the frame.
@@ -89,6 +100,20 @@ public class MordorFrame extends JFrame {
 				if (Board.getController().isGameEnded()) {
 					Board.getController().reset();
 				}
+				try {
+					isengard = AudioSystem.getAudioInputStream(new File("isengard.wav"));
+					isengardClip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, isengard.getFormat()));
+					isengardClip.open(isengard);
+					isengardClip.setMicrosecondPosition(1000 * 1000 * 3);
+					isengardClip.start();
+					
+				} catch (UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (LineUnavailableException e) {
+					e.printStackTrace();
+				}
 				gameStarted = true;
 				Board.getController().startMainLoop();
 				Board.validate();
@@ -108,6 +133,9 @@ public class MordorFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
 				// menü?
+				if(isengard != null && isengardClip != null) {
+					isengardClip.stop();
+				}
 				Board.getController().pauseMainLoop();
 				validate();
 				repaint();
