@@ -1,0 +1,28 @@
+[ Human ]
+MaxLP=10
+MaxSpeed=8
+
+[ Hobbit ]
+MaxLP=10
+MaxSpeed=4
+
+[ Elf ]
+MaxLP=10
+MaxSpeed=10
+
+[ Dwarf ]
+MaxLP=10
+MaxSpeed=5
+
+[ Saruman ]
+Manna=20
+
+[ Tower ]
+Basecost=10
+
+[ Trap ]
+Basecost=5
+
+[ MagicStone ]
+Basecost=10
+
