@@ -156,8 +156,12 @@ public class DrawPanel extends JPanel {
 
 		String enemies = "Enemies: " + control.getEnemyNum();
 		String manna = "Manna: " + control.getSarumanManna();
-		
+
+		if (control.getSarumanManna() < 10) {
+			g.setColor(Color.RED);
+		}
 		g.drawString(manna, infoLayer.getWidth() / 10, 2 * fontH);
+		g.setColor(Color.BLACK);
 		g.drawString(enemies, infoLayer.getWidth() / 10, 4 * fontH);
 	}
 
@@ -197,6 +201,11 @@ public class DrawPanel extends JPanel {
 				g2.setFont(new Font(Font.MONOSPACED, Font.BOLD, fontH));
 				int stringW = g2.getFontMetrics().charsWidth(w.toCharArray(),
 						0, w.length());
+				String szoveg = "Nyertes:";
+				int szovegW = g2.getFontMetrics().charsWidth(
+						szoveg.toCharArray(), 0, szoveg.length());
+				g2.drawString(szoveg, mapWidth / 2 - szovegW / 2, mapHeight / 4
+						- fontH / 2);
 				g2.drawString(w, mapWidth / 2 - stringW / 2, mapHeight / 2
 						- fontH / 2);
 			}

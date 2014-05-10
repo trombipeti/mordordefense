@@ -170,6 +170,7 @@ public class RouteCell extends Cell {
 		Logging.log(2,
 				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
+		Logging.log(1, "Ennyi enemy van rajtam: " + enemies.size());
 		ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
 		for (ListIterator<Enemy> iter = enemies.listIterator(); iter.hasNext();) {
 			// for (Enemy e : enemies){

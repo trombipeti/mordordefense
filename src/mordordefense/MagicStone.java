@@ -226,11 +226,7 @@ public class MagicStone {
 	}
 
 	/**
-	 * A varázskő elhelyezéséhez szükséges mannát kiszámoló függvény. Ennek
-	 * értéke towerOrTrap = trap esetén: {@link MagicStone#baseCost} + a négy
-	 * ellenségre ható szorzók átlaga. Értéke towerOrTrap = tower esetén:
-	 * {@link MagicStone#baseCost} + {@link MagicStone#damageMultiplier} +
-	 * {@link MagicStone#radiusMultiplier} + {@link MagicStone#freqMultiplier}
+	 * A varázskő elhelyezéséhez szükséges mannát kiszámoló függvény.
 	 * 
 	 * @param towerOrTrap
 	 *            Értéke "tower" vagy "trap". Ezzel lehet megmondani a
@@ -243,9 +239,15 @@ public class MagicStone {
 		Logging.log(3, ">> MagicStone.calcCost() hívás");
 		float cost = baseCost;
 		if (towerOrTrap.equalsIgnoreCase("trap")) {
-			cost += (elfMultiplier + dwarfMultiplier + humanMultiplier + hobbitMultiplier) / 4.0f;
+			cost += (elfMultiplier + dwarfMultiplier + humanMultiplier
+					+ hobbitMultiplier - 4);
 		} else if (towerOrTrap.equalsIgnoreCase("tower")) {
-			cost += damageMultiplier + freqMultiplier + radiusMultiplier;
+			cost += damageMultiplier
+					+ freqMultiplier
+					+ radiusMultiplier
+					- 3
+					+ (elfMultiplier + dwarfMultiplier + humanMultiplier
+							+ hobbitMultiplier - 4);
 		} else {
 			Logging.log(0, "<< MagicStone.calcCost exception");
 			throw new Exception("Háde a towerOrTrap értéke miért "

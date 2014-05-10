@@ -56,7 +56,7 @@ public class Saruman {
 	public void rmManna(float m) {
 		Logging.log(2, ">> Saruman.rmManna() hívás, paraméter: " + m);
 		manna -= m;
-		Logging.log(3, "\t Szarumán új varázserej: " + manna);
+		Logging.log(3, "\t Szarumán új varázsereje: " + manna);
 		Logging.log(4, "<< Saruman.rmManna");
 	}
 

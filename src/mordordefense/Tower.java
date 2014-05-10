@@ -151,8 +151,9 @@ public class Tower implements RouteCellListener
 		stones.add(s);
 		Logging.log(1, s.toString());
 		// Az int osztás rossz tulajdonságit kerüljük el a castolgatással
-		freq = (int) (freq * s.getFreqMultiplier());
-		radius = (int) (radius * s.getRadiusMultiplier());
+		freq = (freq * s.getFreqMultiplier());
+		foglessRadius = (foglessRadius * s.getRadiusMultiplier());
+		radius *= s.getRadiusMultiplier();
 		if (s.getRadiusMultiplier() != 1) {
 			removeFromListeners();
 			cellsInRange.clear();
@@ -213,7 +214,7 @@ public class Tower implements RouteCellListener
 	 * 
 	 */
 	private void setUpNeighbors() {
-		Logging.log(4, ">> Tower.setUpNeighbors() hívás");
+		Logging.log(3, ">> Tower.setUpNeighbors() hívás");
 		getNeighbors(parentCell);
 		for (Cell c : cellsInRange) {
 			if (!c.getType().equalsIgnoreCase("FieldCell")) {
@@ -271,14 +272,14 @@ public class Tower implements RouteCellListener
 	/**
 	 * Megmondja, mennyi manna szükséges a torony megépítéséhez. Ez az érték a
 	 * következő: {@link Tower#baseCost} + {@link Tower#foglessRadius} +
-	 * {@link Tower#freq} + {@link Tower#baseDamage}
+	 * ({@link Tower#freq} * {@link Tower#baseDamage}) * 0.75
 	 * 
 	 * @return A torony megépítésének ára
 	 */
 	public float getCost() {
 		Logging.log(2, ">> Tower.getCost() hívás");
 		float ret = baseCost;
-		ret += foglessRadius + freq + baseDamage;
+		ret += foglessRadius + (freq * baseDamage) * 0.75;
 		Logging.log(2, "<< Tower.getCost() return: " + ret);
 		return ret;
 	}
@@ -361,7 +362,7 @@ public class Tower implements RouteCellListener
 
 			if (!globalSlice) {
 				if (Controller.isRandom()) {
-					slice = (new Random().nextInt(50) == 0);
+					slice = (new Random(System.currentTimeMillis()).nextInt(50) == 0);
 				} else {
 					slice = false;
 				}

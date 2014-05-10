@@ -43,7 +43,7 @@ public class MordorFrame extends JFrame {
 	private static final long serialVersionUID = 6107185503023298334L;
 
 	private JPanel contentPane;
-	
+
 	// private Controller control;
 	private DrawPanel Board;
 	private Drawer drawer = new Drawer();
@@ -86,7 +86,7 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(Board.getController().isGameEnded()) {
+				if (Board.getController().isGameEnded()) {
 					Board.getController().reset();
 				}
 				gameStarted = true;
@@ -282,15 +282,15 @@ public class MordorFrame extends JFrame {
 						}
 						break;
 					case MAGICSTONE:
-						Cell cell =  Board.getController().getCell(cellx, celly);
+						Cell cell = Board.getController().getCell(cellx, celly);
 						String type = cell.getType();
-						if(type.equalsIgnoreCase("FieldCell")) {
-							if(((FieldCell)cell).hasTower() == false) {
+						if (type.equalsIgnoreCase("FieldCell")) {
+							if (((FieldCell) cell).hasTower() == false) {
 								state = State.NORMAL;
 								break;
 							}
 						} else {
-							if(((RouteCell)cell).hasTrap() == false) {
+							if (((RouteCell) cell).hasTrap() == false) {
 								state = State.NORMAL;
 								break;
 							}
@@ -299,7 +299,18 @@ public class MordorFrame extends JFrame {
 							Board.getController().pauseMainLoop();
 						}
 						MagicStone m = askUserForMagicStone();
-						Board.getController().placeMagicStone(m, cellx, celly);
+						if (m != null
+								&& Board.getController().placeMagicStone(m,
+										cellx, celly) == false) {
+							// TODO Itt ne dialog legyen
+							JOptionPane.showMessageDialog(null,
+									"Nem sikerült varázskövet elhelyezni",
+									"Kőlerakás sikertelen",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						if (gameStarted) {
+							Board.getController().startMainLoop();
+						}
 						validate();
 						repaint();
 						state = State.NORMAL;
@@ -334,9 +345,9 @@ public class MordorFrame extends JFrame {
 		};
 
 		paintTimer.scheduleAtFixedRate(updateBoard, 0, 50);
-		
+
 		add(Board);
-		
+
 		pack();
 
 	}

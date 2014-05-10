@@ -27,18 +27,18 @@ public class Drawer {
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(2.0f));
 		g2.drawOval(x, y, cellSize, cellSize);
+
+		// Van rajta köd?
 		if (t.isHasFog()) {
 			g2.setStroke(new BasicStroke(1.0f));
-			g2.setColor(Color.GRAY);
-			for (int i = 0; i < cellSize; i += cellSize / 4) {
-				g2.drawLine(x + i, y, x + i, y + cellSize);
-			}
+			g2.setColor(new Color(50, 50, 50, 100));
+			g2.fillRect(x, y, cellSize, cellSize);
 		}
 		ArrayList<MagicStone> stones = (ArrayList<MagicStone>) t.getStones();
 		int n = stones.size();
 		// Bal felső sarokba kiírjuk, hány kő van rajta.
 		if (n != 0) {
-			int fonth = cellSize / 5;
+			int fonth = cellSize / 3;
 			g2.setColor(Color.BLACK);
 			g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, fonth));
 			// Ez itt azért valid, mert monospaced!!
@@ -56,7 +56,7 @@ public class Drawer {
 		int n = stones.size();
 		// Bal felső sarokba kiírjuk, hány kő van rajta.
 		if (n != 0) {
-			int fonth = cellSize / 5;
+			int fonth = cellSize / 3;
 			g.setColor(Color.BLACK);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, fonth));
 			// Ez itt azért valid, mert monospaced!!
