@@ -124,16 +124,39 @@ public class Main {
 		return ret;
 	}
 
+	private static void printUsage() {
+		System.out
+				.println("Használat:\n\tjava mordordefense.Main [kapcsoló=érték]*");
+		System.out.println("Kapcsoló lehet:");
+		System.out.println("\t -h, --help: Ezen súgó kiíratása és kilépés.");
+		System.out
+				.println("\t -l, --loglevel SZÁM: Naplózás szintjét SZÁM-ra állítja.");
+	}
+
 	public static void main(String[] args) {
 
 		// Itt kell beállítani majd, hogy hova logoljon.
-		/*
-		 * Logging.setLogFileName(null); setupTestCases(); boolean ex = false;
-		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
-		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
-		 */
 		Logging.setLogFileName(null);
 		Logging.setLogLevel(2);
+		
+		if (args.length >= 1) {
+			if (args[0].equals("-h") || args[0].equals("--help")
+					|| args.length == 1) {
+				printUsage();
+				System.exit(0);
+			}
+			if (args.length >= 2) {
+				if (args[0].equals("-l") || args[0].equals("--loglevel")) {
+					try {
+						int level = Integer.parseInt(args[1]);
+						Logging.setLogLevel(level);
+					} catch (NumberFormatException e) {
+						printUsage();
+						System.exit(-1);
+					}
+				}
+			}
+		}
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
@@ -149,12 +172,9 @@ public class Main {
 		MordorFrame mf = new MordorFrame(new Controller("palya1.p"));
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mf.setVisible(true);
-		// TODO Ezt nem itt kéne beállítani!!!
+
 		Controller.timeStep = 100;
 		Controller.setRandom(true);
 		Tower.globalSlice = false;
-		// Logging.setLogLevel(1);
-		// ProtoTester.mainTestingEnvironment();
 	}
-
 }
