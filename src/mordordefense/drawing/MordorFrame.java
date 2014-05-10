@@ -60,7 +60,7 @@ public class MordorFrame extends JFrame {
 
 	private State state;
 	protected boolean gameStarted;
-	
+
 	// LOL kis zenélés
 	private AudioInputStream isengard = null;
 	private Clip isengardClip = null;
@@ -100,19 +100,24 @@ public class MordorFrame extends JFrame {
 				if (Board.getController().isGameEnded()) {
 					Board.getController().reset();
 				}
-				try {
-					isengard = AudioSystem.getAudioInputStream(new File("isengard.wav"));
-					isengardClip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, isengard.getFormat()));
-					isengardClip.open(isengard);
-					isengardClip.setMicrosecondPosition(1000 * 1000 * 3);
-					isengardClip.start();
-					
-				} catch (UnsupportedAudioFileException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (LineUnavailableException e) {
-					e.printStackTrace();
+				if (isengardClip == null || isengardClip.isRunning() == false) {
+					try {
+						isengard = AudioSystem.getAudioInputStream(new File(
+								"isengard.wav"));
+						isengardClip = (Clip) AudioSystem
+								.getLine(new DataLine.Info(Clip.class, isengard
+										.getFormat()));
+						isengardClip.open(isengard);
+						isengardClip.setMicrosecondPosition(1000 * 1000 * 3);
+						isengardClip.start();
+
+					} catch (UnsupportedAudioFileException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (LineUnavailableException e) {
+						e.printStackTrace();
+					}
 				}
 				gameStarted = true;
 				Board.getController().startMainLoop();
@@ -133,7 +138,7 @@ public class MordorFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
 				// menü?
-				if(isengard != null && isengardClip != null) {
+				if (isengard != null && isengardClip != null) {
 					isengardClip.stop();
 				}
 				Board.getController().pauseMainLoop();
@@ -192,6 +197,7 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Board.getController().pauseMainLoop();
 				state = State.NORMAL;
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter f = new FileNameExtensionFilter(
@@ -205,13 +211,14 @@ public class MordorFrame extends JFrame {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					Board.getController().pauseMainLoop();
 					Board.getController().setMapFileName(n);
 					Board.clear();
 					Board.setGameEndDrawn(false);
 					// Board.calcSize();
 					validate();
 					repaint();
+				} else {
+					Board.getController().startMainLoop();
 				}
 			}
 		});
