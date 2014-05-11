@@ -1,11 +1,14 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import mordordefense.testing.Logging;
 
-public class Trap implements RouteCellListener {
+public class Trap implements RouteCellListener, Serializable {
+
+	private static final long serialVersionUID = 3869823736585309909L;
 
 	/**
 	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.

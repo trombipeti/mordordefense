@@ -13,6 +13,8 @@ import mordordefense.testing.Logging;
  */
 public class Human extends Enemy {
 
+	private static final long serialVersionUID = -1816395965633825956L;
+
 	/**
 	 * Az enemy típusonként esetlegesen változó maximális életpontja.
 	 */

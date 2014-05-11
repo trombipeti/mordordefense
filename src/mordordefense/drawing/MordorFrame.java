@@ -7,8 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,13 +31,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import mordordefense.Cell;
-import mordordefense.Controller;
-import mordordefense.FieldCell;
-import mordordefense.MagicStone;
-import mordordefense.RouteCell;
-import mordordefense.Tower;
-import mordordefense.Trap;
+import mordordefense.*;
 
 public class MordorFrame extends JFrame {
 
@@ -149,6 +142,22 @@ public class MordorFrame extends JFrame {
 		mnGame.add(mntmPause);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.setAccelerator(KeyStroke.getKeyStroke('S',
+				KeyEvent.CTRL_DOWN_MASK));
+		mntmSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					FileOutputStream f = new FileOutputStream("md.obj");
+					ObjectOutputStream out = new ObjectOutputStream(f);
+					out.writeObject(Board.getController());
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		mnGame.add(mntmSave);
 
 		JMenuItem mntmLoad = new JMenuItem("Load");

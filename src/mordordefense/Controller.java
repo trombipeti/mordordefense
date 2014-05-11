@@ -3,6 +3,7 @@ package mordordefense;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -22,7 +23,9 @@ import mordordefense.testing.Logging;
  * A játékot vezérlő "játékmester" objektum.
  * 
  */
-public class Controller implements RouteCellListener, EnemyListener {
+public class Controller implements RouteCellListener, EnemyListener, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int timeStep = 50;
 

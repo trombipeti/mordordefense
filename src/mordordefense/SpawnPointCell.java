@@ -8,6 +8,8 @@ import mordordefense.testing.Logging;
  */
 public class SpawnPointCell extends RouteCell {
 
+	private static final long serialVersionUID = 8101851389070021192L;
+
 	public SpawnPointCell(int x, int y, int ID) {
 		super(x, y, ID);
 		Logging.log(2, ">> SpawnPointCell konstruktor hívása, x: " + x + " y: "

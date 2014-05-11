@@ -13,6 +13,8 @@ import mordordefense.testing.Logging;
  */
 public class Dwarf extends Enemy {
 
+	private static final long serialVersionUID = 2257253548986904480L;
+
 	/**
 	 * Az enemy típusonként esetlegesen változó maximális életpontja.
 	 */

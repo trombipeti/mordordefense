@@ -1,5 +1,6 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 
 import mordordefense.testing.Logging;
@@ -8,7 +9,9 @@ import mordordefense.testing.Logging;
  * Absztrakt osztály a pálya mezőinek heterogén kollekciójához.
  * 
  */
-public abstract class Cell {
+public abstract class Cell implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static enum Dir {
 		UP(0, "UP"), RIGHT(1, "RIGHT"), DOWN(2, "DOWN"), LEFT(3, "LEFT");

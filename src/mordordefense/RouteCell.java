@@ -14,6 +14,8 @@ import mordordefense.testing.Logging;
  */
 public class RouteCell extends Cell {
 
+	private static final long serialVersionUID = -7858536805228932688L;
+
 	/**
 	 * A cellán lévő csapda. Ha nincs rajta, akkor null;
 	 */

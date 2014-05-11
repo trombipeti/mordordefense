@@ -1,13 +1,17 @@
 package mordordefense;
 
+import java.io.Serializable;
+
 import mordordefense.testing.Logging;
 
 /**
  * A Mordort hősiesen védő Szarumánt megtestesítő osztály.
  * 
  */
-public class Saruman {
+public class Saruman implements Serializable {
 
+	private static final long serialVersionUID = 1612530905095295310L;
+	
 	/**
 	 * Szarumán varázsereje.
 	 */

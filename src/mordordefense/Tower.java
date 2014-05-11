@@ -1,5 +1,6 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,9 +14,9 @@ import mordordefense.testing.Logging;
  * Szarumány tornyait megtestesítő osztály.
  * 
  */
-public class Tower implements RouteCellListener
+public class Tower implements RouteCellListener, Serializable {
 
-{
+	private static final long serialVersionUID = 3647711730410999013L;
 
 	public static int globalDamage;
 
@@ -271,8 +272,8 @@ public class Tower implements RouteCellListener
 
 	/**
 	 * Megmondja, mennyi manna szükséges a torony megépítéséhez. Ez az érték a
-	 * következő: {@link Tower#baseCost} + {@link Tower#foglessRadius} +
-	 * ({@link Tower#freq} * {@link Tower#baseDamage}) * 0.75
+	 * következő: {@link Tower#baseCost} + {@link Tower#foglessRadius} + (
+	 * {@link Tower#freq} * {@link Tower#baseDamage}) * 0.75
 	 * 
 	 * @return A torony megépítésének ára
 	 */

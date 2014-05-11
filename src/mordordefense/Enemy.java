@@ -1,5 +1,6 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import mordordefense.exceptions.EnemyCannotStepException;
@@ -11,7 +12,9 @@ import mordordefense.testing.Logging;
  * ősosztály.
  * 
  */
-public abstract class Enemy {
+public abstract class Enemy implements Serializable {
+
+	private static final long serialVersionUID = -4561743089866969291L;
 
 	/**
 	 * Az enemy maximális (és kezdeti) életereje.

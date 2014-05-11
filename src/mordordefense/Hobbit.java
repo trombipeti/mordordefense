@@ -13,6 +13,8 @@ import mordordefense.testing.Logging;
  */
 public class Hobbit extends Enemy {
 
+	private static final long serialVersionUID = -8534133371987026569L;
+
 	/**
 	 * Az enemy típusonként esetlegesen változó maximális életpontja.
 	 */

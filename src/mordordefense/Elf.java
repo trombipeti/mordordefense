@@ -13,6 +13,8 @@ import mordordefense.testing.Logging;
  */
 public class Elf extends Enemy {
 
+	private static final long serialVersionUID = -2048593247027643112L;
+
 	/**
 	 * Az enemy típusonként esetlegesen változó maximális életpontja.
 	 */

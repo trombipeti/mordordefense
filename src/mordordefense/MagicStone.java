@@ -1,12 +1,16 @@
 package mordordefense;
 
+import java.io.Serializable;
+
 import mordordefense.testing.Logging;
 
 /**
  * Csapdákra és tornyokra elhelyezhető varázskő.
  * 
  */
-public class MagicStone {
+public class MagicStone implements Serializable {
+
+	private static final long serialVersionUID = -4302961557899958184L;
 
 	/**
 	 * A varázskövek alapára.
