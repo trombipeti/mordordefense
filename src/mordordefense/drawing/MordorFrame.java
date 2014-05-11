@@ -200,6 +200,7 @@ public class MordorFrame extends JFrame {
 				Board.getController().pauseMainLoop();
 				state = State.NORMAL;
 				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(new java.io.File("."));
 				FileNameExtensionFilter f = new FileNameExtensionFilter(
 						"Pályabeállító fájlok", "p", "txt");
 				chooser.setFileFilter(f);
@@ -217,8 +218,6 @@ public class MordorFrame extends JFrame {
 					// Board.calcSize();
 					validate();
 					repaint();
-				} else {
-					Board.getController().startMainLoop();
 				}
 			}
 		});
@@ -230,9 +229,9 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmHelp = new JMenuItem("Help");
 		mntmHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnHelp.add(mntmHelp);
-
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
