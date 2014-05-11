@@ -1,9 +1,7 @@
 package mordordefense.testing;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 import mordordefense.Controller;
 import mordordefense.Dwarf;
@@ -81,9 +79,9 @@ public class ScriptInterpreter {
 				// ---------------- Random működés megválasztása----------------
 				if (parts.length == 2) {
 					if (parts[1] == "on")
-						cont.setRandom(true);
+						Controller.setRandom(true);
 					else
-						cont.setRandom(false);
+						Controller.setRandom(false);
 				} else {
 					throw new Exception(
 							"!!Nem megfelelo az argumentumok szama!");
@@ -218,7 +216,6 @@ public class ScriptInterpreter {
 			} else if (parts[0].equalsIgnoreCase("map")) {
 				if (parts.length == 2) {
 					cont.setMapFileName(parts[1]);
-					cont.init();
 				}
 			} else if (parts[0].equalsIgnoreCase("slicing")) {
 				if (parts.length == 2) {
@@ -234,12 +231,12 @@ public class ScriptInterpreter {
 						cont.setCanSpawn(false);
 					}
 				}
-			}else if (parts[0].equalsIgnoreCase("sleep")) {
+			} else if (parts[0].equalsIgnoreCase("sleep")) {
 				if (parts.length == 2) {
 					Thread.sleep(Integer.parseInt(parts[1]));
 				}
-				
-			}else {
+
+			} else {
 				System.out.println("Nem valid Bementei parancs!");
 			}
 		} catch (Exception e) {

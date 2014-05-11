@@ -13,6 +13,19 @@ import mordordefense.testing.Logging;
  */
 public class Dwarf extends Enemy {
 
+	private static final long serialVersionUID = 2257253548986904480L;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó maximális életpontja.
+	 */
+	public static float defMaxLP;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó indulósebessége.
+	 */
+	public static float defSpeed;
+
+	
 	/**
 	 * Alap konstruktor.
 	 */
@@ -38,10 +51,11 @@ public class Dwarf extends Enemy {
 	}
 
 	/**
+	 * @return
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
-	public void leptet() throws EnemyDeadException, EnemyCannotStepException {
+	public boolean leptet() throws EnemyDeadException, EnemyCannotStepException {
 		Logging.log(2, ">> Dwarf.leptet() hívás");
 		if (lifePoint <= 0) {
 			Logging.log(2, "<< Dwarf.leptet() exception");
@@ -49,9 +63,15 @@ public class Dwarf extends Enemy {
 		}
 		long _time = System.currentTimeMillis();
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
-		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 10) {
 			Logging.log(2, "<< Dwarf.leptet(), nem tud meg lepni");
-			return;
+			return false;
+		}
+		if (stepNumber < 0) {
+			stepNumber = 0;
+			timeOfLastStep = System.currentTimeMillis();
+			Logging.log(2, "<< Dwarf.leptet(), belepett a spawnpointra");
+			return true;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van,
@@ -85,6 +105,7 @@ public class Dwarf extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Dwarf.leptet()");
+		return true;
 	}
 
 	@Override
@@ -109,9 +130,9 @@ public class Dwarf extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Dwarf.slice() hívás");
-		Dwarf newEnemy = new Dwarf(lifePoint / 2, speed);
-		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
-		newEnemy.setRouteCell(routeCell);
+		Dwarf newEnemy = new Dwarf(lifePoint / 2, defSpeed);
+		lifePoint = lifePoint / 2;
+		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}

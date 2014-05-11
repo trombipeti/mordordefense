@@ -3,6 +3,7 @@ package mordordefense;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import mordordefense.testing.Logging;
 
@@ -12,6 +13,8 @@ import mordordefense.testing.Logging;
  * 
  */
 public class RouteCell extends Cell {
+
+	private static final long serialVersionUID = -7858536805228932688L;
 
 	/**
 	 * A cellán lévő csapda. Ha nincs rajta, akkor null;
@@ -31,7 +34,13 @@ public class RouteCell extends Cell {
 	/**
 	 * A cellán tartózkodó ellenségek.
 	 */
-	protected List<Enemy> enemies = new ArrayList<Enemy>();
+	// protected List<Enemy> enemies = new ArrayList<Enemy>();
+
+	protected CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<Enemy>();
+
+	public List<Enemy> getEnemies() {
+		return enemies;
+	}
 
 	/**
 	 * A RouteCell-t csapdával létrehozó konstruktor.
@@ -64,16 +73,16 @@ public class RouteCell extends Cell {
 	 *            Az elhelyezendő csapda.
 	 */
 	public boolean addTrap(Trap t) {
-		Logging.log(2,
-				">> RouteCell.addTrap() hívás, paraméter: " + t.toString());
-		if (trap == null) {
+		Logging.log(2, ">> RouteCell.addTrap() hívás, paraméter: "
+				+ (t == null ? "null" : t.toString()));
+		if (trap == null && t != null) {
 			trap = t;
 			trap.setParentCell(this);
 			listeners.add(t);
-			Logging.log(2, "<< routeCell.addTrap() return: boolean - true");
+			Logging.log(2, "<< RouteCell.addTrap() return: boolean - true");
 			return true;
 		} else {
-			Logging.log(2, "<< routeCell.addTrap() return: boolean - false");
+			Logging.log(2, "<< RouteCell.addTrap() return: boolean - false");
 			return false;
 		}
 	}
@@ -163,16 +172,19 @@ public class RouteCell extends Cell {
 		Logging.log(2,
 				">> RouteCell.addBullet() hívás, paraméter: " + b.toString());
 		bullets.add(b);
+		Logging.log(1, "Ennyi enemy van rajtam: " + enemies.size());
+		ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
 		for (ListIterator<Enemy> iter = enemies.listIterator(); iter.hasNext();) {
 			// for (Enemy e : enemies){
 			for (Bullet b1 : bullets) {
 				Enemy e = iter.next();
 				e.sebez(b1);
-				if (e.getDead()) {
-					iter.remove();
+				if (e.isDead()) {
+					toRemove.add(e);
 				}
 			}
 		}
+		enemies.removeAll(toRemove);
 		bullets.remove(b);
 		Logging.log(2, "<< RouteCell.addBullet()");
 	}
@@ -188,7 +200,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, e);
 		}
-		if (!e.getDead())
+		if (!e.isDead())
 			enemies.remove(e);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -204,7 +216,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		if (!h.getDead())
+		if (!h.isDead())
 			enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -220,7 +232,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, h);
 		}
-		if (!h.getDead())
+		if (!h.isDead())
 			enemies.remove(h);
 		Logging.log(4, "<< RouteCell.leave");
 	}
@@ -236,7 +248,7 @@ public class RouteCell extends Cell {
 		for (RouteCellListener l : listeners) {
 			l.onLeave(this, d);
 		}
-		if (!d.getDead())
+		if (!d.isDead())
 			enemies.remove(d);
 		Logging.log(4, "<< RouteCell.leave");
 	}

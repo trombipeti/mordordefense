@@ -9,6 +9,7 @@ import mordordefense.testing.Logging;
  */
 public class FieldCell extends Cell {
 
+	private static final long serialVersionUID = 6920168733152315620L;
 	/**
 	 * A mezőn lévő torony. Ha nincs rajta, akkor null.
 	 * 
@@ -34,11 +35,9 @@ public class FieldCell extends Cell {
 	 *            A lerakandó torony.
 	 */
 	public boolean addTower(Tower t) {
-		Logging.log(
-				2,
-				">> FieldCell.addTower függvényhívás, paraméter: "
-						+ t.toString());
-		if (tower == null) {
+		Logging.log(2, ">> FieldCell.addTower függvényhívás, paraméter: "
+				+ (t == null ? "null" : t.toString()));
+		if (tower == null && t != null) {
 			tower = t;
 			t.setParentCell(this);
 			Logging.log(2, "<< FieldCell.addTower return: boolean - true");

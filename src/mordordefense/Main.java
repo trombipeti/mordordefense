@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import mordordefense.drawing.MordorFrame;
 import mordordefense.testing.Logging;
-import mordordefense.testing.ProtoTester;
 import mordordefense.testing.SkeletonTester;
 
 public class Main {
@@ -16,6 +19,7 @@ public class Main {
 
 	private static TreeMap<Integer, Boolean> ranTestCases = new TreeMap<Integer, Boolean>();
 
+	@SuppressWarnings("unused")
 	private static void setupTestCases() {
 		testCases.put(1, new Runnable() {
 
@@ -82,6 +86,7 @@ public class Main {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static int askForTestCase() {
 		int ret = -1;
 		if (ranTestCases.size() == testCases.size()) {
@@ -119,19 +124,57 @@ public class Main {
 		return ret;
 	}
 
+	private static void printUsage() {
+		System.out
+				.println("Használat:\n\tjava mordordefense.Main [kapcsoló=érték]*");
+		System.out.println("Kapcsoló lehet:");
+		System.out.println("\t -h, --help: Ezen súgó kiíratása és kilépés.");
+		System.out
+				.println("\t -l, --loglevel SZÁM: Naplózás szintjét SZÁM-ra állítja.");
+	}
+
 	public static void main(String[] args) {
 
 		// Itt kell beállítani majd, hogy hova logoljon.
-		/*
-		 * Logging.setLogFileName(null); setupTestCases(); boolean ex = false;
-		 * while (!ex) { int run = askForTestCase(); if (run == -1) { ex = true;
-		 * break; } testCases.get(run).run(); ranTestCases.put(run, true); }
-		 */
-		MordorFrame mf = new MordorFrame();
-		mf.setController(new Controller(""));
-		mf.setVisible(true);
-		// Logging.setLogLevel(1);
-		// ProtoTester.mainTestingEnvironment();
-	}
+		Logging.setLogFileName(null);
+		Logging.setLogLevel(2);
+		
+		if (args.length >= 1) {
+			if (args[0].equals("-h") || args[0].equals("--help")
+					|| args.length == 1) {
+				printUsage();
+				System.exit(0);
+			}
+			if (args.length >= 2) {
+				if (args[0].equals("-l") || args[0].equals("--loglevel")) {
+					try {
+						int level = Integer.parseInt(args[1]);
+						Logging.setLogLevel(level);
+					} catch (NumberFormatException e) {
+						printUsage();
+						System.exit(-1);
+					}
+				}
+			}
+		}
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 
+		MordorFrame mf = new MordorFrame(new Controller("palya1.p"));
+		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mf.setVisible(true);
+
+		Controller.timeStep = 100;
+		Controller.setRandom(true);
+		Tower.globalSlice = false;
+	}
 }

@@ -12,22 +12,22 @@ public class Bullet {
 	/**
 	 * Tündékre ható sebzés.
 	 */
-	protected int elfDamage;
+	protected float elfDamage;
 
 	/**
 	 * Törpökre ható sebzés.
 	 */
-	protected int dwarfDamage;
+	protected float dwarfDamage;
 
 	/**
 	 * Hobbitokra ható sebzés.
 	 */
-	protected int hobbitDamage;
+	protected float hobbitDamage;
 
 	/**
 	 * Emberekra ható sebzés.
 	 */
-	protected int humanDamage;
+	protected float humanDamage;
 
 	/**
 	 * A lövedék kettvágja-e azt, akit eltalál.
@@ -61,8 +61,8 @@ public class Bullet {
 	 * @param humanDamage
 	 *            Embrekre ható sebzése mértéke
 	 */
-	public Bullet(int dwarfDamage, int elfDamage, int hobbitDamage,
-			int humanDamage, boolean slicing) {
+	public Bullet(float dwarfDamage, float elfDamage, float hobbitDamage,
+			float humanDamage, boolean slicing) {
 		Logging.log(2, ">> Bullet konstruktor hivas, parameterek:");
 		Logging.log(2, "\t dwarfDamage: " + dwarfDamage + ", elfDamage: "
 				+ elfDamage + ", hobbitDamage: " + hobbitDamage
@@ -81,7 +81,7 @@ public class Bullet {
 	 *            Egy {@link Hobbit}.
 	 * @return A hobbitokra ható sebzés.
 	 */
-	public int getDamage(Hobbit h) {
+	public float getDamage(Hobbit h) {
 		return hobbitDamage;
 	}
 
@@ -90,7 +90,7 @@ public class Bullet {
 	 *            Egy {@link Human}.
 	 * @return A humanokra ható sebzés.
 	 */
-	public int getDamage(Human h) {
+	public float getDamage(Human h) {
 		return humanDamage;
 	}
 
@@ -99,7 +99,7 @@ public class Bullet {
 	 *            Egy {@link Dwarf}.
 	 * @return A törpökre ható sebzés.
 	 */
-	public int getDamage(Dwarf d) {
+	public float getDamage(Dwarf d) {
 		return dwarfDamage;
 	}
 
@@ -108,7 +108,7 @@ public class Bullet {
 	 *            Egy {@link Elf}.
 	 * @return A tündékre ható sebzés.
 	 */
-	public int getDamage(Elf e) {
+	public float getDamage(Elf e) {
 		return elfDamage;
 	}
 

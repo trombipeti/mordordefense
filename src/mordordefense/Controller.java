@@ -3,7 +3,9 @@ package mordordefense;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +23,9 @@ import mordordefense.testing.Logging;
  * A játékot vezérlő "játékmester" objektum.
  * 
  */
-public class Controller implements RouteCellListener, EnemyListener {
+public class Controller implements RouteCellListener, EnemyListener, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int timeStep = 50;
 
@@ -54,19 +58,35 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private int mapHeight;
 
 	/**
-	 * Maximum hány enemy indulhat el.
-	 */
-	private int maxEnemyNum;
-
-	/**
 	 * Az eddig harcba küldött ellenségek.
 	 */
 	private int sentEnemies;
 
 	/**
+	 * Maximum hány enemy indulhat el.
+	 */
+	private int maxEnemyNum;
+
+	/**
+	 * @return A maximálisan elindítható ellenségek száma
+	 */
+	public int getMaxEnemyNum() {
+		return maxEnemyNum;
+	}
+
+	/**
+	 * @param maxEnemyNum
+	 *            Ennyi ellenség fog tudni maximálisan elindulni.
+	 */
+	public void setMaxEnemyNum(int maxEnemyNum) {
+		this.maxEnemyNum = maxEnemyNum;
+	}
+
+	/**
 	 * az eddig meghalt ellenségek
 	 */
 	private int diedEnemies;
+
 	/**
 	 * A pályán lévő csapdák
 	 */
@@ -78,14 +98,35 @@ public class Controller implements RouteCellListener, EnemyListener {
 	private List<Tower> towers = new ArrayList<Tower>();
 
 	/**
-	 * Szarumán
+	 * Szarumán, ő igazából a mannatároló
 	 */
 	private Saruman saruman;
+	
+	/**
+	 * @return Szarumán varázsereje.
+	 */
+	public float getSarumanManna() {
+		return saruman.getManna();
+	}
 
 	/**
 	 * A pályán lévő ellenségek
 	 */
 	private HashSet<Enemy> enemies = new HashSet<Enemy>();
+
+	/**
+	 * @return A pályán lévő ellenségek száma.
+	 */
+	public int getEnemyNum() {
+		return enemies.size();
+	}
+
+	/**
+	 * Az egy körben keletkezett ellenségek (pl slice hatására), akiket a
+	 * léptetés után be kell majd rakni az enemies-be. Ez a szeretett
+	 * {@link ConcurrentModificationException} elkerüléséhez kell.
+	 */
+	private HashSet<Enemy> enemiesToAdd = new HashSet<Enemy>();
 
 	/**
 	 * A pályán lévő cellák. A map kulcsaihoz újabb map-ek vannak rendelve (a
@@ -109,7 +150,23 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * A győzteseket tároló StringBuffer. Azért ilyen típusú, hogy szálbiztos
 	 * legyen.
 	 */
-	private volatile StringBuffer winner = null;
+	private volatile String winner = null;
+
+	/**
+	 * @return A győztes neve - "Szarumán", ha minden ellenség meghalt,
+	 *         "Ellenségek", ha valamelyik ellenség bejutott mordorba.
+	 */
+	public String getWinner() {
+		return winner;
+	}
+
+	/**
+	 * @param winner
+	 *            A győztes neve
+	 */
+	private void setWinner(String winner) {
+		this.winner = winner;
+	}
 
 	/**
 	 * A pálya adatait tartalmazó fájl neve.
@@ -119,61 +176,201 @@ public class Controller implements RouteCellListener, EnemyListener {
 	/**
 	 * A controller véletlenszerűen indítja-e az enemyket stb.
 	 */
-	private static boolean random;
+	private static boolean random = true;
 	/**
 	 * A Controller automatikusan rakhat-e le enemy-t, vagy kézzel lesznek
-	 * lerakva (alap állapotban kézire van állítva)
+	 * lerakva (alap állapotban automatára van állítva)
 	 * 
 	 */
-	private boolean canSpawn = false;
+	private boolean canSpawn = true;
+	/**
+	 * a kirajzoláshoz fontos flag, amely jelzi, hogy az ellenségek
+	 * változtattak-e a helyzetükön
+	 */
+	public volatile boolean enemyChanged = false;
+	/**
+	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a tornyok állapota
+	 * változott-e
+	 */
+	public volatile boolean towerChanged = false;
+	/**
+	 * a kirajzoláshoz fontos flag, amely jelzi, hogy a csapdák állapota
+	 * változott-e
+	 */
+	public volatile boolean trapChanged = false;
+
+	public volatile long timeOfPause = -1;
+
+	// /**
+	// * Konstruktor
+	// *
+	// * @param n
+	// * hány ellenséget tehet le
+	// */
+	// public Controller(int n, String fileName) {
+	// Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + n);
+	// maxEnemyNum = n;
+	// sentEnemies = diedEnemies = 0;
+	// mapFileName = fileName;
+	// Logging.log(4, "<< Controller konstruktor");
+	// }
 
 	/**
 	 * Konstruktor
 	 * 
-	 * @param n
-	 *            hány ellenséget tehet le
-	 */
-	public Controller(int n, String fileName) {
-		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + n);
-		maxEnemyNum = n;
-		sentEnemies = diedEnemies = 0;
-		mapFileName = fileName;
-		Logging.log(4, "<< Controller konstruktor");
-	}
-
-	/**
-	 * Konstruktor
-	 * 
-	 * @param fileName
+	 * @param mapFile
 	 *            A pálya leírását tartalmazó fájl neve.
 	 */
-	public Controller(String fileName) {
-		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + fileName);
-		mapFileName = fileName;
-		// TODO valahonnan fájlból kéne beolvasni a következő értékeket!!!
-		Human.defMaxLP = 1;
-		Human.defSpeed = 1;
+	public Controller(String mapFile) {
+		Logging.log(3, ">> Controller konstruktor hívás, paraméter:" + mapFile);
+		mapFileName = mapFile;
+		sentEnemies = diedEnemies = 0;
+		initMap();
+		parseConfFile();
 
-		Hobbit.defMaxLP = 1;
-		Hobbit.defSpeed = 1;
-
-		Elf.defMaxLP = 1;
-		Elf.defSpeed = 1;
-
-		Dwarf.defMaxLP = 1;
-		Dwarf.defSpeed = 1;
 		Logging.log(4, "<< Controller konstruktor");
 	}
 
 	/**
-	 * Inicializáló függvény. Beolvassa a pályafájlból a pályát és fölépíti azt.
+	 * Beolvassa és értelmezi a mordordefense.rc konfigurációs fájlt.
 	 */
-	public void init() {
-		Logging.log(2, ">> Controller.init() hívás");
-		saruman = new Saruman(100);
+	private void parseConfFile() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					"mordordefense.rc"));
+			try {
+				String part = null;
+				String line = null;
+				int lineNo = 0;
+				ReadIn: while (true) {
+					line = br.readLine();
+
+					// Ha EOF volt, akkor ugye vége a fájlnak :)
+					if (line == null) {
+						break ReadIn;
+					}
+					++lineNo;
+
+					// Leszedjük a fölös space-eket
+					line = line.trim();
+
+					// Üres sort átugorjuk
+					if (line.isEmpty()) {
+						continue ReadIn;
+					}
+
+					// Újabb rész jön
+
+					if (line.startsWith("[")) {
+
+						// Megkopasztjuk a []-től meg a fölös space-ektől. Tehát
+						// pl "[ Human ]"-ból lesz "Human"
+
+						part = line.substring(1, line.length() - 2)
+								.toLowerCase().trim();
+					} else if (line.startsWith("#")) {
+
+						// A teljes komment sorokat kihagyjuk
+
+						continue ReadIn;
+					} else {
+
+						// Ha van sorvégi komment, levágjuk.
+
+						if (line.contains("#")) {
+							line = line.substring(0, line.indexOf('#')).trim();
+							System.out.println("**" + line + "**");
+						}
+
+						String keyval[] = line.split("=");
+						if (keyval.length < 2) {
+							Logging.log(0, "A konfigurációs fájl " + lineNo
+									+ ". sora rossz. Békén hagyom...");
+							continue ReadIn;
+						}
+
+						// Kulcs-érték páros megvan, beállítjuk a megfelelő
+						// értékeket
+
+						String key = keyval[0];
+						String val = keyval[1];
+
+						try {
+							float floatval = Float.parseFloat(val);
+
+							if (part.equals("saruman")
+									&& key.equalsIgnoreCase("manna")) {
+
+								// Szarumán létrejön az adott mannával
+
+								saruman = new Saruman(floatval);
+
+							} else if (key.equalsIgnoreCase("basecost")) {
+
+								// A megfelelő dolognak beállítjuk az alapárát
+
+								if (part.equals("tower")) {
+									Tower.setBaseCost(floatval);
+								} else if (part.equals("trap")) {
+									Trap.setBaseCost(floatval);
+								} else if (part.equals("magicstone")) {
+									MagicStone.setBaseCost(floatval);
+								}
+							} else if (key.equalsIgnoreCase("maxlp")) {
+
+								// Az enemyk maximális lp-jét beállítjuk
+
+								if (part.equals("human")) {
+									Human.defMaxLP = floatval;
+								} else if (part.equals("hobbit")) {
+									Hobbit.defMaxLP = floatval;
+								} else if (part.equals("dwarf")) {
+									Dwarf.defMaxLP = floatval;
+								} else if (part.equals("elf")) {
+									Elf.defMaxLP = floatval;
+								}
+							} else if (key.equalsIgnoreCase("maxspeed")) {
+
+								// Az enemyk maximális sebességét állítjuk be
+
+								if (part.equals("human")) {
+									Human.defSpeed = floatval;
+								} else if (part.equals("hobbit")) {
+									Hobbit.defSpeed = floatval;
+								} else if (part.equals("dwarf")) {
+									Dwarf.defSpeed = floatval;
+								} else if (part.equals("elf")) {
+									Elf.defSpeed = floatval;
+								}
+							}
+						} catch (NumberFormatException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+			} finally {
+				br.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Pályainicializáló függvény. Beolvassa a pályafájlból (ezt a
+	 * konstruktorban kellett megadni!!!) a pályát és fölépíti azt.
+	 */
+	private void initMap() {
+		Logging.log(2, ">> Controller.initMap() hívás");
 		sentEnemies = 0;
 		spawnCoords = new int[] { 0, 0 }; // Szép is ez a Java nyelv :D
 		mordorCoords = new int[] { 0, 0 };
+		cells.clear();
+		towers.clear();
+		enemies.clear();
+		traps.clear();
+		gameEnded = false;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(mapFileName));
 			try {
@@ -261,12 +458,13 @@ public class Controller implements RouteCellListener, EnemyListener {
 			e.printStackTrace();
 		}
 
-		Logging.log(2, "<< void Controller.init()");
+		Logging.log(2, "<< void Controller.initMap()");
 	}
 
 	/**
 	 * Beállítja a paraméterül kapott cella szomszédait. Aztán meg rekurzívan
-	 * mindenki másét is.
+	 * mindenki másét is. Ha már valamelyik cellának beállította, azt akkor nem
+	 * fogja mégegyszer megtenni. Így nem száll el a rekurzió.
 	 * 
 	 * @param c
 	 *            A cella.
@@ -312,18 +510,37 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(4, "<< Controller.calcSzomszedok()");
 	}
 
+	/**
+	 * Egy {@link Timer}, amely segítségével ütemezhető lesz a mainLoop
+	 * {@link TimerTask}.
+	 */
 	private Timer scheduler = null;
 
 	/**
 	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}. Alapjáraton null az
-	 * értéke, és majd a startMainLoop fogja inicializálni.
+	 * értéke, és majd a {@link Controller#startMainLoop} fogja inicializálni.
 	 */
 	private TimerTask mainLoop = null;
 
 	/**
-	 * Ütemezi a scheduler-ben 10 ms-enkénti futásra a loop TimerTask-ot.
+	 * Ütemezi a scheduler-ben {@link Controller#timeStep} ms-enkénti futásra a
+	 * {@link Controller#mainLoop} {@link TimerTask}-ot.
 	 */
 	public void startMainLoop() {
+		// TODO Enemyk, tornyok idejét beállítani
+		long now = System.currentTimeMillis();
+		if (timeOfPause != -1) {
+			for (Enemy e : enemies) {
+				e.setTimeOfLastStep(e.getTimeOfLastStep() + (now - timeOfPause));
+			}
+			for (Tower t : towers) {
+				if (t.getTimeOfLastShoot() > 0) {
+					t.setTimeOfLastShoot(t.getTimeOfLastShoot()
+							+ (now - timeOfPause));
+				}
+			}
+		}
+
 		mainLoop = new TimerTask() {
 
 			@Override
@@ -338,22 +555,25 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Leállítja az ütemezett mainLoop TimerTaskot, de ezután a startMainLoop()
-	 * hívással ez újra ütemezhető.
+	 * Leállítja az ütemezett mainLoop {@link TimerTask}, de ezután a
+	 * {@link Controller#startMainLoop} hívással ez újra ütemezhető.
 	 */
 	public void pauseMainLoop() {
 		if (mainLoop != null) {
+			timeOfPause = System.currentTimeMillis();
 			mainLoop.cancel();
 		}
 	}
 
 	/**
-	 * Leállítja az összes ütemezett TimerTask-ot és a schedulert is. Ezután a
-	 * startMainLoop már nem hívható meg!!!
+	 * Leállítja az összes ütemezett @ TimerTask} -ot és a
+	 * {@link Controller#scheduler}t is. Ezután a
+	 * {@link Controller#startMainLoop} már nem hívható meg!!!
 	 */
 	public void stopMainLoop() {
 		if (scheduler != null) {
 			scheduler.cancel();
+			scheduler = null;
 		} else {
 			Logging.log(0,
 					"stopMainLoop-ot hívni startMainLoop nélkül nem szép dolog!");
@@ -361,7 +581,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 	}
 
 	/**
-	 * Az eseményeket vezérlő függvény
+	 * Az eseményeket vezérlő függvény. Ez gondoskodik újabb ellenségek
+	 * hozzáadásáról, az {@link Enemy}k léptetéséről, a {@link Tower}-ek
+	 * lövéséről, illetve véletlenszerűen ködöt ereszt egy-egy toronyra.
 	 * 
 	 */
 	public void loop() {
@@ -372,14 +594,10 @@ public class Controller implements RouteCellListener, EnemyListener {
 			}
 		}
 		for (Tower t : towers) {
-			if (t.hasFog && t.fogTimeRemaining > 0)
-				t.fogTimeRemaining -= 1;
-			if (t.hasFog && t.fogTimeRemaining == 0)
-				t.removeFog();
-			if (t.timeOfLastShoot > 0)
-				t.timeOfLastShoot -= 1;
+			t.fireAll();
 		}
 		stepAllEnemies();
+		addRandomFog();
 		for (Tower t : towers) {
 			Logging.log(1, t.toString() + ", index: " + towers.indexOf(t));
 		}
@@ -387,17 +605,23 @@ public class Controller implements RouteCellListener, EnemyListener {
 		 * for (Trap t : traps) { Logging.log(1, t.toString()); }
 		 */
 		Logging.log(1, saruman.toString());
-		Logging.log(1, "--Kör vége-- \n");
+		Logging.log(1, "Enemyk száma: " + enemies.size());
+		Logging.log(1, "--Kör vége-- \n\t" + new Date().toString());
 		Logging.log(4, "<< Controller.loop()");
 	}
 
 	/**
 	 * Random ellenséget a pályához adó függvény, ha a randomitás ki van
-	 * kapcsolva, akkor alapértelmezetten embert rak le
+	 * kapcsolva, akkor alapértelmezetten embert rak le.
 	 */
 	private void addRandomEnemy() {
 		Logging.log(3, ">> Controller.addRandomEnemy() hívás");
-		Random randgen = new Random();
+		Random randgen = new Random(System.currentTimeMillis());
+		int a = randgen.nextInt(maxEnemyNum * 10000);
+		if (a % maxEnemyNum > sentEnemies && sentEnemies > 0) {
+			Logging.log(1, "<< Controller.addRandomEnemy(), nem adok hozzá.");
+			return;
+		}
 		int n = randgen.nextInt(4);
 		if (!random) {
 			n = 0;
@@ -405,20 +629,40 @@ public class Controller implements RouteCellListener, EnemyListener {
 		switch (n) {
 		case 0:
 			addHuman(new Human(Human.defMaxLP, Human.defSpeed));
+			enemyChanged = true;
 			break;
 		case 1:
 			addElf(new Elf(Elf.defMaxLP, Elf.defSpeed));
+			enemyChanged = true;
 			break;
 		case 2:
 			addHobbit(new Hobbit(Hobbit.defMaxLP, Hobbit.defSpeed));
+			enemyChanged = true;
 			break;
 		case 3:
 			addDwarf(new Dwarf(Dwarf.defMaxLP, Dwarf.defSpeed));
+			enemyChanged = true;
 			break;
 		default:
 			break;
 		}
 		Logging.log(4, "<< Controller.addRandomEnemy()");
+	}
+
+	/**
+	 * ködöt random toronyhoz adó függvény
+	 */
+	private void addRandomFog() {
+		Logging.log(2, ">> Controller.addRandomFog");
+		Random randgen = new Random(System.currentTimeMillis());
+		if (towers.size() <= 0 || randgen.nextInt(1000) > 1) {
+			Logging.log(4, "<< Controller.addRandomFog, nem rakok ködöt");
+			return;
+		}
+		int n = randgen.nextInt(towers.size());
+		towers.get(n).addFog((randgen.nextInt(10) + 10) * 1000);
+		towerChanged = true;
+		Logging.log(4, "<< Controller.addRandomFog");
 	}
 
 	/**
@@ -434,6 +678,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		h.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(h);
+		h.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, h.toString());
 	}
 
@@ -450,6 +695,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		e.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(e);
+		e.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, e.toString());
 	}
 
@@ -466,6 +712,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 		h.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(h);
+		h.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, h.toString());
 	}
 
@@ -482,11 +729,12 @@ public class Controller implements RouteCellListener, EnemyListener {
 		d.addEnemyListener(this);
 		sentEnemies++;
 		sp.enter(d);
+		d.setTimeOfLastStep(System.currentTimeMillis());
 		Logging.log(1, d.toString());
 	}
 
 	/**
-	 * Minden pályán lévő ellenséget léptető függvény
+	 * Minden pályán lévő ellenséget léptető függvény.
 	 */
 	public void stepAllEnemies() {
 		Logging.log(2, ">> Controller.stepAllEnemies() hívás");
@@ -494,7 +742,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 		while (iter.hasNext() && !gameEnded) {
 			Enemy en = iter.next();
 			try {
-				en.leptet();
+				if (en.leptet()) {
+					enemyChanged = true;
+				}
 				Logging.log(1, en.toString());
 			} catch (EnemyDeadException e1) {
 				Logging.log(1, "\tAz enemy már meghalt... " + en.toString());
@@ -505,6 +755,8 @@ public class Controller implements RouteCellListener, EnemyListener {
 				// e1.printStackTrace();
 			}
 		}
+		enemies.addAll(enemiesToAdd);
+		enemiesToAdd.clear();
 		Logging.log(4, "<< Controller.stepAllEnemies() hívás");
 	}
 
@@ -518,19 +770,27 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param y
 	 *            a cél cella y koordinátája
 	 */
-	public void placeTower(Tower t, int x, int y) {
+	public boolean placeTower(Tower t, int x, int y) {
+		if (t == null) {
+			return false;
+		}
 		if (cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			if (saruman.getManna() >= Tower.getBaseCost()) {
+			if (saruman.getManna() >= t.getCost()) {
 				FieldCell fc = (FieldCell) cells.get(x).get(y);
 				if (fc.addTower(t)) {
 					towers.add(t);
-					saruman.rmManna(Tower.getBaseCost());
+					saruman.rmManna(t.getCost());
+					towerChanged = true;
+					return true;
 				}
+				return false;
 			} else {
-				Logging.log(0, "Nincs elég manna");
+				Logging.log(1, "Nincs elég manna");
+				return false;
 			}
 		} else {
 			Logging.log(0, "!!! Towert nem FieldCell-re raktuk!");
+			return false;
 		}
 	}
 
@@ -544,75 +804,170 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 * @param y
 	 *            a cél y koordinátája
 	 */
-	public void placeTrap(Trap t, int x, int y) {
+	public boolean placeTrap(Trap t, int x, int y) {
+		if (t == null) {
+			return false;
+		}
 		if (!cells.get(x).get(y).getType().equalsIgnoreCase("FieldCell")) {
-			if (saruman.getManna() >= Tower.getBaseCost()) {
+			if (saruman.getManna() >= t.getCost()) {
 				RouteCell rc = (RouteCell) cells.get(x).get(y);
 				if (rc.addTrap(t)) {
-					saruman.rmManna(Trap.getBaseCost());
+					saruman.rmManna(t.getCost());
 					traps.add(t);
+					trapChanged = true;
 					Logging.log(1, t.toString() + " parentCell: " + x + ", "
 							+ y + ", index: " + traps.indexOf(t));
+					return true;
 				}
+				return false;
 			} else {
 				Logging.log(0, "Nincs elég manna");
+				return false;
 			}
 		} else {
 			Logging.log(0, "!!! Trapet nem RouteCell-re raktuk!");
+			return false;
 		}
 
-	}
-
-	public void placeMagicStone(MagicStone ms, int x, int y) {
-		Cell c = cells.get(x).get(y);
-		if (c.getType().equalsIgnoreCase("FieldCell")
-				&& ((FieldCell) c).hasTower()) {
-			if (saruman.getManna() >= MagicStone.calcCost()) {
-				((FieldCell) c).getTower().addStone(ms);
-			}
-		}
-		if (c.getType().equalsIgnoreCase("RouteCell")
-				&& ((RouteCell) c).hasTrap()) {
-			if (saruman.getManna() >= MagicStone.calcCost()) {
-				((RouteCell) c).getTrap().addStone(ms);
-			}
-
-		}
 	}
 
 	/**
-	 * visszaadja az i. tornyot
+	 * Varázskövet helyez el az adott cellára, ha van ott {@link Tower}, vagy az
+	 * egy {@link RouteCell} és van rajta {@link Trap}.
+	 * 
+	 * @param ms
+	 *            Egy varázskő, ennek az értékei módosítják a torony/csapda
+	 *            tulajdonságait
+	 * @param x
+	 *            A kiszemelt cella x koordinátája
+	 * @param y
+	 *            A kiszemelt cella y koordinátája
+	 */
+	public boolean placeMagicStone(MagicStone ms, int x, int y) {
+		if (ms == null) {
+			return false;
+		}
+		Cell c = cells.get(x).get(y);
+		try {
+			if (c.getType().equalsIgnoreCase("FieldCell")
+					&& ((FieldCell) c).hasTower()) {
+				if (saruman.getManna() >= ms.getCost("tower")) {
+					((FieldCell) c).getTower().addStone(ms);
+					saruman.rmManna(ms.getCost("tower"));
+					return true;
+				}
+				return false;
+			} else if (c.getType().equalsIgnoreCase("RouteCell")
+					&& ((RouteCell) c).hasTrap()) {
+				if (saruman.getManna() >= ms.getCost("trap")) {
+					((RouteCell) c).getTrap().addStone(ms);
+					saruman.rmManna(ms.getCost("trap"));
+					return true;
+				}
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Visszaadja a Trap-ek listáját.
+	 * 
+	 * @return A pályán lévő csapdák.
+	 */
+	public List<Trap> getTrap() {
+		return traps;
+	}
+
+	/**
+	 * Visszaadja a Tower-ek listáját.
+	 * 
+	 * @return A pályán lévő tornyok.
+	 */
+	public List<Tower> getTowers() {
+		return towers;
+	}
+
+	/**
+	 * Visszaadja az ellenségek {@link HashSet}-jét.
+	 * 
+	 * @return A pályán lévő {@link Enemy}k
+	 */
+	public HashSet<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	/**
+	 * Visszaadja az x,y helyen álló Cellát
+	 * 
+	 * @param x
+	 *            x koordináta
+	 * @param y
+	 *            y koordináta
+	 * @return
+	 */
+
+	public Cell getCell(int x, int y) {
+		return cells.get(x).get(y);
+	}
+
+	/**
+	 * A pálya méretét megadó függvény
+	 * 
+	 * @return Egy 2 elemű int tömb, amely szélesség, magasság sorrendben
+	 *         tartalmazza a méreteket.
+	 */
+	public int[] getMapSize() {
+		int[] temp = { mapWidth, mapHeight };
+		return temp;
+	}
+
+	/**
+	 * visszaadja a kért sorszámú tornyot
 	 * 
 	 * @param i
-	 *            sorszám
-	 * @return
+	 *            A torony sorszáma. Nincs ellenőrzés!!!
+	 * @return A pályán lévő tornyok közül az i-edik.
 	 */
 	public Tower getTower(int i) {
 		return towers.get(i);
 	}
 
 	/**
-	 * visszaadja az i. csapdát
+	 * visszaadja a kért sorszámú csapdát
 	 * 
 	 * @param i
-	 *            sorszám
-	 * @return
+	 *            A csapda sorszáma. Nincs ellenőrzés!!!
+	 * @return A pályán lévő csapdák közül az i-edik.
 	 */
 	public Trap getTrap(int i) {
 		return traps.get(i);
 	}
 
 	/**
-	 * beállítja a randomitást
+	 * Beállítja a Controller véletlenszerű működését. Csak tesztelésnél érdemes
+	 * használni, mert a célja csakis ez. Ha a véletlenszerűség ki van
+	 * kapcsolva, minden egyes kör ugyanúgy fog lezajlani. Az ellenségek
+	 * elágazásnál a FENT,JOBBRA,LENT,BALRA közül a legelső lehetséges irányba
+	 * fognak továbbhaladni. A lövedékek kettévágós mivolta pedig a
+	 * {@link Tower#globalSlice} értékétől fog függni. Az ellenségek indítása
+	 * azonban véletlenszerű marad, ha {@link Controller#canSpawn} értéke igaz.
 	 * 
 	 * @param b
-	 *            randomitás értéke
+	 *            Igaz - véletlenszerűség be, hamis - ki
 	 */
 	public static void setRandom(boolean b) {
 		random = b;
 	}
 
-	public static boolean getRandom() {
+	/**
+	 * @return Be van-e kapcsolva a véletlenszerűség.
+	 * @see Controller#setRandom(boolean)
+	 */
+	public static boolean isRandom() {
 		return random;
 	}
 
@@ -633,6 +988,15 @@ public class Controller implements RouteCellListener, EnemyListener {
 	 */
 	public void setMapFileName(String mapFileName) {
 		this.mapFileName = mapFileName;
+		initMap();
+	}
+
+	/**
+	 * Reseteli a controllert. Ez gyakorlatilag újra beolvassa a configfjálokat.
+	 */
+	public void reset() {
+		initMap();
+		parseConfFile();
 	}
 
 	/**
@@ -664,7 +1028,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + e.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + e.toString());
 			stopMainLoop();
 		}
@@ -679,7 +1043,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + d.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + d.toString());
 			stopMainLoop();
 		}
@@ -694,7 +1058,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -709,7 +1073,7 @@ public class Controller implements RouteCellListener, EnemyListener {
 						+ sender.toString() + ", " + h.toString());
 		if (sender.getType().equalsIgnoreCase("MordorCell")) {
 			setGameEnded(true);
-			winner = new StringBuffer("enemies");
+			setWinner("Ellenségek");
 			Logging.log(1, "!!! Enemy nyert: " + h.toString());
 			stopMainLoop();
 		}
@@ -759,8 +1123,9 @@ public class Controller implements RouteCellListener, EnemyListener {
 		Logging.log(3,
 				">> Controller.onSlice() hívás, paraméter: " + e.toString());
 		e.addEnemyListener(this);
-		enemies.add(e);
+		enemiesToAdd.add(e);
 		sentEnemies++;
+		enemyChanged = true;
 		Logging.log(1, e.toString());
 		Logging.log(4, "<< Controller.onSlice() hívás");
 	}
@@ -769,10 +1134,11 @@ public class Controller implements RouteCellListener, EnemyListener {
 	public void onDie(Enemy e) {
 		Logging.log(2,
 				">> Controller.onDie() hívás, paraméter: " + e.toString());
-		saruman.addManna(10);
+		saruman.addManna(e.getMaxLifePoint());
 		diedEnemies++;
+		enemyChanged = true;
 		if (diedEnemies >= maxEnemyNum && diedEnemies == sentEnemies) {
-			winner = new StringBuffer("saruman");
+			setWinner("Szarumán");
 			setGameEnded(true);
 			Logging.log(1, "!!! Szarumán nyert !!!");
 			stopMainLoop();

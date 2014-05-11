@@ -9,6 +9,8 @@ import mordordefense.testing.Logging;
  */
 public class MordorCell extends RouteCell {
 
+	private static final long serialVersionUID = -7876818825648099206L;
+
 	public MordorCell(int x, int y, int ID) {
 		super(x, y, ID);
 		Logging.log(2, ">> MordorCell konstruktor hívás, x: " + x + ", y: " + y

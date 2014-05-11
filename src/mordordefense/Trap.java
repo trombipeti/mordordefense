@@ -1,24 +1,27 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import mordordefense.testing.Logging;
 
-public class Trap implements RouteCellListener {
+public class Trap implements RouteCellListener, Serializable {
+
+	private static final long serialVersionUID = 3869823736585309909L;
 
 	/**
 	 * A csapda alaperőssége. Alapból ennyivel lassítja a rálépő ellenséget.
 	 */
 	public static int globalStrength;
 	protected float strength;
-	
+
 	/**
 	 * A csapda tartózkodási helye.
 	 */
 	protected RouteCell parentCell;
 
-	protected static int baseCost;
+	protected static float baseCost;
 
 	/**
 	 * A csapdán lévő varázskövek.
@@ -31,16 +34,17 @@ public class Trap implements RouteCellListener {
 		Logging.log(4, "<< Trap default konstruktor");
 	}
 
-	public Trap(int strength) {
+	public Trap(float strength) {
 		Logging.log(2, ">> Trap konstruktor hívás, parameter: " + strength);
 		this.strength = strength;
 		Logging.log(4, "<< Trap konstruktor");
 	}
 
 	/**
-	 * Operation
+	 * Varázskövet helyez el a csapdára.
 	 * 
 	 * @param s
+	 *            Az elhelyezendő {@link MagicStone}.
 	 */
 	public void addStone(MagicStone s) {
 		Logging.log(3, ">> Trap.addStone() hívás, paraméter: " + s.toString());
@@ -50,11 +54,18 @@ public class Trap implements RouteCellListener {
 	}
 
 	/**
+	 * @return A csapdán lévő varázskövek.
+	 */
+	public List<MagicStone> getStones() {
+		return stones;
+	}
+
+	/**
 	 * A csapdaelhelyezés alapárát visszaadó függvény.
 	 * 
 	 * @return int Az építés alapköltsége.
 	 */
-	public static int getBaseCost() {
+	public static float getBaseCost() {
 		Logging.log(4, ">> Trap.getBaseCost() hívás.");
 		Logging.log(4, "<< " + baseCost);
 		return baseCost;
@@ -66,22 +77,35 @@ public class Trap implements RouteCellListener {
 	 * @param c
 	 *            Az alapár.
 	 */
-	public static void setBaseCost(int c) {
+	public static void setBaseCost(float c) {
 		Logging.log(4, ">> Trap.setBaseCost() hívás, paraméter: " + c);
 		baseCost = c;
 		Logging.log(4, "<< Trap.setBaseCost");
 	}
-	
+
+	/**
+	 * Megmondja, mennyi manna szükséges a csapda megépítéséhez. Ennek értéke:
+	 * {@link Trap#baseCost} + {@link Trap#strength}
+	 * 
+	 * @return A csapda építésének ára
+	 */
+	public float getCost() {
+		Logging.log(2, ">> Trap.getCost() hívás");
+		float ret = baseCost + strength;
+		Logging.log(2, "<< Trap.getCost() return: " + ret);
+		return ret;
+	}
+
 	/**
 	 * A Trap-et tároló RouteCell-t beállító függvény
 	 * 
 	 * @param c
-	 * 			A tároló RouteCell
+	 *            A tároló RouteCell
 	 */
-	
-	public void setParentCell(RouteCell c){
-		if(c!=null)
-			parentCell=c; //nincs szükség logolásra, pusztán kozmetikai
+
+	public void setParentCell(RouteCell c) {
+		if (c != null)
+			parentCell = c; // nincs szükség logolásra, pusztán kozmetikai
 	}
 
 	@Override

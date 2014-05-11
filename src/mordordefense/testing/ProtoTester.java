@@ -48,7 +48,6 @@ public class ProtoTester {
 
 	public static void TestCaseMainLoop() {
 		Controller cont = new Controller("palya1.p");
-		cont.init();
 		cont.startMainLoop();
 	}
 
@@ -106,7 +105,6 @@ public class ProtoTester {
 				in = br.readLine();
 				value = Integer.parseInt(in);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
 				if (in == null || in.equalsIgnoreCase("q")) {

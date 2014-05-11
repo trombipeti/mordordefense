@@ -1,13 +1,17 @@
 package mordordefense;
 
+import java.io.Serializable;
+
 import mordordefense.testing.Logging;
 
 /**
  * A Mordort hősiesen védő Szarumánt megtestesítő osztály.
  * 
  */
-public class Saruman {
+public class Saruman implements Serializable {
 
+	private static final long serialVersionUID = 1612530905095295310L;
+	
 	/**
 	 * Szarumán varázsereje.
 	 */
@@ -56,7 +60,7 @@ public class Saruman {
 	public void rmManna(float m) {
 		Logging.log(2, ">> Saruman.rmManna() hívás, paraméter: " + m);
 		manna -= m;
-		Logging.log(3, "\t Szarumán új varázserej: " + manna);
+		Logging.log(3, "\t Szarumán új varázsereje: " + manna);
 		Logging.log(4, "<< Saruman.rmManna");
 	}
 
