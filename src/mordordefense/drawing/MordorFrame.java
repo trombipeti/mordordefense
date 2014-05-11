@@ -227,10 +227,12 @@ public class MordorFrame extends JFrame {
 					}
 					Board.getController().setMapFileName(n);
 					Board.clear();
+					Board.getController().reset();
 					Board.setGameEndDrawn(false);
 					// Board.calcSize();
 					validate();
 					repaint();
+					gameRunning=false;
 				} else {
 					if (gameRunning) {
 						Board.getController().startMainLoop();
