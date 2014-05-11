@@ -13,6 +13,19 @@ import mordordefense.testing.Logging;
  */
 public class Elf extends Enemy {
 
+	private static final long serialVersionUID = -2048593247027643112L;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó maximális életpontja.
+	 */
+	public static float defMaxLP;
+
+	/**
+	 * Az enemy típusonként esetlegesen változó indulósebessége.
+	 */
+	public static float defSpeed;
+
+	
 	/**
 	 * Alap konstruktor.
 	 */
@@ -38,10 +51,11 @@ public class Elf extends Enemy {
 	}
 
 	/**
+	 * @return
 	 * @see mordordefense.Enemy#leptet()
 	 */
 	@Override
-	public void leptet() throws EnemyCannotStepException, EnemyDeadException {
+	public boolean leptet() throws EnemyCannotStepException, EnemyDeadException {
 		Logging.log(2, ">> Elf.leptet() hívás");
 		if (lifePoint <= 0) {
 			Logging.log(2, "<< Elf.leptet() exception");
@@ -49,9 +63,15 @@ public class Elf extends Enemy {
 		}
 		long _time = System.currentTimeMillis();
 		// Itt ha még nem lépett egyet se, akkor hagyjuk lépni!!!
-		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 1) {
+		if (stepNumber > 0 && ((_time - timeOfLastStep) / 1000.f) * speed < 10) {
 			Logging.log(2, "<< Elf.leptet(), nem tud meg lepni.");
-			return;
+			return false;
+		}
+		if (stepNumber < 0) {
+			stepNumber = 0;
+			timeOfLastStep = System.currentTimeMillis();
+			Logging.log(2, "<< Elf.leptet(), belepett a spawnpointra");
+			return true;
 		}
 		// Eltároljuk, hogy melyik szomszédra tud egyáltalán lépni.
 		// Kis szépséghiba, hogy ha több olyan cellatípus is van, akire nem tud
@@ -86,6 +106,7 @@ public class Elf extends Enemy {
 			throw new EnemyCannotStepException();
 		}
 		Logging.log(2, "<< Elf.leptet()");
+		return true;
 	}
 
 	@Override
@@ -110,9 +131,9 @@ public class Elf extends Enemy {
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Elf.slice() hívás");
-		Elf newEnemy = new Elf(lifePoint / 2, speed);
-		lifePoint = (int) (Math.floor(lifePoint / 2 + 0.5));
-		newEnemy.setRouteCell(routeCell);
+		Elf newEnemy = new Elf(lifePoint / 2, defSpeed);
+		lifePoint = lifePoint / 2;
+		routeCell.enter(newEnemy);
 		for (EnemyListener l : listeners) {
 			l.onSlice(newEnemy);
 		}

@@ -1,5 +1,6 @@
 package mordordefense;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import mordordefense.exceptions.EnemyCannotStepException;
@@ -11,7 +12,9 @@ import mordordefense.testing.Logging;
  * ősosztály.
  * 
  */
-public abstract class Enemy {
+public abstract class Enemy implements Serializable {
+
+	private static final long serialVersionUID = -4561743089866969291L;
 
 	/**
 	 * Az enemy maximális (és kezdeti) életereje.
@@ -42,7 +45,7 @@ public abstract class Enemy {
 	/**
 	 * Az enemy által megtett lépések száma.
 	 */
-	protected int stepNumber = 0;
+	protected int stepNumber = -1;
 
 	/**
 	 * Az utolsó lépés ideje. Ebből az értékből tudja megmondani, hogy tud-e
@@ -61,16 +64,6 @@ public abstract class Enemy {
 	protected HashSet<EnemyListener> listeners = new HashSet<EnemyListener>();
 
 	/**
-	 * Az enemy típusonként esetlegesen változó maximális életpontja.
-	 */
-	public static float defMaxLP;
-
-	/**
-	 * Az enemy típusonként esetlegesen változó indulósebessége.
-	 */
-	public static float defSpeed;
-
-	/**
 	 * Enemy halálát jelző boolean
 	 */
 	protected boolean dead = false;
@@ -80,7 +73,7 @@ public abstract class Enemy {
 	 * 
 	 * @return
 	 */
-	public boolean getDead() {
+	public boolean isDead() {
 		return dead;
 	}
 
@@ -128,6 +121,21 @@ public abstract class Enemy {
 	}
 
 	/**
+	 * @return A {@link RouteCell}, amin az enemy áll.
+	 */
+	public RouteCell getRouteCell() {
+		return routeCell;
+	}
+
+	public long getTimeOfLastStep() {
+		return timeOfLastStep;
+	}
+
+	public void setTimeOfLastStep(long timeOfLastStep) {
+		this.timeOfLastStep = timeOfLastStep;
+	}
+
+	/**
 	 * Az enemyt lelassító függvény. Hogy az enemy ne álljon meg és ne induljon
 	 * el visszafele, egy megadott szint alá nem tud csökkenni.
 	 * 
@@ -135,12 +143,13 @@ public abstract class Enemy {
 	 *            Mennyivel csökkenjen a sebessége.
 	 */
 	public void lassit(float mertek) {
-		//mertek=mertek/(Controller.timeStep/10.0f);
+		// mertek=mertek/(Controller.timeStep/10.0f);
 		Logging.log(2, ">> Enemy.lassit() hívás, paraméter: " + mertek);
-		if (speed - mertek >= 1) {
+		if (speed - mertek >= 0.1f) {
 			speed -= mertek;
 			Logging.log(3, "\t A sebessége ennyire csökkent: " + speed);
 		} else {
+			speed = 0.1f;
 			Logging.log(3,
 					"\t Szegény már így is nagyon lassú, nem lassítom tovább, sebessége: "
 							+ speed);
@@ -182,9 +191,9 @@ public abstract class Enemy {
 	 *             Ha nem talált cellát, ahova lépni tud (jól felépített pálya
 	 *             és normálisan megírt Controller esetén ilyen kivételt nem
 	 *             kéne, hogy dobjon.)
-	 * 
+	 * @return sikeres volt-e a lépés, haladt-e az ellenség
 	 */
-	abstract public void leptet() throws EnemyDeadException,
+	abstract public boolean leptet() throws EnemyDeadException,
 			EnemyCannotStepException;
 
 	/**
