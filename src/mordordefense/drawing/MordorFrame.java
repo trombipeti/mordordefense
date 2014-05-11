@@ -325,6 +325,9 @@ public class MordorFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Controller control = Board.getController();
+				if(control.isGameEnded()) {
+					return;
+				}
 				// Ha cellára kattintottunk
 				int cellx = e.getX() / Board.getCellSize();
 				int cellnumx = control.getMapSize()[0];
