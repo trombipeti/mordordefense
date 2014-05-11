@@ -167,6 +167,33 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmLoad = new JMenuItem("Load");
 		mnGame.add(mntmLoad);
 
+		mntmLoad.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					FileInputStream f = new FileInputStream("md.obj");
+					ObjectInputStream in = new ObjectInputStream(f);
+					Controller newCont=(Controller) in.readObject();
+					Board.setController(newCont);
+					in.close();
+					validate();
+					repaint();
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 		JMenu mnAdd = new JMenu("Add");
 		menuBar.add(mnAdd);
 
@@ -232,7 +259,7 @@ public class MordorFrame extends JFrame {
 					// Board.calcSize();
 					validate();
 					repaint();
-					gameRunning=false;
+					gameRunning = false;
 				} else {
 					if (gameRunning) {
 						Board.getController().startMainLoop();
