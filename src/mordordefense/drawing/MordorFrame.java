@@ -53,6 +53,7 @@ public class MordorFrame extends JFrame {
 
 	private State state;
 	protected boolean gameStarted;
+	protected boolean gameRunning;
 
 	// LOL kis zenélés
 	private AudioInputStream isengard = null;
@@ -113,6 +114,7 @@ public class MordorFrame extends JFrame {
 					}
 				}
 				gameStarted = true;
+				gameRunning = true;
 				Board.getController().startMainLoop();
 				Board.validate();
 				Board.repaint();
@@ -134,6 +136,7 @@ public class MordorFrame extends JFrame {
 				if (isengard != null && isengardClip != null) {
 					isengardClip.stop();
 				}
+				gameRunning = false;
 				Board.getController().pauseMainLoop();
 				validate();
 				repaint();
@@ -227,7 +230,12 @@ public class MordorFrame extends JFrame {
 					// Board.calcSize();
 					validate();
 					repaint();
+				} else {
+					if (gameRunning) {
+						Board.getController().startMainLoop();
+					}
 				}
+
 			}
 		});
 		mnMap.add(mntmOpen);
