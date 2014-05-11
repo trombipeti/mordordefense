@@ -136,8 +136,6 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Itt Pause legyen vagy Stop? Vagy legyen a pause-ra külön
-				// menü?
 				if (isengard != null && isengardClip != null) {
 					isengardClip.stop();
 				}
@@ -156,13 +154,33 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (gameRunning) {
+					Board.getController().pauseMainLoop();
+				}
 				try {
-					FileOutputStream f = new FileOutputStream("md.obj");
-					ObjectOutputStream out = new ObjectOutputStream(f);
-					out.writeObject(Board.getController());
-					out.close();
+					JFileChooser chooser = new JFileChooser();
+					chooser.setCurrentDirectory(new java.io.File("."));
+					FileNameExtensionFilter filter = new FileNameExtensionFilter(
+							"Játékfájlok", "obj");
+					chooser.setFileFilter(filter);
+					int retval = chooser.showOpenDialog(null);
+					if (retval == JFileChooser.APPROVE_OPTION) {
+						String n = "";
+						try {
+							n = chooser.getSelectedFile().getCanonicalPath();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						FileOutputStream f = new FileOutputStream(n);
+						ObjectOutputStream out = new ObjectOutputStream(f);
+						out.writeObject(Board.getController());
+						out.close();
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
+				}
+				if (gameRunning) {
+					Board.getController().startMainLoop();
 				}
 			}
 		});
@@ -179,14 +197,28 @@ public class MordorFrame extends JFrame {
 					Board.getController().pauseMainLoop();
 				}
 				try {
-					FileInputStream f = new FileInputStream("md.obj");
-					ObjectInputStream in = new ObjectInputStream(f);
-					Controller newCont = (Controller) in.readObject();
-					Board.setController(newCont);
-					in.close();
-					
-					validate();
-					repaint();
+					JFileChooser chooser = new JFileChooser();
+					chooser.setCurrentDirectory(new java.io.File("."));
+					FileNameExtensionFilter filter = new FileNameExtensionFilter(
+							"Mentett játékfájlok", "obj");
+					chooser.setFileFilter(filter);
+					int retval = chooser.showOpenDialog(null);
+					if (retval == JFileChooser.APPROVE_OPTION) {
+						String n = "";
+						try {
+							n = chooser.getSelectedFile().getCanonicalPath();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						FileInputStream f = new FileInputStream(n);
+						ObjectInputStream in = new ObjectInputStream(f);
+						Controller newCont = (Controller) in.readObject();
+						Board.setController(newCont);
+						in.close();
+
+						validate();
+						repaint();
+					}
 
 				} catch (FileNotFoundException e) {
 
@@ -198,7 +230,7 @@ public class MordorFrame extends JFrame {
 
 					e.printStackTrace();
 				}
-				if(gameRunning){
+				if (gameRunning) {
 					Board.getController().startMainLoop();
 				}
 
@@ -325,7 +357,7 @@ public class MordorFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Controller control = Board.getController();
-				if(control.isGameEnded()) {
+				if (control.isGameEnded()) {
 					return;
 				}
 				// Ha cellára kattintottunk
