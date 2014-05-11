@@ -96,6 +96,9 @@ public class MordorFrame extends JFrame {
 				if (Board.getController().isGameEnded()) {
 					Board.getController().reset();
 				}
+				if(gameRunning){
+					return;
+				}
 				if (isengardClip == null || isengardClip.isRunning() == false) {
 					try {
 						isengard = AudioSystem.getAudioInputStream(new File(
@@ -166,8 +169,8 @@ public class MordorFrame extends JFrame {
 		mnGame.add(mntmSave);
 
 		JMenuItem mntmLoad = new JMenuItem("Load");
-		mnGame.add(mntmLoad);
-
+		mntmLoad.setAccelerator(KeyStroke.getKeyStroke('L',
+				KeyEvent.CTRL_DOWN_MASK));
 		mntmLoad.addActionListener(new ActionListener() {
 
 			@Override
@@ -194,7 +197,8 @@ public class MordorFrame extends JFrame {
 
 			}
 		});
-
+		mnGame.add(mntmLoad);
+		
 		JMenu mnAdd = new JMenu("Add");
 		menuBar.add(mnAdd);
 
