@@ -76,6 +76,7 @@ public class MordorFrame extends JFrame {
 
 		state = State.NORMAL;
 		gameStarted = false;
+		gameRunning = false;
 
 		// control = c;
 
@@ -174,7 +175,7 @@ public class MordorFrame extends JFrame {
 				try {
 					FileInputStream f = new FileInputStream("md.obj");
 					ObjectInputStream in = new ObjectInputStream(f);
-					Controller newCont=(Controller) in.readObject();
+					Controller newCont = (Controller) in.readObject();
 					Board.setController(newCont);
 					in.close();
 					validate();
@@ -339,7 +340,7 @@ public class MordorFrame extends JFrame {
 					case TOWER:
 						if (Board.getController().getCell(cellx, celly)
 								.getType().equalsIgnoreCase("FieldCell")) {
-							if (gameStarted) {
+							if (gameRunning) {
 								Board.getController().pauseMainLoop();
 							}
 							Tower t = askUserForTower();
@@ -352,7 +353,7 @@ public class MordorFrame extends JFrame {
 										"Toronyépítés sikertelen",
 										JOptionPane.ERROR_MESSAGE);
 							}
-							if (gameStarted) {
+							if (gameRunning) {
 								Board.getController().startMainLoop();
 							}
 							validate();
@@ -363,7 +364,7 @@ public class MordorFrame extends JFrame {
 					case TRAP:
 						if (!control.getCell(cellx, celly).getType()
 								.equalsIgnoreCase("FieldCell")) {
-							if (gameStarted) {
+							if (gameRunning) {
 								Board.getController().pauseMainLoop();
 							}
 							Trap t = askUserForTrap();
@@ -376,7 +377,7 @@ public class MordorFrame extends JFrame {
 										"Csapdaépítés sikertelen",
 										JOptionPane.ERROR_MESSAGE);
 							}
-							if (gameStarted) {
+							if (gameRunning) {
 								Board.getController().startMainLoop();
 							}
 							validate();
@@ -398,7 +399,7 @@ public class MordorFrame extends JFrame {
 								break;
 							}
 						}
-						if (gameStarted) {
+						if (gameRunning) {
 							Board.getController().pauseMainLoop();
 						}
 						MagicStone m = askUserForMagicStone();
@@ -411,7 +412,7 @@ public class MordorFrame extends JFrame {
 									"Kőlerakás sikertelen",
 									JOptionPane.ERROR_MESSAGE);
 						}
-						if (gameStarted) {
+						if (gameRunning) {
 							Board.getController().startMainLoop();
 						}
 						validate();
