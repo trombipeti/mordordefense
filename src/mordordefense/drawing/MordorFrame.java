@@ -260,11 +260,15 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
 		mntmAbout.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ImageIcon icon = new ImageIcon("soamazing_logo.jpg");
-				JOptionPane.showMessageDialog(null, "", "About", JOptionPane.INFORMATION_MESSAGE, icon);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"soamazing:\nBodolai Dorottya\nBulla Ádám\nKovács András\nTrombitás Péter",
+								"About", JOptionPane.INFORMATION_MESSAGE, icon);
 			}
 		});
 
