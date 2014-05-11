@@ -514,13 +514,13 @@ public class Controller implements RouteCellListener, EnemyListener, Serializabl
 	 * Egy {@link Timer}, amely segítségével ütemezhető lesz a mainLoop
 	 * {@link TimerTask}.
 	 */
-	private Timer scheduler = null;
+	private transient Timer scheduler = null;
 
 	/**
 	 * A loop-ot lefuttató, ütemezhető {@link TimerTask}. Alapjáraton null az
 	 * értéke, és majd a {@link Controller#startMainLoop} fogja inicializálni.
 	 */
-	private TimerTask mainLoop = null;
+	private transient TimerTask mainLoop = null;
 
 	/**
 	 * Ütemezi a scheduler-ben {@link Controller#timeStep} ms-enkénti futásra a
