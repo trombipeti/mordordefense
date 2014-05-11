@@ -17,6 +17,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -246,8 +247,26 @@ public class MordorFrame extends JFrame {
 		JMenuItem mntmHelp = new JMenuItem("Help");
 		mntmHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnHelp.add(mntmHelp);
+		mntmHelp.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO ide kéne vmi kamu szöveg
+				JOptionPane.showMessageDialog(null, "EZ ITT A HELP", "Help",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
+		mntmAbout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ImageIcon icon = new ImageIcon("soamazing_logo.jpg");
+				JOptionPane.showMessageDialog(null, "", "About", JOptionPane.INFORMATION_MESSAGE, icon);
+			}
+		});
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
