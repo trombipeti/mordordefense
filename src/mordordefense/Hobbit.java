@@ -126,7 +126,14 @@ public class Hobbit extends Enemy {
 		}
 		Logging.log(2, "<< Hobbit.sebez()");
 	}
-
+	
+	@Override
+	public void lassit(float mertek) {
+		Logging.log(2, ">> Hobbit.lassit()");
+		Logging.log(2, "<< Hobbit.lassit()");
+		return;
+	}
+	
 	@Override
 	protected void slice() {
 		Logging.log(2, ">> Hobbit.slice() hívás");
