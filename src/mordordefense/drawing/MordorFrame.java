@@ -179,7 +179,7 @@ public class MordorFrame extends JFrame {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if (gameRunning) {
+				if (gameRunning && !Board.getController().isGameEnded()) {
 					Board.getController().startMainLoop();
 				}
 			}
@@ -193,6 +193,9 @@ public class MordorFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+
+				boolean fileChanged = false;
+
 				if (gameRunning) {
 					Board.getController().pauseMainLoop();
 				}
@@ -216,6 +219,8 @@ public class MordorFrame extends JFrame {
 						Board.setController(newCont);
 						in.close();
 
+						fileChanged = true;
+
 						validate();
 						repaint();
 					}
@@ -230,7 +235,8 @@ public class MordorFrame extends JFrame {
 
 					e.printStackTrace();
 				}
-				if (gameRunning) {
+				if (gameRunning && !Board.getController().isGameEnded()
+						&& !fileChanged) {
 					Board.getController().startMainLoop();
 				}
 
@@ -305,7 +311,7 @@ public class MordorFrame extends JFrame {
 					repaint();
 					gameRunning = false;
 				} else {
-					if (gameRunning) {
+					if (gameRunning && !Board.getController().isGameEnded()) {
 						Board.getController().startMainLoop();
 					}
 				}
@@ -399,7 +405,8 @@ public class MordorFrame extends JFrame {
 										"Toronyépítés sikertelen",
 										JOptionPane.ERROR_MESSAGE);
 							}
-							if (gameRunning) {
+							if (gameRunning
+									&& !Board.getController().isGameEnded()) {
 								Board.getController().startMainLoop();
 							}
 							validate();
@@ -423,7 +430,8 @@ public class MordorFrame extends JFrame {
 										"Csapdaépítés sikertelen",
 										JOptionPane.ERROR_MESSAGE);
 							}
-							if (gameRunning) {
+							if (gameRunning
+									&& !Board.getController().isGameEnded()) {
 								Board.getController().startMainLoop();
 							}
 							validate();
@@ -458,7 +466,7 @@ public class MordorFrame extends JFrame {
 									"Kőlerakás sikertelen",
 									JOptionPane.ERROR_MESSAGE);
 						}
-						if (gameRunning) {
+						if (gameRunning && !Board.getController().isGameEnded()) {
 							Board.getController().startMainLoop();
 						}
 						validate();
