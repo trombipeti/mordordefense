@@ -95,6 +95,7 @@ public class MordorFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Board.getController().isGameEnded()) {
 					Board.getController().reset();
+					gameRunning = false;
 				}
 				if (gameRunning) {
 					return;

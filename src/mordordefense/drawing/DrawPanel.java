@@ -68,6 +68,7 @@ public class DrawPanel extends JPanel {
 
 	public void setController(Controller c) {
 		control = c; // Map méretének beállítása
+		gameEndDrawn = false;
 	}
 
 	public int getCellSize() {
