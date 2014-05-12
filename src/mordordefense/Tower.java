@@ -397,7 +397,9 @@ public class Tower implements RouteCellListener, Serializable {
 			removeFog();
 		}
 		for (RouteCell rc : closestCellsWithEnemy) {
-			fire(rc);
+			if (rc.getNumEnemies() > 0) {
+				fire(rc);
+			}
 		}
 		Logging.log(4, "<< Tower.fireAll");
 	}
